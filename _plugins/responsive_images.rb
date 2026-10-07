@@ -64,6 +64,13 @@ module CornerstoneImages
       srcset = variants.map { |w, u| "#{base}#{u} #{w}w" }.join(", ")
       sizes = attr(t, "sizes") || attr(t, "data-sizes") || DEFAULT_SIZES
       t = t.sub(/\s+data-sizes\s*=\s*(["']).*?\1/i, "")
+      if variants.map(&:first).max.to_i < info["w"].to_i
+        # No full-width WebP (the JPG/PNG compressed smaller): a WebP-only srcset would cap the image at its
+        # largest variant and stretch it blurry, so offer the original as the full-width candidate instead.
+        t = set_attr(t, "srcset", "#{srcset}, #{base}#{key} #{info['w']}w")
+        out << set_attr(t, "sizes", sizes)
+        next
+      end
       out << %(<picture><source type="image/webp" srcset="#{srcset}" sizes="#{sizes}">#{t}</picture>)
     end
     out << html[pos..] if pos < html.length

@@ -116,6 +116,10 @@ def process(p, dry):
                 out.write_bytes(vd)
         if out.exists():
             entry["webp"].append([w, url_of(out)])
+    elif entry["webp"]:
+        # the original is already WebP: list it as the full-width candidate, or browsers never get past the
+        # largest smaller variant (a 480w-only srcset stretched across an 848px column looks blurry)
+        entry["webp"].append([w, url_of(p)])
     return entry, note
 
 
