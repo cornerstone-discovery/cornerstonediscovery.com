@@ -1,5 +1,5 @@
 // Bootstrap v3.3.1 CSS: the exact version the live site loads (maxcdn). No Bootstrap JS is used (see assets/js/site.js).
-// Glyphicons @font-face points at a 4-glyph subset.
+// Glyphicons font removed: every icon is Font Awesome 7 (_icons.scss).
 /*!
  * Bootstrap v3.3.1 (http://getbootstrap.com)
  * Copyright 2011-2014 Twitter, Inc.
@@ -265,11 +265,6 @@ th {
   .table-bordered td {
     border: 1px solid #ddd !important;
   }
-}
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  font-display: block;
-  src: url('../fonts/glyphicons-3.3.1-subset.woff2') format('woff2');
 }
 .glyphicon {
   position: relative;

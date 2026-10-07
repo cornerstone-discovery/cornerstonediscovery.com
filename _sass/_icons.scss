@@ -1,36 +1,101 @@
-// Font Awesome 4.2.0 (the version the live site loads, so icon metrics match): only the glyphs the site uses,
-// plus a matching X-logo square (FA 4 predates X). ~1.4 KB instead of the 77 KB font + 30 KB CSS.
-// Class names and CSS metrics are the stock FA 4 ones. Built by tools/build-icons.py: to add an icon, add its
-// codepoint to KEEP there, re-run it, and add a rule below.
+// Font Awesome Free 7.3.1 (https://fontawesome.com, icons CC BY 4.0, fonts SIL OFL 1.1, code MIT).
+// Every icon on the site comes from this one set. Core rules below are Font Awesome's own CSS, trimmed to what
+// the site uses; the fonts are subsets built by tools/build-icons.py (~2 KB instead of ~235 KB).
+// To add an icon: add it to tools/build-icons.py, re-run it, and add a `.fa-name { --fa: "\xxxx"; }` rule.
 @font-face {
-  font-family: 'FontAwesome';
+  font-family: 'Font Awesome 7 Free';
   font-style: normal;
-  font-weight: normal;
+  font-weight: 900;
   font-display: block;
-  src: url('../fonts/fontawesome-4.2.0-subset.woff2') format('woff2');
+  src: url('../fonts/fa7-solid-subset.woff2') format('woff2');
 }
-.fa {
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
+@font-face {
+  font-family: 'Font Awesome 7 Brands';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('../fonts/fa7-brands-subset.woff2') format('woff2');
+}
+
+.fa-solid,
+.fa-brands {
+  --_fa-family: var(--fa-family, var(--fa-style-family, 'Font Awesome 7 Free'));
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: var(--fa-display, inline-block);
+  font-family: var(--_fa-family);
+  font-feature-settings: normal;
+  font-style: normal;
+  font-synthesis: none;
+  font-variant: normal;
+  font-weight: var(--fa-style, 900);
+  line-height: 1;
+  text-align: center;
+  text-rendering: auto;
+  // FA 7 makes every icon 1.25em wide by default; the site's layout was built around natural widths.
+  width: var(--fa-width, auto);
 }
-.fa-lg { font-size: 1.33333333em; line-height: .75em; vertical-align: -15%; }
-.fa-fw { width: 1.28571429em; text-align: center; }
-.fa-ul { padding-left: 0; margin-left: 2.14285714em; list-style-type: none; }
+.fa-solid::before,
+.fa-brands::before {
+  content: var(--fa);
+}
+.fa-brands {
+  --fa-family: 'Font Awesome 7 Brands';
+  --fa-style: 400;
+}
+
+.fa-lg {
+  font-size: calc(20 / 16 * 1em);
+  line-height: calc(1 / 20 * 1em);
+  vertical-align: calc((6 / 20 - .375) * 1em);
+}
+.fa-fw { --fa-width: 1.25em; }
+.fa-ul {
+  list-style-type: none;
+  margin-inline-start: var(--fa-li-margin, 2.5em);
+  padding-inline-start: 0;
+}
 .fa-ul > li { position: relative; }
-.fa-li { position: absolute; left: -2.14285714em; width: 2.14285714em; top: .14285714em; text-align: center; }
-.fa-li.fa-lg { left: -1.85714286em; }
-.fa-phone:before { content: "\f095"; }
-.fa-envelope:before { content: "\f0e0"; }
-.fa-car:before { content: "\f1b9"; }
-.fa-angle-right:before { content: "\f105"; }
-.fa-angle-down:before { content: "\f107"; }
-.fa-x-square:before { content: "\e61a"; }  // custom glyph: X logo in FA 4's rounded square
-.fa-facebook-square:before { content: "\f082"; }
-.fa-linkedin-square:before { content: "\f08c"; }
-.fa-bars:before { content: "\f0c9"; }
-.fa-quote-left:before { content: "\f10d"; }
-.fa-quote-right:before { content: "\f10e"; }
+.fa-li {
+  inset-inline-start: calc(-1 * var(--fa-li-width, 2em));
+  position: absolute;
+  text-align: center;
+  width: var(--fa-li-width, 2em);
+  line-height: inherit;
+}
+
+// solid
+.fa-phone { --fa: "\f095"; }
+.fa-envelope { --fa: "\f0e0"; }
+.fa-car { --fa: "\f1b9"; }
+.fa-bars { --fa: "\f0c9"; }
+.fa-quote-left { --fa: "\f10d"; }
+.fa-quote-right { --fa: "\f10e"; }
+.fa-angle-right { --fa: "\f105"; }
+.fa-angle-down { --fa: "\f107"; }
+.fa-chevron-left { --fa: "\f053"; }
+.fa-chevron-right { --fa: "\f054"; }
+.fa-chevron-up { --fa: "\f077"; }
+.fa-chevron-down { --fa: "\f078"; }
+// brands
+.fa-square-x-twitter { --fa: "\e61a"; }
+.fa-square-facebook { --fa: "\f082"; }
+.fa-linkedin { --fa: "\f08c"; }
+
+// Bootstrap 3 positioned the testimonial arrows via .glyphicon-chevron-*; same placement for the FA chevrons.
+.carousel-control .fa-chevron-left,
+.carousel-control .fa-chevron-right {
+  position: absolute; top: 50%; z-index: 5; display: inline-block; margin-top: -10px;
+}
+.carousel-control .fa-chevron-left { left: 50%; margin-left: -10px; }
+.carousel-control .fa-chevron-right { right: 50%; margin-right: -10px; }
+@media screen and (min-width: 768px) {
+  .carousel-control .fa-chevron-left,
+  .carousel-control .fa-chevron-right { width: 30px; height: 30px; margin-top: -15px; font-size: 30px; }
+  .carousel-control .fa-chevron-left { margin-left: -15px; }
+  .carousel-control .fa-chevron-right { margin-right: -15px; }
+}
+// the theme sizes the testimonial quote marks with `.carousel-caption i.fa` (FA 4 class)
+.carousel-caption i.fa-solid { font-size: 18px; }
+// FA 7's square brand glyphs sit 1px higher than FA 4's did; keep the top bar on live's baseline
+.header-socials .fa-brands { position: relative; top: 1px; }

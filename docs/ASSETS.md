@@ -7,8 +7,8 @@ Layered so the site renders exactly like the live WordPress site, then our addit
 | Partial | Source |
 |---|---|
 | `_sass/_fonts.scss` | Self-hosted Google Fonts, latin subset: Roboto Condensed (variable, 300–700, + italic) and Lato 300/400/700/900 (+ italics) — the families/weights the live theme `@import`ed from fonts.googleapis.com. |
-| `_sass/_icons.scss` | Font Awesome **4.2.0** (the version live loads, so icon metrics match to the pixel), subset to the glyphs the site uses, plus a custom X-logo square matching the Facebook/LinkedIn squares (FA 4 predates X). |
-| `_sass/_bootstrap.scss` | Bootstrap **3.3.1** CSS, the exact version live loads. No Bootstrap JS. Glyphicons subset to 4 chevrons (from 3.3.1's font). |
+| `_sass/_icons.scss` | Font Awesome Free **7.3.1**: the one icon set for the whole site (social squares, phone/envelope/car, menu, quotes, chevrons). Core rules are FA's own CSS; fonts are subsets (~2 KB). |
+| `_sass/_bootstrap.scss` | Bootstrap **3.3.1** CSS, the exact version live loads. No Bootstrap JS, no Glyphicons font (the chevrons are Font Awesome too). |
 | `_sass/_theme.scss` | Live theme `wp-content/themes/cornerstonediscovery/style.css` v7.0.5, verbatim except the font `@import`s and image URLs. |
 | `_sass/_theme-custom.scss` | Live WordPress Customizer "Additional CSS" (`#wp-custom-css`), verbatim. Header phone size, CTA button, `.h1`/`.h2` classes, etc. |
 | `_sass/_site.scss` | Everything we added: forms, offices band, blog (merged into the site look), FAQ accordions, accessibility. |
@@ -20,16 +20,17 @@ to the safelist there.
 (1440/1024/800/375) against live — 1,058 measurements, all within ±0.6 px. The only difference is the Media, PA
 banner, whose wrong "Philadelphia" headline was corrected.
 
-### Regenerating the icon font
+### Regenerating the icon fonts
 
 ```bash
-pip install fonttools brotli skia-pathops
-python tools/build-icons.py      # Font Awesome 4.2.0 subset + the X square -> assets/fonts/fontawesome-4.2.0-subset.woff2
+pip install fonttools brotli
+python tools/build-icons.py   # Font Awesome Free 7.3.1 -> assets/fonts/fa7-solid-subset.woff2, fa7-brands-subset.woff2
 ```
 
-To add an icon: add its FA 4 codepoint to `KEEP` in `tools/build-icons.py`, re-run, and add a `.fa-name:before`
-rule in `_sass/_icons.scss`. Glyphicons (4 chevrons) are a fixed subset of Bootstrap 3.3.1's font:
-`pyftsubset glyphicons-halflings-regular.ttf --flavor=woff2 --no-hinting --unicodes=U+e114,U+e079,U+e080,U+e113`.
+To add an icon: add its name and codepoint (fontawesome.com/icons, Free set) to `SOLID` or `BRANDS` in
+`tools/build-icons.py`, re-run, add a `.fa-name { --fa: "\xxxx"; }` rule in `_sass/_icons.scss`, and use
+`<i class="fa-solid fa-name">` (or `fa-brands`). Header icons were checked against live after the switch
+(within 1.5 px).
 
 ## Favicon and logo
 

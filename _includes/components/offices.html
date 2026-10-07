@@ -13,9 +13,9 @@ Maps come from components/office-map.html (the only map component on the site).
         <div class="office-card">
           <h3>{{ loc.name }}{% if loc.area %} <small>{{ loc.area }}</small>{% endif %}</h3>
           <ul class="fa-ul">
-            <li><i class="fa-li fa fa-car" aria-hidden="true"></i> {{ loc.street }}{% if loc.suite %}, {{ loc.suite }}{% endif %}<br>{{ loc.city }}, {{ loc.region }} {{ loc.postal_code }}</li>
-            <li><i class="fa-li fa fa-phone" aria-hidden="true"></i> <a href="tel:{{ loc.phone_tel }}">{{ loc.phone }}</a></li>
-            <li><i class="fa-li fa fa-envelope" aria-hidden="true"></i> <a href="mailto:{{ loc.email }}">{{ loc.email }}</a></li>
+            <li><i class="fa-li fa-solid fa-car" aria-hidden="true"></i> {{ loc.street }}{% if loc.suite %}, {{ loc.suite }}{% endif %}<br>{{ loc.city }}, {{ loc.region }} {{ loc.postal_code }}</li>
+            <li><i class="fa-li fa-solid fa-phone" aria-hidden="true"></i> <a href="tel:{{ loc.phone_tel }}">{{ loc.phone }}</a></li>
+            <li><i class="fa-li fa-solid fa-envelope" aria-hidden="true"></i> <a href="mailto:{{ loc.email }}">{{ loc.email }}</a></li>
           </ul>
           <p>
             <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&amp;destination={{ q }}" target="_blank" rel="noopener">Get Directions</a>

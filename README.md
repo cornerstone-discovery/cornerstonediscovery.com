@@ -16,9 +16,9 @@ post from the Jekyll era, the Wix era and the WordPress era, with its real publi
 | `blog/`, `tag/`, `category/` | Paginated index (`/blog/page/N/`) and tag/category archives (noindex). |
 | `_layouts/`, `_includes/` | `default`, `home`, `page`, `about`, `contact`, `post`, `blog`; nav, footer, hero, analytics, schema, `components/` (forms, offices, testimonials…). |
 | `_data/` | `locations.yml` (**both offices**: address, phone, email, map pin), `forms.yml` (every form, field for field), `nav.yml`, `services.yml`, `team.yml`, `testimonials.yml`, `images.json` (generated). |
-| `_sass/` → `assets/css/main.scss` | The one stylesheet: self-hosted fonts, 11-glyph icon font, Bootstrap 3.3.1 CSS, the live theme CSS and the live "Additional CSS" (verbatim, so the site renders like the WordPress one), then `_site.scss` (our additions). Compiled + minified by Jekyll, unused rules purged in CI. |
+| `_sass/` → `assets/css/main.scss` | The one stylesheet: self-hosted fonts, Font Awesome 7 icon subset, Bootstrap 3.3.1 CSS, the live theme CSS and the live "Additional CSS" (verbatim, so the site renders like the WordPress one), then `_site.scss` (our additions). Compiled + minified by Jekyll, unused rules purged in CI. |
 | `assets/js/site.js` | All behaviour, no dependencies: mobile nav, team accordion, testimonial carousel, click-to-load maps, lazy reCAPTCHA, forms, GA4 events. |
-| `assets/fonts/`, `assets/icons/` | Lato + Roboto Condensed (woff2), icon subsets, favicon set (from the original `FAVICON.ai`). |
+| `assets/fonts/`, `assets/icons/` | Lato + Roboto Condensed (woff2), Font Awesome 7 subsets, favicon set (from the original `FAVICON.ai`). |
 | `_plugins/` | `baseurl_links.rb` (github.io sub-path), `responsive_images.rb` (width/height, lazy loading, WebP `<picture>`/srcset from `_data/images.json`). |
 | `tools/` | `images.py` (optimize images, make WebP variants, write the manifest), `purge-css.mjs`, `check-links.mjs`. See [docs/ASSETS.md](docs/ASSETS.md). |
 | `uploads/YYYY/MM/` | Content images carried over from WordPress (+ generated `.w480.webp` / `.w960.webp` / `.webp` variants). |

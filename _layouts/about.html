@@ -19,7 +19,7 @@ layout: default
             <div class="panel-heading" role="tab" id="heading-{{ pid }}">
               {%- if person.image %}<img src="{{ person.image | relative_url }}" class="img-responsive" alt="{{ person.first }} {{ person.last }}">{% endif %}
               <div class="panel-title">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#bio-{{ pid }}" aria-expanded="false" aria-controls="bio-{{ pid }}"><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#bio-{{ pid }}" aria-expanded="false" aria-controls="bio-{{ pid }}"><i class="indicator fa-solid fa-chevron-down pull-right" aria-hidden="true"></i>
                   <h3>{{ person.first | upcase }} <span>{{ person.last | upcase }}{% if person.suffix %},{% endif %}</span>{% if person.suffix %} {{ person.suffix }}{% endif %}</h3>
                   <h4>{{ person.position }}</h4>
                 </a>

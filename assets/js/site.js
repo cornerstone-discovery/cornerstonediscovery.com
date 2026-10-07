@@ -23,8 +23,8 @@
       trigger.classList.toggle('collapsed', !open);
       var icon = trigger.querySelector('i.indicator');
       if (icon) {
-        icon.classList.toggle('glyphicon-chevron-up', open);
-        icon.classList.toggle('glyphicon-chevron-down', !open);
+        icon.classList.toggle('fa-chevron-up', open);
+        icon.classList.toggle('fa-chevron-down', !open);
       }
     }
   }

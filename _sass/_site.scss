@@ -68,7 +68,7 @@ details.faq {
     font-family: 'Roboto Condensed', sans-serif; font-size: 20px; font-weight: 700;
     padding: 12px 40px 12px 15px; cursor: pointer; list-style: none; position: relative;
     &::-webkit-details-marker { display: none; }
-    &::after { content: '\f105'; font-family: FontAwesome; position: absolute; right: 15px; top: 12px; }
+    &::after { content: '\f105'; font-family: 'Font Awesome 7 Free'; font-weight: 900; position: absolute; right: 15px; top: 12px; }
   }
   &[open] summary::after { content: '\f107'; }
   > .faq-body { padding: 15px; }

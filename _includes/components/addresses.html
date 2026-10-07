@@ -3,9 +3,9 @@
 {%- for loc in site.data.locations %}
 <ul class="fa-ul">
   <li>{% if include.underline %}<strong><u>{{ loc.name }}</u></strong>{% else %}<strong>{{ loc.name }}</strong>{% endif %}</li>
-  <li><i class="fa-li fa fa-car"></i> {{ loc.street }}<br>{% if loc.suite %} {{ loc.suite }}<br>{% endif %} {{ loc.city }}, {{ loc.region }} {{ loc.postal_code }}</li>
-  <li><i class="fa-li fa fa-phone"></i> <a href="tel:{{ loc.phone_tel }}">{{ loc.phone }}</a></li>
-  <li><i class="fa-li fa fa-envelope"></i> <a href="mailto:{{ loc.email }}">{{ loc.email }}</a></li>
+  <li><i class="fa-li fa-solid fa-car" aria-hidden="true"></i> {{ loc.street }}<br>{% if loc.suite %} {{ loc.suite }}<br>{% endif %} {{ loc.city }}, {{ loc.region }} {{ loc.postal_code }}</li>
+  <li><i class="fa-li fa-solid fa-phone" aria-hidden="true"></i> <a href="tel:{{ loc.phone_tel }}">{{ loc.phone }}</a></li>
+  <li><i class="fa-li fa-solid fa-envelope" aria-hidden="true"></i> <a href="mailto:{{ loc.email }}">{{ loc.email }}</a></li>
 </ul>
 {%- if include.maps %}
 {% include components/office-map.html loc=loc %}
