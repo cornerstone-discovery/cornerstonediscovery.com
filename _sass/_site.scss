@@ -20,6 +20,11 @@ $mist: #eef5f5;
 a:focus-visible, button:focus-visible, .btn:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
   outline: 2px solid $turq; outline-offset: 2px;
 }
+// Bootstrap 3 draws a dotted outline on any focused link, so a link stays boxed after a mouse click (e.g. the
+// team accordion). Keep the ring for keyboard focus only (:focus-visible, above).
+a:focus:not(:focus-visible) { outline: none; }
+// team accordion headings are toggles, not text links: no underline on hover/focus
+.panel-title a:hover, .panel-title a:focus { text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
