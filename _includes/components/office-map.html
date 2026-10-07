@@ -1,0 +1,9 @@
+{%- comment -%}
+The one way the site shows a map. usage: {% include components/office-map.html loc=loc %}
+Static image from tools/static-maps.py (OpenStreetMap; no API key, no third-party request), linking to the
+office on Google Maps, with the credit OpenStreetMap requires. Re-run the tool when an address changes.
+{%- endcomment -%}
+<a class="office-map" href="https://www.google.com/maps/search/?api=1&amp;query={{ include.loc.maps_query | url_encode }}" target="_blank" rel="noopener" aria-label="Open {{ include.loc.name }} in Google Maps">
+  <picture><source type="image/webp" srcset="{{ '/assets/i/map-' | append: include.loc.key | append: '.webp' | relative_url }}"><img src="{{ '/assets/i/map-' | append: include.loc.key | append: '.jpg' | relative_url }}" alt="Map: {{ include.loc.street }}, {{ include.loc.city }}, {{ include.loc.region }}" width="1040" height="416" loading="lazy" decoding="async"></picture>
+</a>
+<p class="map-credit">Map &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors</p>

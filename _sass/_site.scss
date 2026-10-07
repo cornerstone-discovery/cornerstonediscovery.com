@@ -113,7 +113,8 @@ details.faq {
 .office-map {
   display: block; width: 100%; aspect-ratio: 5 / 2; overflow: hidden; background: #dfe9ea;
   border: 1px solid #dfe9ea;
-  img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  // !important: the theme forces .sidebar .component img to 60px (service icons)
+  img, .sidebar .component & img { display: block; width: 100% !important; height: 100% !important; max-width: none; object-fit: cover; }
   &:hover, &:focus { border-color: $turq; }
 }
 .map-credit { font-size: 11px; color: #828282; margin: 4px 0 0; text-align: right; a { color: #828282; font-weight: 400; } }

@@ -3,7 +3,7 @@ layout: default
 ---
 {%- comment -%}
 Contact page and the pages that used WordPress's "contact" template: copy + (optional) form on the left,
-both office addresses + map on the right, as on the live site.
+both office addresses, each with its map, on the right.
   page.form      key in _data/forms.yml to render below the copy (contact page: "contact")
   page.landing   paid-ads landing page: no site header, as on live
   page.offices   show the full-width "Our Offices" band (both locations, directions, maps) under the content
@@ -22,10 +22,9 @@ both office addresses + map on the right, as on the live site.
           <div class="component">
             <h4>Our Addresses:</h4>
             <hr class="hr-contact-info">
-            {% include components/addresses.html underline=true %}
+            {% include components/addresses.html underline=true maps=true %}
             <hr class="hr-contact-info">
             <p>{{ page.contact.urgent_notice | default: "For urgent requests or questions, call us today at 267.639.6900 or email us at info@cornerstonediscovery.com." }}</p>
-            <iframe src="{{ page.contact.maps_url | default: site.company.maps_embed }}" width="100%" height="450" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map to Cornerstone Discovery's Philadelphia Office"></iframe>
           </div>
         </div>
       </div>
