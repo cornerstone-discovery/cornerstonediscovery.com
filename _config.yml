@@ -41,8 +41,8 @@ company:
   founded: 2005
   logo: /assets/i/cornerstonediscoveryREV.png
 social:
-  twitter: https://twitter.com/YourCaseNow
-  twitter_handle: YourCaseNow
+  x: https://x.com/YourCaseNow
+  x_handle: YourCaseNow
   facebook: https://www.facebook.com/CornerstoneDiscovery
   linkedin: https://www.linkedin.com/company/cornerstone-discovery
 
@@ -101,7 +101,7 @@ feed:
   path: feed.xml
   posts_limit: 20
 
-# jekyll-seo-tag
+# jekyll-seo-tag (the key is still "twitter": X reads the twitter:* card meta tags)
 twitter:
   username: YourCaseNow
   card: summary_large_image
@@ -109,7 +109,7 @@ logo: /assets/i/cornerstonediscovery.png
 # Default social-share image (1200x630) for pages without their own image.
 og_image: /assets/i/og-default.jpg
 social_links:
-  - https://twitter.com/YourCaseNow
+  - https://x.com/YourCaseNow
   - https://www.facebook.com/CornerstoneDiscovery
   - https://www.linkedin.com/company/cornerstone-discovery
 

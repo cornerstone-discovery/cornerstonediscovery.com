@@ -35,7 +35,7 @@ All business details come from _config.yml `company`, so NAP stays identical eve
   ],
   "areaServed": [{% assign locs = site.pages | where_exp: "pg", "pg.location" %}{% for pg in locs %}{"@type": "Place", "name": "{{ pg.location.name }}, {{ pg.location.region }}"}, {% endfor %}{"@type": "State", "name": "Pennsylvania"}, {"@type": "State", "name": "New Jersey"}, {"@type": "State", "name": "New York"}, {"@type": "State", "name": "Delaware"}, {"@type": "Country", "name": "United States"}],
   "knowsAbout": ["Digital forensics", "Mobile device forensics", "Cell site analysis", "Electronic discovery", "Early case assessment", "Litigation support", "Trial presentation", "Expert witness testimony"],
-  "sameAs": ["{{ site.social.linkedin }}", "{{ site.social.facebook }}", "{{ site.social.twitter }}"]
+  "sameAs": ["{{ site.social.linkedin }}", "{{ site.social.facebook }}", "{{ site.social.x }}"]
 }
 </script>
 {%- else -%}

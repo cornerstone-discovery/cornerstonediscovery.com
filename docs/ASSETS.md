@@ -7,7 +7,7 @@ Layered so the site renders exactly like the live WordPress site, then our addit
 | Partial | Source |
 |---|---|
 | `_sass/_fonts.scss` | Self-hosted Google Fonts, latin subset: Roboto Condensed (variable, 300–700, + italic) and Lato 300/400/700/900 (+ italics) — the families/weights the live theme `@import`ed from fonts.googleapis.com. |
-| `_sass/_icons.scss` | Font Awesome **4.2.0** (the version live loads, so icon metrics match to the pixel), subset to the 11 glyphs the site uses. |
+| `_sass/_icons.scss` | Font Awesome **4.2.0** (the version live loads, so icon metrics match to the pixel), subset to the glyphs the site uses, plus a custom X-logo square matching the Facebook/LinkedIn squares (FA 4 predates X). |
 | `_sass/_bootstrap.scss` | Bootstrap **3.3.1** CSS, the exact version live loads. No Bootstrap JS. Glyphicons subset to 4 chevrons (from 3.3.1's font). |
 | `_sass/_theme.scss` | Live theme `wp-content/themes/cornerstonediscovery/style.css` v7.0.5, verbatim except the font `@import`s and image URLs. |
 | `_sass/_theme-custom.scss` | Live WordPress Customizer "Additional CSS" (`#wp-custom-css`), verbatim. Header phone size, CTA button, `.h1`/`.h2` classes, etc. |
@@ -20,20 +20,16 @@ to the safelist there.
 (1440/1024/800/375) against live — 1,058 measurements, all within ±0.6 px. The only difference is the Media, PA
 banner, whose wrong "Philadelphia" headline was corrected.
 
-### Regenerating the icon subsets
+### Regenerating the icon font
 
 ```bash
-pip install fonttools brotli
-# Font Awesome 4.2.0 TTF from cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/fonts/fontawesome-webfont.ttf
-pyftsubset fontawesome-webfont.ttf --flavor=woff2 --no-hinting \
-  --unicodes=U+f095,U+f0e0,U+f1b9,U+f105,U+f107,U+f081,U+f08c,U+f082,U+f0c9,U+f10e,U+f10d \
-  --output-file=assets/fonts/fontawesome-4.2.0-subset.woff2
-# Glyphicons from Bootstrap 3.3.1 (chevron down/left/right/up)
-pyftsubset glyphicons-halflings-regular.ttf --flavor=woff2 --no-hinting \
-  --unicodes=U+e114,U+e079,U+e080,U+e113 --output-file=assets/fonts/glyphicons-3.3.1-subset.woff2
+pip install fonttools brotli skia-pathops
+python tools/build-icons.py      # Font Awesome 4.2.0 subset + the X square -> assets/fonts/fontawesome-4.2.0-subset.woff2
 ```
 
-Add a codepoint (FA 4 cheatsheet) and a `.fa-name:before` rule in `_icons.scss` to use a new icon.
+To add an icon: add its FA 4 codepoint to `KEEP` in `tools/build-icons.py`, re-run, and add a `.fa-name:before`
+rule in `_sass/_icons.scss`. Glyphicons (4 chevrons) are a fixed subset of Bootstrap 3.3.1's font:
+`pyftsubset glyphicons-halflings-regular.ttf --flavor=woff2 --no-hinting --unicodes=U+e114,U+e079,U+e080,U+e113`.
 
 ## Favicon and logo
 

@@ -1,6 +1,7 @@
-// Font Awesome 4.2.0 (the version the live site loads, so icon metrics match) — only the 11 glyphs the site uses (subset woff2, ~1.4 KB instead of the 77 KB font + 30 KB CSS).
-// Class names and CSS metrics are the stock FA 4 ones, so markup is unchanged.
-// To add an icon: add its codepoint to the pyftsubset command in docs/ASSETS.md and a rule below.
+// Font Awesome 4.2.0 (the version the live site loads, so icon metrics match): only the glyphs the site uses,
+// plus a matching X-logo square (FA 4 predates X). ~1.4 KB instead of the 77 KB font + 30 KB CSS.
+// Class names and CSS metrics are the stock FA 4 ones. Built by tools/build-icons.py: to add an icon, add its
+// codepoint to KEEP there, re-run it, and add a rule below.
 @font-face {
   font-family: 'FontAwesome';
   font-style: normal;
@@ -27,7 +28,7 @@
 .fa-car:before { content: "\f1b9"; }
 .fa-angle-right:before { content: "\f105"; }
 .fa-angle-down:before { content: "\f107"; }
-.fa-twitter-square:before { content: "\f081"; }
+.fa-x-square:before { content: "\e61a"; }  // custom glyph: X logo in FA 4's rounded square
 .fa-facebook-square:before { content: "\f082"; }
 .fa-linkedin-square:before { content: "\f08c"; }
 .fa-bars:before { content: "\f0c9"; }
