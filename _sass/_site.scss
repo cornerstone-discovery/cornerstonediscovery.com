@@ -30,6 +30,10 @@ a:focus-visible, button:focus-visible, .btn:focus-visible, summary:focus-visible
 // menu button (toggled by assets/js/site.js).
 // ==========================================================================
 $nav-bp: 992px;
+// desktop nav links and the Contact Us button share one height, so the active underline (flush with the
+// bottom of its link) lines up exactly with the bottom edge of the button, and every label sits on one line
+$nav-item-h: 42px;
+$nav-item-h-md: 38px;
 
 .main-nav-top {
   position: relative; z-index: 9999;
@@ -82,12 +86,13 @@ $nav-bp: 992px;
   .nav-toggle { display: none; }
   .site-nav-list { display: flex; align-items: center; }
   .site-nav-item { display: flex; }
+  .site-nav-link, .site-nav-button { display: flex; align-items: center; height: $nav-item-h; line-height: 1; }
   .site-nav-link {
-    position: relative; display: block; padding: 12px 11px;
+    position: relative; padding: 0 11px;
     color: #fff; font-size: 15px; text-shadow: 0 1px 3px rgba(0, 0, 0, .7);
     // underline: turquoise on hover, lime for the current section
     &::after {
-      content: ''; position: absolute; left: 11px; right: 11px; bottom: 4px; height: 3px;
+      content: ''; position: absolute; left: 11px; right: 11px; bottom: 0; height: 3px;
       background: $turq; transform: scaleX(0); transform-origin: left center; transition: transform .2s ease;
     }
     &:hover, &:focus { color: #fff; }
@@ -97,8 +102,8 @@ $nav-bp: 992px;
 
   .site-nav-cta { margin-left: 14px; }
   .site-nav-button {
-    display: block; padding: 11px 22px; font-size: 15px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .3);
+    padding: 0 22px; font-size: 15px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .25);
   }
 }
 
@@ -106,9 +111,10 @@ $nav-bp: 992px;
 @media (min-width: $nav-bp) and (max-width: 1199px) {
   .site-header-main { gap: 16px; }
   .site-logo img { width: 180px; }
+  .site-nav-link, .site-nav-button { height: $nav-item-h-md; }
   .site-nav-link { font-size: 14px; padding-left: 7px; padding-right: 7px; &::after { left: 7px; right: 7px; } }
   .site-nav-cta { margin-left: 8px; }
-  .site-nav-button { padding: 10px 16px; font-size: 14px; }
+  .site-nav-button { padding: 0 16px; font-size: 14px; }
 }
 
 @media (max-width: $nav-bp - 1) {
