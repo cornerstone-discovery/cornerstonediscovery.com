@@ -24,6 +24,10 @@ a:focus-visible, button:focus-visible, .btn:focus-visible, summary:focus-visible
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
 
+// ---- blog banner: the live custom CSS turns the dot overlay off on .blog/.single-post/.archive pages because
+// 1SEO's blog-bg.webp had dots printed into the photo. The banner is now rebuilt from the clean original
+// (Graphic Design/Images/bell.jpg) and the blog layouts don't use those classes, so it gets the standard overlay.
+
 // ---- hero headline rendered as a link (posts link "Blog" back to the index) ----
 .page-header .titlebg > .container > a,
 .page-header .titlebg > .container > a:hover { color: #fff; text-decoration: none; }
