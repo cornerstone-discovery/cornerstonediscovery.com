@@ -1,0 +1,25 @@
+# Contact-form worker for cornerstonediscovery.com. Deploy: npm run deploy (see README.md).
+name = "cornerstone-contact"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+workers_dev = true
+
+# After the DNS cut-over to GitHub Pages (zone proxied through Cloudflare), uncomment this so the form posts
+# same-origin to /api/contact, then set contact_form.endpoint: /api/contact in _config.yml.
+# routes = [
+#   { pattern = "cornerstonediscovery.com/api/contact", zone_name = "cornerstonediscovery.com" },
+# ]
+
+[vars]
+MAIL_TO = "info@cornerstonediscovery.com"
+MAIL_FROM = "Cornerstone Discovery Website <noreply@mg.cornerstonediscovery.com>"
+MAILGUN_DOMAIN = "mg.cornerstonediscovery.com"
+MAILGUN_REGION = "us"
+# Browser origins allowed to post (the live site, the GitHub Pages preview, local `jekyll serve`).
+ALLOWED_ORIGINS = "https://cornerstonediscovery.com,https://www.cornerstonediscovery.com,https://cornerstone-discovery.github.io,http://localhost:4000,http://127.0.0.1:4000"
+# Where no-JS submissions land.
+THANK_YOU_URL = "https://cornerstonediscovery.com/thank-you/"
+NEWSLETTER_THANK_YOU_URL = "https://cornerstonediscovery.com/thank-you-newsletter/"
+ERROR_URL = "https://cornerstonediscovery.com/contact/"
+DRY_RUN = "false"
+ALLOW_NO_CAPTCHA = "false"

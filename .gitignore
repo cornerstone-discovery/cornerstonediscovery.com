@@ -1,0 +1,30 @@
+# Jekyll
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# Ruby / Bundler
+vendor/
+.bundle/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.claude/
+
+# tool dependencies
+node_modules/
+
+# Legacy PHP/WordPress tree and internal migration notes: archived in the private
+# OLD-cornerstonediscovery.com repo. Never publish them here.
+web/
+migration/
+app.yaml
+cron.yaml
+composer.json
+composer.lock
+nginx-app.conf
+php.ini
+.gcloudignore
+.vscode/

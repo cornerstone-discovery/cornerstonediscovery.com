@@ -1,0 +1,86 @@
+{%- comment -%}
+Structured data (JSON-LD). jekyll-seo-tag already emits WebSite / WebPage / BlogPosting; this adds:
+  * home:            the business itself (ProfessionalService) with real NAP, geo and service areas
+  * location pages:  a Service for that area, provided by the business
+  * service pages:   a Service (page.service set and not a location page)
+  * everything else: BreadcrumbList
+All business details come from _config.yml `company`, so NAP stays identical everywhere.
+{%- endcomment -%}
+{%- assign org_id = '/' | absolute_url | append: '#organization' -%}
+{%- assign tel = site.company.phone_tel -%}
+{%- capture phone %}+1-{{ tel | slice: 0, 3 }}-{{ tel | slice: 3, 3 }}-{{ tel | slice: 6, 4 }}{% endcapture -%}
+{%- if page.url == "/" or page.url == "/contact/" -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": "{{ org_id }}",
+  "name": "{{ site.title }}",
+  "url": "{{ '/' | absolute_url }}",
+  "logo": "{{ site.logo | absolute_url }}",
+  "image": "{{ site.og_image | absolute_url }}",
+  "description": "{{ site.description | strip | escape }}",
+  "telephone": "{{ phone }}",
+  "email": "{{ site.company.email }}",
+  "foundingDate": "{{ site.company.founded }}",
+  "address": {"@type": "PostalAddress", "streetAddress": "{{ site.company.address }}", "addressLocality": "{{ site.company.city }}", "addressRegion": "{{ site.company.region }}", "postalCode": "{{ site.company.postal_code }}", "addressCountry": "US"},
+  "geo": {"@type": "GeoCoordinates", "latitude": {{ site.company.latitude }}, "longitude": {{ site.company.longitude }}},
+  "hasMap": "{{ site.company.maps_link }}",
+  "department": [{% for loc in site.data.locations %}
+    {"@type": "ProfessionalService", "@id": "{{ '/' | absolute_url }}#{{ loc.key }}", "name": "{{ site.title }} — {{ loc.name }}", "url": "{{ '/contact/' | absolute_url }}", "image": "{{ site.og_image | absolute_url }}", "telephone": "+1-{{ loc.phone_tel | slice: 0, 3 }}-{{ loc.phone_tel | slice: 3, 3 }}-{{ loc.phone_tel | slice: 6, 4 }}", "email": "{{ loc.email }}",
+     "address": {"@type": "PostalAddress", "streetAddress": "{{ loc.street }}{% if loc.suite %}, {{ loc.suite }}{% endif %}", "addressLocality": "{{ loc.city }}", "addressRegion": "{{ loc.region }}", "postalCode": "{{ loc.postal_code }}", "addressCountry": "US"},
+     "geo": {"@type": "GeoCoordinates", "latitude": {{ loc.latitude }}, "longitude": {{ loc.longitude }}},
+     "hasMap": "https://www.google.com/maps/search/?api=1&query={{ loc.maps_query | url_encode }}",
+     "parentOrganization": {"@id": "{{ org_id }}"}}{% unless forloop.last %},{% endunless %}{% endfor %}
+  ],
+  "areaServed": [{% assign locs = site.pages | where_exp: "pg", "pg.location" %}{% for pg in locs %}{"@type": "Place", "name": "{{ pg.location.name }}, {{ pg.location.region }}"}, {% endfor %}{"@type": "State", "name": "Pennsylvania"}, {"@type": "State", "name": "New Jersey"}, {"@type": "State", "name": "New York"}, {"@type": "State", "name": "Delaware"}, {"@type": "Country", "name": "United States"}],
+  "knowsAbout": ["Digital forensics", "Mobile device forensics", "Cell site analysis", "Electronic discovery", "Early case assessment", "Litigation support", "Trial presentation", "Expert witness testimony"],
+  "sameAs": ["{{ site.social.linkedin }}", "{{ site.social.facebook }}", "{{ site.social.twitter }}"]
+}
+</script>
+{%- else -%}
+{%- if page.location or page.service and page.layout == "page" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "{{ page.seo_title | default: page.title | escape }}",
+  "url": "{{ page.url | absolute_url }}",
+  "description": "{{ page.description | strip | escape }}",
+  "provider": {"@type": "ProfessionalService", "@id": "{{ org_id }}", "name": "{{ site.title }}", "telephone": "{{ phone }}"},
+  {%- if page.location %}
+  "areaServed": [{% for a in page.location.served %}{"@type": "Place", "name": "{{ a }}, {{ page.location.region }}"}{% unless forloop.last %}, {% endunless %}{% endfor %}],
+  "serviceType": ["Digital forensics", "Electronic discovery", "Litigation support", "Trial support"]
+  {%- else %}
+  "areaServed": [{"@type": "State", "name": "Pennsylvania"}, {"@type": "State", "name": "New Jersey"}, {"@type": "State", "name": "New York"}, {"@type": "State", "name": "Delaware"}],
+  "serviceType": "{{ page.title | escape }}"
+  {%- endif %}
+}
+</script>
+{%- endif %}
+{%- comment -%} Breadcrumbs: Home > (Blog) > parent sections > this page {%- endcomment -%}
+{%- assign parts = page.url | split: "/" -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "{{ '/' | absolute_url }}"}
+    {%- assign pos = 1 -%}
+    {%- if page.layout == "post" %}{% assign pos = pos | plus: 1 %},
+    {"@type": "ListItem", "position": {{ pos }}, "name": "Blog", "item": "{{ '/blog/' | absolute_url }}"}
+    {%- else -%}
+    {%- assign path = "/" -%}
+    {%- for seg in parts -%}{%- if seg != "" and forloop.last == false -%}
+      {%- assign path = path | append: seg | append: "/" -%}
+      {%- assign parent = site.pages | where: "url", path | first -%}
+      {%- if parent and parent.url != page.url %}{% assign pos = pos | plus: 1 %},
+    {"@type": "ListItem", "position": {{ pos }}, "name": "{{ parent.title | escape }}", "item": "{{ parent.url | absolute_url }}"}
+      {%- endif -%}
+    {%- endif -%}{%- endfor -%}
+    {%- endif %}{% assign pos = pos | plus: 1 %},
+    {"@type": "ListItem", "position": {{ pos }}, "name": "{{ page.title | strip_html | escape }}", "item": "{{ page.url | absolute_url }}"}
+  ]
+}
+</script>
+{%- endif -%}

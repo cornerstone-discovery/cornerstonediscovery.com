@@ -1,0 +1,6 @@
+{%- comment -%}
+Back-compat include: page content ported from WordPress embeds the form as {% include components/contact-form.html %}.
+Renders the page's form from _data/forms.yml (front matter `form:`), defaulting to the main contact form.
+{%- endcomment -%}
+{%- assign which = include.form | default: page.form | default: "contact" -%}
+{% include components/form.html form=which heading=include.heading %}

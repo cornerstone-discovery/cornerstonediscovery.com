@@ -1,0 +1,34 @@
+# Office locations: rendered in the footer, the contact page, the "Our Offices" section and the structured data.
+# Order matches the live site (PA Lab first). Both offices share the main line and info@.
+# Coordinates are the building's (OpenStreetMap); keep them identical to each Google Business Profile pin.
+- key: pa-lab
+  name: PA Lab
+  area: Aston, Delaware County
+  street: 2901 Dutton Mill Rd
+  suite: Suite 220
+  city: Aston
+  region: PA
+  postal_code: "19014"
+  county: Delaware County
+  phone: (267) 639-6900
+  phone_tel: "2676396900"
+  email: info@cornerstonediscovery.com
+  latitude: 39.857364
+  longitude: -75.421475
+  maps_query: Cornerstone Discovery, 2901 Dutton Mill Rd Suite 220, Aston, PA 19014
+  page: /service-areas/media-pa/
+- key: philadelphia
+  name: Philadelphia Office
+  area: The Navy Yard, Philadelphia
+  street: 4775 League Island Blvd
+  city: Philadelphia
+  region: PA
+  postal_code: "19112"
+  county: Philadelphia County
+  phone: (267) 639-6900
+  phone_tel: "2676396900"
+  email: info@cornerstonediscovery.com
+  latitude: 39.892481
+  longitude: -75.165484
+  maps_query: Cornerstone Discovery, 4775 League Island Blvd, Philadelphia, PA 19112
+  page: /philadelphia-pa/

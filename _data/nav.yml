@@ -1,0 +1,18 @@
+# Primary navigation (order matches the live site's menu). `class: menu-cta` renders as the highlighted button.
+- title: Digital <br>Forensics
+  url: /digital-forensics/
+- title: E-Discovery
+  url: /e-discovery/
+- title: Early Case<br> Assessment
+  url: /e-discovery/early-case-assessment/
+- title: Litigation <br>Support
+  url: /litigation-support/
+- title: Trial Support
+  url: /trial-support/
+- title: About Us
+  url: /about-us/
+- title: Blog
+  url: /blog/
+- title: Contact Us
+  url: /contact/
+  class: menu-cta

@@ -1,0 +1,29 @@
+{%- comment -%}
+Hero header used by every interior page (and the blog), markup identical to the live theme.
+  page.header_image     background image (ported from the ACF "header image"); include.image overrides
+  page.header_position  CSS background-position (default "center center")
+  page.header_class     legacy class (about / digitalforensics / ediscovery / liitgationsupport / trialsupport / contact)
+  page.heading          { pre, emphasis, post } -> "<pre> <span>emphasis </span><post>" (space inside the span, like live); falls back to page.title
+  page.hero_as_div      render the headline as <div class="h1"> because the page's SEO <h1> is in its content
+  include.text          headline override (blog archives, posts)
+  include.link          wrap the headline in a link (posts link the "Blog" banner back to /blog/)
+  include.as_div        same as page.hero_as_div
+{%- endcomment -%}
+{%- assign bg = include.image | default: page.header_image | default: include.default_image -%}
+{%- if page.hero_as_div or include.as_div %}{% assign htag = 'div class="h1"' %}{% assign hclose = 'div' %}{% else %}{% assign htag = 'h1' %}{% assign hclose = 'h1' %}{% endif -%}
+<div class="page-header interior-header {{ page.header_class }}"{% if bg %} style="background-image: url({{ bg | relative_url }}); background-position: {{ include.position | default: page.header_position | default: 'center center' }}"{% endif %}>
+  <div class="titlebg">
+    {% include nav.html %}
+    <div class="container">
+      {% if include.link %}<a href="{{ include.link | relative_url }}">{% endif %}<{{ htag }}>
+        {%- if include.text -%}
+          {{ include.text }}
+        {%- elsif page.heading -%}
+          {{ page.heading.pre }}{% if page.heading.emphasis %} <span class="emphasis">{{ page.heading.emphasis }} </span>{% endif %}{% if page.heading.post %}{% unless page.heading.emphasis %} {% endunless %}{{ page.heading.post }}{% endif %}
+        {%- else -%}
+          {{ page.h1 | default: page.title }}
+        {%- endif -%}
+      </{{ hclose }}>{% if include.link %}</a>{% endif %}
+    </div>
+  </div>
+</div>

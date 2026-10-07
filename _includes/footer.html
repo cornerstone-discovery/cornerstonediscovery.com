@@ -1,0 +1,43 @@
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="col-xs-3 col-sm-3">
+            <p><img src="{{ '/assets/i/cornerstonediscoverytag.png' | relative_url }}" class="img-responsive" alt="{{ site.title }}"></p>
+          </div>
+          <div class="col-xs-9 col-sm-9">
+            <div class="h3">About Cornerstone Discovery</div>
+            <p>Cornerstone Discovery was founded in {{ site.company.founded }} and is located at the Navy Yard in Philadelphia, Pennsylvania. We are proud to support clients both locally and nationally with certified technical experts and experienced trial technicians to help you revolutionize your case in and out of the courtroom.</p>
+            <p><a href="{{ '/about-us/' | relative_url }}">Learn More<span class="sr-only"> about Cornerstone Discovery</span></a></p>
+          </div>
+        </div>
+        <hr class="visible-xs">
+      </div>
+      <div class="col-sm-3">
+        <div class="h3">Contact Info</div>
+        {% include components/addresses.html %}
+        <hr class="visible-xs">
+      </div>
+      <div class="col-sm-3">
+        <div class="h3">Forensic Certifications</div>
+        <div class="row">
+          <img src="{{ '/assets/i/certs.png' | relative_url }}" class="img-responsive col-xs-9 col-sm-12" alt="International Society of Forensic Computer Examiners (CCE), EnCase® Certified e-Discovery Practitioner – Guidance Software (EnCEP®), EnCase® Certified Examiner – Guidance Software (EnCE), AccessData Certified Examiner (ACE)">
+        </div>
+        <div class="footer-social">
+          <div class="h3">Stay Connected</div>
+          <a href="{{ site.social.twitter }}" target="_blank" rel="noopener" aria-label="Twitter"><i class="fa fa-twitter-square fa-lg"></i></a> &nbsp;&nbsp;
+          <a href="{{ site.social.facebook }}" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa fa-facebook-square fa-lg"></i></a> &nbsp;&nbsp;
+          <a href="{{ site.social.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa fa-linkedin-square fa-lg"></i></a>
+          <span> | </span> <a href="{{ '/sitemap/' | relative_url }}">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<div class="copyright">
+  <div class="container">
+    <p class="pull-right">Support / <a href="#">Back to top</a></p>
+    <p>&copy; {{ site.time | date: "%Y" }} Cornerstone Discovery; <a href="https://www.edrm.net" target="_blank" rel="noopener">EDRM (edrm.net)</a> &middot; <a href="{{ '/privacy-policy/' | relative_url }}">Privacy Policy</a></p>
+  </div>
+</div>

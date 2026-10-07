@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+{% include head.html %}
+</head>
+<body class="{{ page.body_class | default: layout.body_class }}">
+<a class="skip-link" href="#main">Skip to content</a>
+{%- comment -%} The hero/nav is the first child of each layout; #main marks where the page's own content starts. {%- endcomment -%}
+{{ content | replace_first: '<section class="', '<section id="main" tabindex="-1" class="' }}
+{% include footer.html %}
+<script src="{{ '/assets/js/site.js' | relative_url }}?v={{ site.time | date: '%Y%m%d%H%M' }}" defer></script>
+</body>
+</html>

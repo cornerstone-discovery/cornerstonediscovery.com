@@ -1,0 +1,34 @@
+{%- comment -%}
+"Our Offices" band: both locations side by side, each with address, phone, email, directions and a map.
+Maps are click-to-load (no Google request until the visitor asks), so the band costs nothing on page load.
+  include.heading   optional heading override
+{%- endcomment -%}
+<section class="offices" id="offices" aria-labelledby="offices-heading">
+  <div class="container">
+    <h2 id="offices-heading" class="text-center">{{ include.heading | default: "Our Offices" }}</h2>
+    <div class="row">
+      {%- for loc in site.data.locations %}
+      {%- assign q = loc.maps_query | url_encode %}
+      <div class="col-sm-6">
+        <div class="office-card">
+          <h3>{{ loc.name }}{% if loc.area %} <small>{{ loc.area }}</small>{% endif %}</h3>
+          <ul class="fa-ul">
+            <li><i class="fa-li fa fa-car" aria-hidden="true"></i> {{ loc.street }}{% if loc.suite %}, {{ loc.suite }}{% endif %}<br>{{ loc.city }}, {{ loc.region }} {{ loc.postal_code }}</li>
+            <li><i class="fa-li fa fa-phone" aria-hidden="true"></i> <a href="tel:{{ loc.phone_tel }}">{{ loc.phone }}</a></li>
+            <li><i class="fa-li fa fa-envelope" aria-hidden="true"></i> <a href="mailto:{{ loc.email }}">{{ loc.email }}</a></li>
+          </ul>
+          <p>
+            <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&amp;destination={{ q }}" target="_blank" rel="noopener">Get Directions</a>
+            {% if loc.page %}<a class="btn btn-secondary" href="{{ loc.page | relative_url }}">Areas We Serve</a>{% endif %}
+          </p>
+          <div class="office-map" data-map-src="https://www.google.com/maps?q={{ q }}&amp;output=embed">
+            <button type="button" class="office-map-load">
+              <span>Show map: {{ loc.city }}, {{ loc.region }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>

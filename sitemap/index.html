@@ -1,0 +1,17 @@
+---
+layout: page
+title: Sitemap
+seo_title: Our Sitemap | PA, NJ, NY, DE | Cornerstone Discovery
+description: Having trouble finding exactly what you’re looking for on our website? Check out our Sitemap and find exactly the service you’re looking for today!
+permalink: /sitemap/
+hero_as_div: true
+---
+<h1>Sitemap for Cornerstone Discovery</h1>
+<h2>Pages</h2>
+<ul>
+{% assign pgs = site.pages | where_exp: "pg", "pg.title" | sort: "url" %}{% for pg in pgs %}{% unless pg.sitemap == false or pg.url contains "/blog/category/" or pg.url contains "/blog/tag/" or pg.url contains "/blog/page/" or pg.url == "/sitemap/" %}<li><a href="{{ pg.url | relative_url }}">{{ pg.title }}</a></li>{% endunless %}{% endfor %}
+</ul>
+<h2>Blog posts</h2>
+<ul>
+{% for post in site.posts %}<li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <small>({{ post.date | date: "%b %Y" }})</small></li>{% endfor %}
+</ul>

@@ -1,0 +1,46 @@
+---
+layout: default
+body_class: single-post
+---
+{%- comment -%}
+Blog post. Same building blocks as every interior page: hero banner ("Blog", linking back to the index, as on
+the live site), white content column, sidebar. The post title is the page's only <h1>.
+Additions over WordPress: breadcrumb, publish date & author, tags, prev/next links, "Our Services" in the sidebar.
+{%- endcomment -%}
+{% include page-header.html image="/uploads/2021/03/blog-bg.webp" position="center top" text="Blog" link="/blog/" as_div=true %}
+<section class="content blog-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9 col-sm-12 blog-post-column">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="{{ '/' | relative_url }}">Home</a> <span aria-hidden="true">&rsaquo;</span> <a href="{{ '/blog/' | relative_url }}">Blog</a> <span aria-hidden="true">&rsaquo;</span> <span aria-current="page">{{ page.title }}</span>
+        </nav>
+        <article class="post">
+          <h1 class="post-title">{{ page.title }}</h1>
+          <p class="post-meta">
+            <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+            {%- if page.author %} &bull; {{ page.author }}{% endif %}
+            {%- if page.contributor %} &bull; Contributing author: {{ page.contributor }}{% endif %}
+          </p>
+          <div class="post-content">
+            {{ content }}
+          </div>
+          <p><a class="btn btn-primary btn-larger" href="{{ '/contact/' | relative_url }}">CONTACT US</a></p>
+          {%- if page.tags.size > 0 %}
+          <div class="blog-tags">
+            {% for t in page.tags %}<a href="{{ t | slugify | prepend: '/tag/' | append: '/' | relative_url }}">#{{ t }}</a> {% endfor %}
+          </div>
+          {%- endif %}
+        </article>
+        <nav class="post-nav row" aria-label="More posts">
+          <div class="col-sm-6">{% if page.previous %}<a href="{{ page.previous.url | relative_url }}"><span class="post-nav-label">&laquo; Previous</span>{{ page.previous.title }}</a>{% endif %}</div>
+          <div class="col-sm-6 text-right">{% if page.next %}<a href="{{ page.next.url | relative_url }}"><span class="post-nav-label">Next &raquo;</span>{{ page.next.title }}</a>{% endif %}</div>
+        </nav>
+      </div>
+      <div class="col-md-3 col-sm-12">
+        {% include blog-sidebar.html services=true %}
+      </div>
+    </div>
+  </div>
+</section>
+{% include components/junto.html %}

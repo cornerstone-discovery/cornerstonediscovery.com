@@ -1,0 +1,64 @@
+---
+layout: default
+body_class: blog-index
+---
+{%- comment -%}
+Blog index (/blog/, /blog/page/N/) and the /category/… and /tag/… archives.
+Built from the same parts as every other interior page (hero banner, white content column, sidebar) so the
+blog reads as part of the site rather than a separate theme. Text matches the live blog: title, 55-word
+excerpt, "Continue Reading", WordPress-style pagination, and the four sidebar widgets.
+{%- endcomment -%}
+{% include page-header.html image="/uploads/2021/03/blog-bg.webp" position="center top" text=page.h1 %}
+<section class="content blog-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9 col-sm-12">
+        {%- if page.category %}{% assign posts = site.categories[page.category] %}
+        {%- elsif page.tag %}{% assign posts = site.tags[page.tag] %}
+        {%- else %}{% assign posts = paginator.posts %}{% endif %}
+        {%- for post in posts %}
+        <article class="post-card">
+          <div class="row">
+            {%- if post.image %}
+            <div class="col-sm-5">
+              <a class="post-card-image" href="{{ post.url | relative_url }}" tabindex="-1" aria-hidden="true"><img src="{{ post.image | relative_url }}" alt="" data-sizes="(min-width: 1200px) 340px, (min-width: 992px) 280px, (min-width: 768px) 300px, 100vw" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" decoding="async"{% if post.image_width %} width="{{ post.image_width }}" height="{{ post.image_height }}"{% endif %}></a>
+            </div>
+            <div class="col-sm-7">
+            {%- else %}
+            <div class="col-sm-12">
+            {%- endif %}
+              <h2 class="post-card-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+              <p class="post-meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %-d, %Y" }}</time>{% if post.author %} &bull; {{ post.author }}{% endif %}</p>
+              <p>{{ post.content | strip_html | normalize_whitespace | truncatewords: 55, " […]" }}</p>
+              <p class="blog-read-more"><a class="btn btn-primary" href="{{ post.url | relative_url }}">Continue Reading<span class="sr-only">: {{ post.title }}</span></a></p>
+            </div>
+          </div>
+        </article>
+        {%- endfor %}
+
+        {%- if paginator and paginator.total_pages > 1 and page.category == nil and page.tag == nil %}
+        {%- assign cur = paginator.page %}{% assign last = paginator.total_pages %}{% assign penult = last | minus: 1 %}
+        <nav class="navigation pagination" aria-label="Posts pagination">
+          <h2 class="sr-only">Posts pagination</h2>
+          <div class="nav-links">
+            {%- if paginator.previous_page %}<a class="prev page-numbers" href="{{ paginator.previous_page_path | relative_url }}">Previous</a>{% endif %}
+            {%- for i in (1..last) %}
+              {%- assign d = cur | minus: i | abs %}
+              {%- if i == cur %} <span class="page-numbers current" aria-current="page">{{ i }}</span>
+              {%- elsif i == 1 %} <a class="page-numbers" href="{{ '/blog/' | relative_url }}">1</a>
+              {%- elsif i == last or d <= 2 %} <a class="page-numbers" href="{{ site.paginate_path | replace: ':num', i | relative_url }}">{{ i }}</a>
+              {%- elsif i == 2 or i == penult %} <span class="page-numbers dots">…</span>
+              {%- endif %}
+            {%- endfor %}
+            {%- if paginator.next_page %} <a class="next page-numbers" href="{{ paginator.next_page_path | relative_url }}">Next</a>{% endif %}
+          </div>
+        </nav>
+        {%- endif %}
+      </div>
+      <div class="col-md-3 col-sm-12">
+        {% include blog-sidebar.html %}
+      </div>
+    </div>
+  </div>
+</section>
+{% include components/junto.html %}

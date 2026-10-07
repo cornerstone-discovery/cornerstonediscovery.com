@@ -1,0 +1,159 @@
+# Cornerstone Discovery — static site (Jekyll / GitHub Pages)
+title: Cornerstone Discovery
+tagline: A Single Source for all of Your Criminal & Civil Litigation Support Needs.
+description: >-
+  Cornerstone Discovery is an award-winning litigation support firm in Philadelphia, PA providing
+  digital forensics, e-Discovery, litigation and trial support services in PA, NJ, NY, DE and nationwide.
+url: https://cornerstonediscovery.com
+baseurl: ""
+# The production domain. Tracking runs and indexing is allowed only when the build's url matches this,
+# so the github.io preview stays out of analytics and search.
+canonical_url: https://cornerstonediscovery.com
+lang: en
+timezone: America/New_York
+# Fail the build on malformed front matter instead of silently rendering the page without its layout.
+strict_front_matter: true
+liquid:
+  error_mode: warn
+  strict_filters: true
+
+# Blog identity (the original 2015 Jekyll blog was "The Tech Gazette")
+blog:
+  title: The Tech Gazette
+  description: >-
+    The Tech Gazette is Cornerstone Discovery's blog: technology news, case summaries and insights
+    for the legal community, written by our forensic examiners and litigation support team.
+
+# Company details (used by nav, footer, contact page, JSON-LD)
+company:
+  phone: (267) 639-6900
+  phone_tel: "2676396900"
+  email: info@cornerstonediscovery.com
+  address: 4775 League Island Blvd
+  city_state_zip: Philadelphia, PA 19112
+  city: Philadelphia
+  region: PA
+  postal_code: "19112"
+  # Philadelphia Navy Yard building (OpenStreetMap). Keep identical to the Google Business Profile pin.
+  latitude: 39.892481
+  longitude: -75.165484
+  maps_link: https://www.google.com/maps/search/?api=1&query=Cornerstone+Discovery+4775+League+Island+Blvd+Philadelphia+PA+19112
+  founded: 2005
+  logo: /assets/i/cornerstonediscoveryREV.png
+  maps_embed: https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3061.18611720455!2d-75.1676705!3d39.8924651!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c6c63144bafc29%3A0x1fcb69008e600925!2sCornerstone%20Discovery!5e0!3m2!1sen!2sus
+social:
+  twitter: https://twitter.com/YourCaseNow
+  twitter_handle: YourCaseNow
+  facebook: https://www.facebook.com/CornerstoneDiscovery
+  linkedin: https://www.linkedin.com/company/cornerstone-discovery
+
+# ═══════════════════════════════════════════════════════════════════════════════════════════
+#  INTEGRATIONS — every public ID the site uses lives here. Blank = feature off.
+#  These are all public values (they end up in the HTML). SECRETS NEVER GO IN THIS REPO:
+#  the reCAPTCHA secret and Mailgun API key live in form-worker/secrets.json (git-ignored)
+#  and are pushed to Cloudflare with `npm run secrets` — see form-worker/README.md.
+# ═══════════════════════════════════════════════════════════════════════════════════════════
+analytics:
+  # GA4 > Admin > Data streams > Web > Measurement ID (G-XXXXXXXXXX). Loads gtag.js directly; no GTM.
+  # Sends page views plus key events: generate_lead (contact form), click_to_call, click_to_email.
+  ga4_measurement_id:
+  # Optional Google Ads conversion tracking for form leads: AW-XXXXXXXXX and the conversion label.
+  google_ads_id:
+  google_ads_lead_label:
+
+# Search Console / Bing Webmaster "HTML tag" verification codes (content="…" value only).
+webmaster_verifications:
+  google:
+  bing:
+
+contact_form:
+  # URL of the contact-form worker (form-worker/). After `npm run deploy` use the workers.dev URL it prints;
+  # after the DNS cut-over, the worker route makes it same-origin: /api/contact
+  # Blank = the form is replaced by email/phone buttons.
+  endpoint:
+  # reCAPTCHA v2 ("I'm not a robot" checkbox) SITE key — public. Its secret goes in form-worker/secrets.json.
+  recaptcha_site_key:
+
+# URLs — posts keep the WordPress-era root permalinks (/post-slug/), pages set their own.
+permalink: /:title/
+paginate: 10
+paginate_path: /blog/page/:num/
+
+sass:
+  style: compressed
+  sourcemap: never
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter_opts:
+    disable: true
+excerpt_separator: <!--more-->
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jekyll-redirect-from
+
+feed:
+  path: feed.xml
+  posts_limit: 20
+
+# jekyll-seo-tag
+twitter:
+  username: YourCaseNow
+  card: summary_large_image
+logo: /assets/i/cornerstonediscovery.png
+# Default social-share image (1200x630) for pages without their own image.
+og_image: /assets/i/og-default.jpg
+social_links:
+  - https://twitter.com/YourCaseNow
+  - https://www.facebook.com/CornerstoneDiscovery
+  - https://www.linkedin.com/company/cornerstone-discovery
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      author: Cornerstone Discovery
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: page
+  - scope:
+      path: _public
+    values:
+      sitemap: false
+  - scope:
+      path: uploads
+    values:
+      sitemap: false
+
+include:
+  - _public
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - migration
+  - docs
+  - tools
+  - form-worker
+  - vendor
+  - .bundle
+  - node_modules
+  - "*.ps1"
+  # legacy PHP / App Engine / WordPress tree — pending removal from the repo
+  - web
+  - app.yaml
+  - cron.yaml
+  - composer.json
+  - composer.lock
+  - nginx-app.conf
+  - php.ini

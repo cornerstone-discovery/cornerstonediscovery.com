@@ -1,0 +1,59 @@
+---
+layout: default
+---
+{%- comment -%}
+Home page. Markup mirrors the live theme section for section (hero, ribbon + badge, services, EDRM, Junto,
+testimonials, copy) so the original stylesheet renders it identically. As on live, the page's <h1> is the first
+heading of the copy. Addition: the "Our Offices" band highlighting both locations.
+{%- endcomment -%}
+<div class="jumbotron"{% if page.header_image %} style="background-image: url({{ page.header_image | relative_url }})"{% endif %}>
+  <div class="titlebg">
+    {% include nav.html %}
+    <div class="container">
+      <div class="homeheadline text-center">
+        <div class="h1">{{ page.h1 | default: site.tagline }} <span class="emphasis"></span></div>
+      </div>
+      <div class="home-hero-cta">
+        <a href="{{ '/contact/' | relative_url }}" class="btn btn-primary">Contact Us Today!</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="services-section">
+  <div class="container">
+    {%- if page.ribbon %}
+    <div class="row ribbon-offset">
+      <div class="col-lg-9 col-lg-offset-1 col-md-6 col-sm-6 col-sm-offset-0">
+        {%- if page.ribbon.badge %}<img width="194" height="190" src="{{ page.ribbon.badge | relative_url }}" class="tli-badge" alt="{{ page.ribbon.badge_alt }}" decoding="async">{% endif %}
+        <div class="ribbon">
+          <div class="ribbon-stitches-top"></div>
+          <strong class="ribbon-content"><div class="h2">{{ page.ribbon.text }}</div></strong>
+          <div class="ribbon-stitches-bottom"></div>
+        </div>
+      </div>
+    </div>
+    {%- endif %}
+    {%- if page.brag %}
+    <div id="humble-brag" class="row humble-brag component">
+      <div class="col-sm-12 text-center"><div class="h4">{{ page.brag }}</div></div>
+    </div>
+    {%- endif %}
+    <div class="home-services">
+      {%- for svc in site.data.services %}
+      {% include components/service-card.html service=svc %}
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+{% include components/edrm.html %}
+{% include components/junto.html %}
+{% include components/testimonials.html %}
+{% include components/offices.html %}
+
+<section class="content">
+  <div class="container">
+    {{ content }}
+  </div>
+</section>

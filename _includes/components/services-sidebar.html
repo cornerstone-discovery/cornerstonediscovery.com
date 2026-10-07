@@ -1,0 +1,24 @@
+{%- comment -%}
+"Additional Services" sidebar: every core service except the one this page belongs to, then the latest
+three blog posts (so every service page links into the blog).
+page.service (front matter) names the current service key; defaults to none.
+{%- endcomment -%}
+<div class="sidebar">
+  <div class="h2">Additional Services</div>
+  {%- for svc in site.data.services %}
+  {%- unless svc.url == page.url %}
+  {% include components/service-card.html service=svc %}
+  {%- endunless %}
+  {%- endfor %}
+  {%- unless include.no_posts %}
+  <div class="sidebar-recent-posts">
+    <div class="h2">From the Blog</div>
+    <ul>
+      {%- for p in site.posts limit: 3 %}
+      <li><a href="{{ p.url | relative_url }}">{{ p.title }}</a><time datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: "%B %-d, %Y" }}</time></li>
+      {%- endfor %}
+    </ul>
+    <a class="btn btn-primary" href="{{ '/blog/' | relative_url }}">All Posts</a>
+  </div>
+  {%- endunless %}
+</div>

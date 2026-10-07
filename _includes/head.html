@@ -1,0 +1,36 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{%- comment -%} <title> is the SEO title when one was set (ported from Yoast), otherwise the page title. {%- endcomment -%}
+{%- if paginator and paginator.page > 1 -%}
+<title>Our Blog - Page {{ paginator.page }} of {{ paginator.total_pages }} | Cornerstone Discovery</title>
+{%- elsif page.seo_title -%}
+<title>{{ page.seo_title }}</title>
+{%- elsif page.url == "/" -%}
+<title>{{ site.title }}</title>
+{%- else -%}
+<title>{{ page.title | strip_html }} - {{ site.title }}</title>
+{%- endif %}
+{%- assign css_url = '/assets/css/main.css' | relative_url %}
+<link rel="preload" href="{{ '/assets/fonts/lato-400.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ '/assets/fonts/roboto-condensed-v.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+{%- comment -%} Preload the hero background (the largest thing above the fold) so it starts with the CSS. {%- endcomment -%}
+{%- assign hero = page.preload_image | default: page.header_image %}
+{%- if page.layout == "home" %}{% assign hero = "/assets/i/hero.webp" %}{% elsif page.layout == "post" or page.layout == "blog" %}{% assign hero = "/uploads/2021/03/blog-bg.webp" %}{% elsif page.landing %}{% assign hero = nil %}{% endif %}
+{%- if hero %}
+<link rel="preload" href="{{ hero | relative_url }}" as="image" fetchpriority="high">
+{%- endif %}
+<link rel="stylesheet" href="{{ css_url }}?v={{ site.time | date: '%Y%m%d%H%M' }}">
+{% seo title=false %}
+{% include schema.html %}
+{%- if site.url != site.canonical_url %}
+<meta name="robots" content="noindex, nofollow">
+{%- elsif page.robots == "noindex" or page.category or page.tag %}
+<meta name="robots" content="noindex, follow">
+{%- endif %}
+{% feed_meta %}
+<link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="32x32">
+<link rel="icon" href="{{ '/assets/icons/favicon.svg' | relative_url }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ '/assets/icons/apple-touch-icon.png' | relative_url }}">
+<link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
+<meta name="theme-color" content="#213645">
+{% include analytics-head.html %}

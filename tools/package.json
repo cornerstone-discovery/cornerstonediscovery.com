@@ -1,0 +1,12 @@
+{
+  "name": "cornerstonediscovery-tools",
+  "private": true,
+  "description": "Post-build helpers for the static site (run from the repo root after `jekyll build`).",
+  "type": "module",
+  "scripts": {
+    "purge-css": "node purge-css.mjs"
+  },
+  "devDependencies": {
+    "purgecss": "^6.0.0"
+  }
+}

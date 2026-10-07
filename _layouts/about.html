@@ -1,0 +1,45 @@
+---
+layout: default
+---
+{% include page-header.html default_image="/assets/i/aboutbg.jpg" %}
+<section class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9 col-sm-12">
+        {{ content }}
+
+        <!-- TEAM ACCORDION -->
+        <hr>
+        <h3>Meet Our Growing Team</h3>
+        <br>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          {%- for person in site.data.team %}
+          {%- assign pid = person.id | default: person.last | slugify %}
+          <div class="panel">
+            <div class="panel-heading" role="tab" id="heading-{{ pid }}">
+              {%- if person.image %}<img src="{{ person.image | relative_url }}" class="img-responsive" alt="{{ person.first }} {{ person.last }}">{% endif %}
+              <div class="panel-title">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#bio-{{ pid }}" aria-expanded="false" aria-controls="bio-{{ pid }}"><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+                  <h3>{{ person.first | upcase }} <span>{{ person.last | upcase }}{% if person.suffix %},{% endif %}</span>{% if person.suffix %} {{ person.suffix }}{% endif %}</h3>
+                  <h4>{{ person.position }}</h4>
+                </a>
+              </div>
+            </div>
+            <div id="bio-{{ pid }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-{{ pid }}">
+              <div class="panel-body">
+                {{ person.bio }}
+              </div>
+            </div>
+          </div>
+          {%- endfor %}
+        </div>
+        <!-- /TEAM ACCORDION -->
+      </div>
+      <div class="col-md-3 col-sm-12">
+        {% include components/services-sidebar.html %}
+      </div>
+    </div>
+  </div>
+</section>
+{% include components/junto.html %}
+{% include components/testimonials.html %}

@@ -1,0 +1,25 @@
+# The four core services. Used by the home page cards and the "Additional Services" sidebar.
+- key: digital-forensics
+  title: Digital Forensics
+  url: /digital-forensics/
+  icon: /assets/i/icon_digitalforensics.png
+  icon_alt: An illustrated icon of a fingerprint.
+  blurb: Rely on our team of Certified Technical Experts with the experience and resources necessary to uncover the critical evidence you need. We've streamlined the process to save you time and money.
+- key: e-discovery
+  title: e-Discovery
+  url: /e-discovery/
+  icon: /assets/i/icon_ediscovery.png
+  icon_alt: e-Discovery
+  blurb: Tap into our reliable, dependable and cost-effective e-Discovery solutions. We provide innovative technology and strategic consulting services for every stage of the e-Discovery process.
+- key: litigation-support
+  title: Litigation Support
+  url: /litigation-support/
+  icon: /assets/i/icon_litigationsupport.png
+  icon_alt: Litigation Support
+  blurb: Access our round-the-clock, comprehensive and industry-leading Litigation Support services, including graphic design, evidence storage, printing/production services, scanning and more.
+- key: trial-support
+  title: Trial Support
+  url: /trial-support/
+  icon: /assets/i/icon_trialsupport.png
+  icon_alt: Trial Support
+  blurb: Leverage our Certified Trial Technicians, experts in presentation and technology software, to help you prepare and execute your best case.

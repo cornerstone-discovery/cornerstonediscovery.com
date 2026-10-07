@@ -1,0 +1,30 @@
+---
+layout: default
+---
+{% include page-header.html default_image="/assets/i/aboutbg.jpg" %}
+<section class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9 col-sm-12">
+        {%- if page.blurb %}
+        {%- if page.blurb_icon %}<div class="iconheader hidden-xs"><img src="{{ page.blurb_icon | relative_url }}" class="img-responsive" alt=""></div>{% endif %}
+        <div class="h2">{{ page.blurb }}</div>
+        <div class="clearfix"></div>
+        <hr class="blurb-rule">
+        {%- endif %}
+        {{ content }}
+        {%- if page.show_form %}{% unless content contains 'class="contact-form"' %}
+        <hr>
+        {% include components/contact-form.html heading="Interested in Our Services? Have Questions?" intro="Please fill out the form below and you&rsquo;ll hear from us ASAP." %}
+        {%- endunless %}{% endif %}
+      </div>
+      <div class="col-md-3 col-sm-12">
+        {% include components/services-sidebar.html %}
+      </div>
+    </div>
+  </div>
+</section>
+{%- if page.offices %}
+{% include components/offices.html %}
+{%- endif %}
+{% include components/junto.html %}

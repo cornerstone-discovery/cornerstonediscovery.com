@@ -1,0 +1,58 @@
+{%- comment -%}
+Top contact bar + logo + primary nav. Active item is marked server-side from page.url
+(assets/js/site.js also handles it client-side). Markup and whitespace mirror the live theme exactly.
+{%- endcomment -%}
+<div class="main-nav-top">
+  <div class="topcontactbar text-right">
+    <div class="container">
+      <span class="header-phone">
+        <b>Call us Today!</b>
+        <a href="tel:{{ site.company.phone_tel }}">{{ site.company.phone }}</a>
+      </span>
+      &nbsp;&nbsp;&nbsp;
+      <span class="header-socials">
+        <a href="{{ site.social.twitter }}" target="_blank" rel="noopener" aria-label="Cornerstone Discovery on X (Twitter)">
+          <i class="fa fa-twitter-square" aria-hidden="true"></i>
+        </a>
+        <a href="{{ site.social.facebook }}" target="_blank" rel="noopener" aria-label="Cornerstone Discovery on Facebook">
+          <i class="fa fa-facebook-square" aria-hidden="true"></i>
+        </a>
+        <a href="{{ site.social.linkedin }}" target="_blank" rel="noopener" aria-label="Cornerstone Discovery on LinkedIn">
+          <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+        </a> 
+      </span>
+    </div>
+  </div>
+  <div class="toplogo">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-3 col-sm-12">
+          <div class="logo">
+            <a href="{{ '/' | relative_url }}"><img src="{{ site.company.logo | relative_url }}" class="img-responsive" alt="{{ site.title }}" width="230" height="76" srcset="{{ site.company.logo | relative_url }} 1x, {{ site.company.logo | replace: '.png', '@2x.png' | relative_url }} 2x"></a>
+          </div>
+        </div>
+        <div class="col-lg-8 col-md-9 col-sm-12">
+          <nav class="navbar navbar-default navbar-right" aria-label="Primary">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <i class="fa fa-bars fa-lg"></i>
+              </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav" id="menu-primary-menu">
+                {%- for item in site.data.nav %}
+                {%- assign active = false %}
+                {%- if item.url == "/" %}{% if page.url == "/" %}{% assign active = true %}{% endif %}
+                {%- elsif item.url == "/blog/" %}{% if page.url contains "/blog/" or page.layout == "post" %}{% assign active = true %}{% endif %}
+                {%- elsif page.url == item.url or page.url contains item.url %}{% assign active = true %}{% endif %}
+                <li class="{% if active %}active {% endif %}{{ item.class }}"><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+                {%- endfor %}
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

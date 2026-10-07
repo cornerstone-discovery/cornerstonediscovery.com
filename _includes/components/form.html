@@ -1,0 +1,71 @@
+{%- comment -%}
+Renders one form from _data/forms.yml (ported field-for-field from the live Gravity Forms) and posts it to the
+contact-form worker. Field names are the labels, so the email lists them exactly as the visitor saw them.
+  {% include components/form.html form="contact" %}            full-width horizontal form
+  {% include components/form.html form="newsletter" compact=true %}  sidebar widget
+Always rendered (so every page looks like live). Until contact_form.endpoint is set the form is marked
+data-unconnected and site.js tells the visitor to call/email instead of submitting; the production deploy
+refuses to publish without an endpoint (.github/workflows/pages.yml).
+{%- endcomment -%}
+{%- comment -%} Index the data in place: assigning whole hashes makes Liquid walk them (and intermittently crash on Windows). {%- endcomment -%}
+{%- assign fk = include.form -%}
+{%- assign uid = include.form | append: "-" | append: include.compact -%}
+<div class="contact-form form-{{ include.form }}{% if include.compact %} form-compact{% endif %}">
+  {%- if include.heading %}<h3>{{ include.heading }}</h3>{% elsif site.data.forms[fk].title %}<h3 class="form-title">{{ site.data.forms[fk].title }}</h3>{% endif %}
+  <form class="{% unless include.compact %}form-horizontal {% endunless %}js-contact-form" action="{{ site.contact_form.endpoint | default: '#' }}" method="POST" novalidate{% unless site.contact_form.endpoint %} data-unconnected{% endunless %}>
+    <input type="hidden" name="form_id" value="{{ include.form }}">
+    <input type="hidden" name="page_url" value="{{ page.url | absolute_url }}">
+    <div class="hp-field" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+    {%- if site.data.forms[fk].legend %}<p class="small text-muted">{{ site.data.forms[fk].legend }}</p>{% endif %}
+    {%- for fd in site.data.forms[fk].fields %}
+    {%- assign fname = fd.label | remove: ":" | strip -%}
+    {%- assign fid = uid | append: "-" | append: forloop.index -%}
+    {%- capture lbl %}{{ fd.label }}{% if fd.required %} <span class="req">{{ site.data.forms[fk].required_marker | default: "*" }}</span>{% endif %}{% endcapture -%}
+    {%- if include.compact %}{% assign lcls = "" %}{% assign wrap = "" %}{% else %}{% assign lcls = "col-sm-4 control-label" %}{% assign wrap = "col-sm-8" %}{% endif %}
+    {%- case fd.type %}
+    {%- when "html" %}
+    <p class="form-intro">{{ fd.text }}</p>
+    {%- when "captcha" %}
+    {%- if site.contact_form.recaptcha_site_key %}
+    <div class="form-group"><label class="sr-only">CAPTCHA</label><div class="{% unless include.compact %}col-sm-offset-4 col-sm-8{% endunless %}"><div class="g-recaptcha"{% if include.compact %} data-size="compact"{% endif %} data-sitekey="{{ site.contact_form.recaptcha_site_key }}"></div></div></div>
+    {%- endif %}
+    {%- when "name" %}
+    <div class="form-group">
+      <label class="{{ lcls }}">{{ lbl }}</label>
+      <div class="{{ wrap }}"><div class="row">
+        {%- for part in fd.parts %}
+        <div class="col-xs-6"><input id="{{ fid }}-{{ forloop.index }}" type="text" name="{{ part }} Name" class="form-control" maxlength="100" autocomplete="{% if forloop.first %}given-name{% else %}family-name{% endif %}"{% if fd.required %} required{% endif %}><label class="help-block small" for="{{ fid }}-{{ forloop.index }}">{{ part }}</label></div>
+        {%- endfor %}
+      </div></div>
+    </div>
+    {%- when "checkboxes" %}
+    <fieldset class="form-group{% if fd.required %} js-require-one{% endif %}">
+      <legend class="{{ lcls }}">{{ lbl }}</legend>
+      <div class="{{ wrap }}">
+        {%- if fd.select_all %}<div class="checkbox"><label><input type="checkbox" class="js-select-all"> Select All</label></div>{% endif %}
+        {%- for c in fd.choices %}{% if c != "" %}
+        <div class="checkbox"><label><input type="checkbox" name="{{ fname }}" value="{{ c | escape }}"> {{ c }}</label></div>
+        {%- endif %}{% endfor %}
+      </div>
+    </fieldset>
+    {%- when "textarea" %}
+    <div class="form-group">
+      <label class="{{ lcls }}" for="{{ fid }}">{{ lbl }}</label>
+      <div class="{{ wrap }}"><textarea id="{{ fid }}" name="{{ fname }}" rows="5" class="form-control" maxlength="5000"{% if fd.required %} required{% endif %}></textarea></div>
+    </div>
+    {%- else %}
+    <div class="form-group">
+      <label class="{{ lcls }}{% if fd.hide_label %} sr-only{% endif %}" for="{{ fid }}">{{ lbl }}</label>
+      <div class="{{ wrap }}"><input id="{{ fid }}" type="{{ fd.type }}" name="{{ fname }}" class="form-control" maxlength="{% if fd.type == 'email' %}254{% else %}200{% endif %}"{% if fd.placeholder %} placeholder="{{ fd.placeholder }}"{% endif %}{% if fd.type == 'email' %} autocomplete="email"{% elsif fd.type == 'tel' %} autocomplete="tel"{% elsif fname == 'Name' %} autocomplete="name"{% elsif fname contains 'Company' or fname contains 'Firm' %} autocomplete="organization"{% endif %}{% if fd.required or fd.type == 'email' %} required{% endif %}></div>
+    </div>
+    {%- endcase %}
+    {%- endfor %}
+    <div class="form-group">
+      <div class="{% unless include.compact %}col-sm-offset-4 col-sm-8{% endunless %}">
+        <button type="submit" class="btn btn-primary">{{ site.data.forms[fk].button }}</button>
+        {%- unless include.compact %}<p class="small text-muted form-note">We'll only use this to respond to you. See our <a href="{{ '/privacy-policy/' | relative_url }}">privacy policy</a>.</p>{% endunless %}
+        <div class="form-status alert hidden" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,30 @@
+---
+layout: default
+---
+{%- comment -%} Service landing pages (/digital-forensics/lp/ etc.): nav + copy + form, no hero. {%- endcomment -%}
+<div class="page-header landing-header">
+  <div class="titlebg">
+    {% include nav.html %}
+  </div>
+</div>
+<section class="content">
+  <div class="container">
+    <div class="row">
+      {%- if content contains 'class="contact-form"' %}
+      <div class="col-md-8 col-md-offset-2 col-sm-12">
+        {{ content }}
+      </div>
+      {%- else %}
+      <div class="col-md-7 col-sm-12">
+        {{ content }}
+      </div>
+      <div class="col-md-5 col-sm-12">
+        <div class="component text-left">
+          {% include components/contact-form.html heading="Request a Consultation" intro="Tell us about your matter and a member of our team will respond promptly." %}
+        </div>
+      </div>
+      {%- endif %}
+    </div>
+  </div>
+</section>
+{% include components/testimonials.html %}

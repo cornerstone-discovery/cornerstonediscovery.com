@@ -1,0 +1,58 @@
+{%- comment -%}
+Blog sidebar: the four widgets from the live site, in the same order, styled like the rest of the site's
+sidebars, followed by the core services so readers can get from a post to the service it's about.
+{%- endcomment -%}
+<aside class="sidebar blog-sidebar">
+  <section class="widget">
+    <h2 class="h2 widget-title">Sign Up</h2>
+    {% include components/form.html form="newsletter" compact=true %}
+  </section>
+  <section class="widget">
+    <h2 class="h2 widget-title">Jason Silva’s Blog</h2>
+    <div class="jason-silva-blog">
+      <img alt="jason silva" class="jason-silva-profile" src="{{ '/uploads/2021/02/jason.png' | relative_url }}" width="352" height="353" loading="lazy" decoding="async">
+      <div class="blog-text-container">
+        <div class="blog-text">
+          <h3 class="h6"><a href="{{ '/about-us/' | relative_url }}">JASON SILVA</a></h3>
+          <div>
+            <a class="sidebar-blog-job-title" href="{{ '/about-us/' | relative_url }}">DIRECTOR OF OPERATIONS</a>
+            <p class="sidebar-blog-text">As featured in Legal IT Professionals Column on "The Shifting Role of eDiscovery in the Legal Space."</p>
+            <p class="sidebar-blog-date">September 27, 2016</p>
+          </div>
+        </div>
+        <a class="sidebar-blog-more" href="https://www.legalitprofessionals.com/legal-it-columns/65-guest-columns/9050-the-shifting-role-of-ediscovery-in-the-legal-space" target="_blank" rel="noopener" aria-label="Read Jason Silva's column on Legal IT Professionals">&gt;</a>
+      </div>
+    </div>
+  </section>
+  <section class="widget">
+    <h2 class="h2 widget-title">Recent Posts</h2>
+    <ul class="recent-posts">
+      {%- for p in site.posts limit: 5 %}
+      <li><a href="{{ p.url | relative_url }}"{% if p.url == page.url %} aria-current="page"{% endif %}>{{ p.title }}</a></li>
+      {%- endfor %}
+    </ul>
+  </section>
+  <section class="widget">
+    <h2 class="h2 widget-title">Search by Tags</h2>
+    <div class="tagcloud">
+      {%- capture tagnames %}{% for t in site.tags %}{{ t[0] }}|{% endfor %}{% endcapture %}
+      {%- assign tagnames = tagnames | split: "|" | sort_natural %}
+      {%- comment -%} WordPress tag-cloud sizing: 8pt (fewest posts) to 22pt (most), linear in post count. {%- endcomment -%}
+      {%- assign tmin = 9999 %}{% assign tmax = 0 %}
+      {%- for name in tagnames %}{% if name != "" %}{% assign c = site.tags[name].size %}{% if c < tmin %}{% assign tmin = c %}{% endif %}{% if c > tmax %}{% assign tmax = c %}{% endif %}{% endif %}{% endfor %}
+      {%- assign spread = tmax | minus: tmin %}{% if spread < 1 %}{% assign spread = 1 %}{% endif %}
+      {%- for name in tagnames %}{% if name != "" %}
+      {%- assign c = site.tags[name].size %}{% assign pt = c | minus: tmin | times: 14.0 | divided_by: spread | plus: 8 | round: 2 %}
+      <a class="tag-cloud-link" href="{{ name | slugify | prepend: '/tag/' | append: '/' | relative_url }}" style="font-size: {{ pt }}pt;" aria-label="{{ name }} ({{ c }} {% if c == 1 %}post{% else %}posts{% endif %})">{{ name }}</a>
+      {%- endif %}{% endfor %}
+    </div>
+  </section>
+  <section class="widget">
+    <h2 class="h2 widget-title">Our Services</h2>
+    <ul class="service-links">
+      {%- for svc in site.data.services %}
+      <li><a href="{{ svc.url | relative_url }}"><img src="{{ svc.icon | relative_url }}" alt="" width="40" height="40" loading="lazy" decoding="async"> {{ svc.title }}</a></li>
+      {%- endfor %}
+    </ul>
+  </section>
+</aside>

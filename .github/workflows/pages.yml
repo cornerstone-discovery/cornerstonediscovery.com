@@ -1,0 +1,93 @@
+# Build, check and deploy the site to GitHub Pages.
+# One-time setup: repo Settings -> Pages -> Build and deployment -> Source: "GitHub Actions".
+#
+# Until the custom domain is attached, Pages serves the site at
+#   https://cornerstone-discovery.github.io/cornerstonediscovery.com/
+# configure-pages reports that origin + sub-path and the build adapts (see _plugins/baseurl_links.rb);
+# the preview is noindex and runs no tracking. Once cornerstonediscovery.com is set as the custom
+# domain, the same workflow builds for the root of the real domain.
+#
+# Every run (pushes and pull requests) also:
+#   * runs the contact-form worker's tests and syntax-checks assets/js/site.js
+#   * purges unused CSS (tools/purge-css.mjs) and fails on any broken internal link (tools/check-links.mjs)
+#   * refuses to publish to the real domain while contact_form.endpoint is blank (forms would not send)
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: tools/package-lock.json
+
+      - name: Test the contact-form worker and site JS
+        run: |
+          node --test form-worker/test/*.test.mjs
+          node --check assets/js/site.js
+
+      - id: pages
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+
+      - name: Build
+        env:
+          JEKYLL_ENV: production
+          PAGES_ORIGIN: ${{ steps.pages.outputs.origin }}
+          PAGES_BASE: ${{ steps.pages.outputs.base_path }}
+        run: |
+          # PR builds have no Pages context: build for the real domain.
+          printf 'url: "%s"\n' "${PAGES_ORIGIN:-https://cornerstonediscovery.com}" > _config.pages.yml
+          bundle exec jekyll build --config _config.yml,_config.pages.yml --baseurl "${PAGES_BASE}"
+
+      - name: Refuse a production deploy without a working contact form
+        if: github.event_name != 'pull_request' && steps.pages.outputs.origin == 'https://cornerstonediscovery.com'
+        run: |
+          if grep -q 'data-unconnected' _site/contact/index.html; then
+            echo "::error::contact_form.endpoint is blank in _config.yml. Deploy form-worker/ and set it before publishing to cornerstonediscovery.com (DEPLOY.md step 2)."
+            exit 1
+          fi
+
+      - name: Purge unused CSS and check internal links
+        run: |
+          npm ci --prefix tools --no-audit --no-fund
+          node tools/purge-css.mjs _site
+          node tools/check-links.mjs _site "${{ steps.pages.outputs.base_path }}"
+
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

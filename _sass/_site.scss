@@ -1,0 +1,224 @@
+// ==========================================================================
+// Site layer: what the static site adds on top of the live theme (_theme + _theme-custom).
+// Nothing here restyles the shared header/nav/hero: those come straight from the live CSS
+// so they render pixel-for-pixel like the WordPress site.
+// ==========================================================================
+
+$lime: #8bc53f;
+$lime-text: #8cc542;
+$turq: #50c5dc;
+$navy: #213645;
+$slate: #335166;
+$mist: #eef5f5;
+
+// ---- accessibility ----
+.skip-link {
+  position: absolute; left: -10000px; top: 0; z-index: 1000;
+  background: $navy; color: #fff; padding: 10px 15px; font-weight: 700;
+  &:focus { left: 10px; top: 10px; color: #fff; }
+}
+a:focus-visible, button:focus-visible, .btn:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid $turq; outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+// ---- hero headline rendered as a link (posts link "Blog" back to the index) ----
+.page-header .titlebg > .container > a,
+.page-header .titlebg > .container > a:hover { color: #fff; text-decoration: none; }
+
+// ---- landing pages: the live site hides the hero there (page-id-861/862/863 in the custom CSS) ----
+.landing-page .page-header.interior-header { display: none; }
+
+// ---- page content ----
+section.content .row + hr { clear: both; }
+// in-content separators: WordPress "wide" separator blocks on live (2px grey at 40% opacity)
+section.content hr:not(.blurb-rule):not(.hr-contact-info):not(.visible-xs) {
+  border-top: 0; border-bottom: 2px solid #808080; opacity: .4; margin: 30px 0;
+}
+section.content hr.blurb-rule { margin: 30px 0; }
+.content img.img-responsive, .content figure img { max-width: 100%; height: auto; }
+.content figure { margin: 0 0 15px; }
+.content figcaption { font-size: 13px; color: #666; }
+.content img { max-width: 100%; height: auto; }
+.embed-responsive { margin-bottom: 15px; }
+.spacer { height: 30px; }
+
+// "Read More" disclosure on the home page (the live site used a JS accordion; <details> needs no script)
+section.content details:not(.faq) {
+  > summary {
+    display: inline-block; cursor: pointer; list-style: none; margin: 0 0 20px;
+    color: #fff; background-color: $lime; padding: 6px 12px; font-family: 'Roboto Condensed', sans-serif; text-transform: uppercase; font-weight: 700;
+    &::-webkit-details-marker { display: none; }
+    &:hover { background-color: $turq; }
+  }
+  &[open] > summary { display: none; }
+}
+
+// FAQ accordions (replace the WordPress "Accordion Blocks" plugin; colours from the live custom CSS)
+details.faq {
+  border: 1px solid $mist; margin-bottom: 10px; background: #fff;
+  summary {
+    background: $mist; color: $navy;
+    font-family: 'Roboto Condensed', sans-serif; font-size: 20px; font-weight: 700;
+    padding: 12px 40px 12px 15px; cursor: pointer; list-style: none; position: relative;
+    &::-webkit-details-marker { display: none; }
+    &::after { content: '\f105'; font-family: FontAwesome; position: absolute; right: 15px; top: 12px; }
+  }
+  &[open] summary::after { content: '\f107'; }
+  > .faq-body { padding: 15px; }
+}
+
+// ---- forms (contact, newsletter, landing pages) ----
+.contact-form {
+  margin-top: 20px;
+  .hp-field { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .form-note { margin-top: 10px; }
+  .form-status { margin-top: 15px; }
+  fieldset legend { border: 0; font-size: 14px; font-weight: 700; margin-bottom: 0; }
+  .checkbox { margin-top: 0; }
+  .g-recaptcha { min-height: 78px; }
+}
+.form-compact .checkbox { margin-top: 0; }
+
+// ---- "Our Offices" band (home, contact) ----
+.offices {
+  background: $mist url(../i/bg_cornercomponent.png) top right no-repeat;
+  padding: 50px 0 30px;
+  h2 { margin: 0 0 30px; }
+  h2 span, h3 span { color: $lime; }
+}
+.office-card {
+  background: #fff; padding: 25px 25px 20px; margin-bottom: 20px; height: calc(100% - 20px);
+  box-shadow: 0 1px 3px rgba(33, 54, 69, .15);
+  h3 { margin-top: 0; color: $navy; font-weight: 700; text-transform: uppercase; font-size: 24px; }
+  h3 small { display: block; color: $slate; font-size: 15px; font-weight: 400; margin-top: 4px; }
+  .fa-ul { margin-left: 2em; font-size: 16px; }
+  .fa-ul li { margin-bottom: 6px; }
+  .fa-li { color: $turq; }
+  .btn { margin: 0 6px 6px 0; }
+}
+@media (min-width: 768px) {
+  .offices .row { display: flex; flex-wrap: wrap; }
+  .offices .row > [class*="col-"] { display: flex; }
+  .office-card { width: 100%; display: flex; flex-direction: column; }
+  .office-card .office-map { margin-top: auto; }
+}
+.office-map {
+  position: relative; aspect-ratio: 5 / 2; width: 100%; background: #dfe9ea;
+  iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+}
+.office-map-load {
+  position: absolute; inset: 0; width: 100%; border: 0; cursor: pointer;
+  background: #dfe9ea url(../i/bg_cornercomponent.png) top right no-repeat; color: #fff;
+  font-family: 'Roboto Condensed', sans-serif; font-size: 18px; text-transform: uppercase; font-weight: 700;
+  span { display: inline-block; background: $lime; padding: 8px 16px; }
+  &:hover span, &:focus span { background: $turq; }
+}
+.contact-maps .office-map { margin-bottom: 15px; }
+.contact-maps h5 { font-weight: 700; margin: 15px 0 8px; }
+
+// ==========================================================================
+// Blog: same parts as the interior pages (white column, standard sidebar headings)
+// ==========================================================================
+.breadcrumbs {
+  font-size: 13px; color: #828282; margin: 0 0 15px;
+  a { color: $slate; font-weight: 400; }
+  a:hover { color: $lime; }
+}
+.post-card {
+  border-bottom: 1px solid #e5e5e5; padding: 0 0 30px; margin: 0 0 30px;
+  &:last-of-type { border-bottom: 0; }
+  .post-card-image img { width: 100%; height: auto; display: block; margin-bottom: 15px; }
+}
+.post-card-title {
+  font-size: 24px; font-weight: 700; text-transform: none; margin: 0 0 8px; line-height: 1.2;
+  a { color: $navy; }
+  a:hover, a:focus { color: $lime; text-decoration: none; }
+}
+// post title: the site's standard content <h1> (same as the service pages), just tighter above the meta line
+.post-title { margin: 0 0 10px; }
+.post-meta { color: #828282; font-size: 14px; margin-bottom: 20px; }
+.blog-read-more { display: block; margin: 0; }
+
+.post-content {
+  img { max-width: 100%; height: auto; }
+  h5 { font-size: 18px; color: $slate; }
+  blockquote { border-left-color: $lime; font-size: 16px; }
+}
+.blog-tags {
+  margin: 30px 0 0;
+  a { color: $slate; margin-right: 15px; white-space: nowrap; font-weight: 400; }
+  a:hover { color: $lime; }
+}
+.post-nav {
+  margin: 40px 0; padding-top: 20px; border-top: 1px solid #e5e5e5;
+  a { display: block; color: $navy; font-family: 'Roboto Condensed', sans-serif; font-size: 18px; line-height: 1.25; margin-bottom: 10px; }
+  a:hover { color: $lime; text-decoration: none; }
+  .post-nav-label { display: block; font-size: 13px; text-transform: uppercase; color: #828282; }
+}
+.archive-title { text-transform: none; margin-top: 0; }
+
+// pagination (WordPress markup)
+.nav-links {
+  margin: 10px 0 40px;
+  .page-numbers { display: inline-block; padding: 6px 12px; margin: 0 4px 4px 0; background: $mist; color: $navy; font-weight: 700; }
+  a.page-numbers:hover { background: $lime; color: #fff; text-decoration: none; }
+  .current { background: $lime; color: #fff; }
+  .dots { background: none; }
+}
+
+// sidebar widgets: headings use the site's sidebar heading style instead of the dark bars
+.sidebar.blog-sidebar {
+  .widget { margin-bottom: 40px; padding: 0; background: none; }
+  .widget-title {
+    background: none; padding: 10px 0; margin: 0 0 15px;
+    font-family: 'Roboto Condensed', sans-serif; font-weight: 700 !important; font-size: 16px;
+    color: $navy; border-bottom: 1px solid $navy; text-transform: uppercase;
+  }
+  ul { padding-left: 0; list-style: none; }
+  ul li { font-size: 15px; margin-bottom: 10px; line-height: 1.35; }
+  a { color: $navy; font-weight: 400; }
+  a:hover, a[aria-current] { color: $lime; }
+  .form-newsletter { background: $mist; padding: 15px; color: $navy; }
+  .form-newsletter .form-intro { font-weight: 700; text-transform: uppercase; font-family: 'Roboto Condensed', sans-serif; }
+  .form-newsletter .form-status { color: #333; }
+}
+.service-links {
+  li { margin-bottom: 8px; }
+  a { display: flex; align-items: center; gap: 10px; font-family: 'Roboto Condensed', sans-serif; font-size: 16px; text-transform: uppercase; font-weight: 700 !important; }
+  img { width: 40px; height: 40px; flex: none; }
+}
+.tagcloud a { display: inline-block; margin: 0 10px 8px 0; line-height: 1.2; }
+
+.jason-silva-blog {
+  background: $mist;
+  .jason-silva-profile { max-width: 100%; height: auto; display: block; }
+  .blog-text-container { display: flex; align-items: stretch; }
+  .blog-text { padding: 10px 15px; flex: 1; }
+  .h6 { margin: 0 0 4px; font-size: 18px; font-family: 'Roboto Condensed', sans-serif; font-weight: 700; }
+  .sidebar-blog-job-title { color: $lime-text !important; font-size: 13px; }
+  .sidebar-blog-text { font-size: 14px; margin: 8px 0 4px; }
+  .sidebar-blog-date { color: #828282; font-size: 12px; margin: 0; }
+  .sidebar-blog-more { background: $lime; color: #fff !important; padding: 0 12px; display: flex; align-items: center; font-size: 20px; }
+  .sidebar-blog-more:hover { background: $turq; text-decoration: none; }
+}
+
+// "From the Blog" box at the end of the services sidebar
+.sidebar-recent-posts {
+  margin-top: 10px;
+  ul { list-style: none; padding: 0; margin: 0 0 10px; }
+  li { padding: 8px 0; border-bottom: 1px solid #e5e5e5; font-size: 14px; line-height: 1.35; }
+  li a { color: $navy; font-weight: 700; }
+  li a:hover { color: $lime; }
+  time { display: block; color: #828282; font-size: 12px; margin-top: 2px; }
+}
+
+// ---- team accordion ----
+.panel-heading img { width: 100%; }
+
+// ---- mobile nav: Bootstrap's collapse without bootstrap.js ----
+@media (max-width: 767px) {
+  .navbar-collapse.collapse.in { display: block !important; }
+}

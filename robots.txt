@@ -1,0 +1,14 @@
+---
+layout: none
+permalink: /robots.txt
+sitemap: false
+---
+User-agent: *
+{% if site.url == site.canonical_url -%}
+Allow: /
+Disallow: /_public/
+
+Sitemap: {{ '/sitemap.xml' | absolute_url }}
+{%- else -%}
+Disallow: /
+{%- endif %}

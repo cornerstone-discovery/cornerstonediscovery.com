@@ -1,0 +1,210 @@
+# Every form on the site, ported field-for-field from the live Gravity Forms. Rendered by
+# _includes/components/form.html and submitted to form-worker/ (which emails the fields in this order).
+newsletter:
+  fields:
+  - type: html
+    text: FOR TECH NEWS IN & OUT OF THE COURTROOM
+  - type: email
+    label: Email
+    required: false
+    placeholder: Email
+    hide_label: true
+  - type: captcha
+  button: Subscribe Now
+  gravity_form_id: 2
+  live_pages: 114
+contact:
+  fields:
+  - type: text
+    label: Name
+    required: true
+  - type: text
+    label: Company Name
+    required: true
+  - type: email
+    label: Email
+    required: true
+  - type: tel
+    label: Phone
+    required: false
+  - type: textarea
+    label: Message
+    required: false
+  - type: captcha
+  button: Submit
+  gravity_form_id: 1
+  live_pages:
+  - contact
+  title: Contact Us
+  required_marker: '*'
+  legend: '" * " indicates required fields'
+lp_digital_forensics:
+  fields:
+  - type: name
+    label: Name
+    required: true
+    parts:
+    - First
+    - Last
+  - type: text
+    label: 'Firm Name:'
+    required: true
+  - type: email
+    label: Email
+    required: true
+  - type: tel
+    label: Phone
+    required: false
+  - type: checkboxes
+    label: 'Needs (Check all that apply):'
+    required: true
+    select_all: true
+    choices:
+    - Computer Forensics
+    - Cell Phone Forensics
+    - Data Acquisition/Retrieval
+    - Data Analysis
+    - Cell Phone Mapping
+    - Automotive Forensics
+    - Audio/Video Forensics
+    - Deceased Person’s Data
+    - Cyber Security Services
+    - Data Breach/Incident Response
+    - Wire Fraud
+    - Medical Data Breach
+    - Spyware Detection
+    - Digital Risk Management
+    - Online Identity Theft
+    - Penetration Testing Service
+    - Cyber Security Services
+    - IP Theft Investigations
+    - Business Partner Theft
+    - Disgruntled Employee
+    - Browsing History & Social Media Monitoring
+    - GPS Services
+    - CCTV/Security Footage Acquisition
+  - type: textarea
+    label: 'Notes or Specific Details:'
+    required: false
+  button: Submit
+  gravity_form_id: 6
+  live_pages:
+  - digital-forensics__lp
+  required_marker: (Required)
+lp_e_discovery:
+  fields:
+  - type: name
+    label: Name
+    required: true
+    parts:
+    - First
+    - Last
+  - type: text
+    label: 'Firm Name:'
+    required: true
+  - type: email
+    label: Email
+    required: true
+  - type: tel
+    label: Phone
+    required: false
+  - type: checkboxes
+    label: 'Needs (Check all that apply):'
+    required: true
+    select_all: true
+    choices:
+    - ECA (Early Case Assessment)
+    - ESI (Electronically Stored Information) Identification
+    - Data Preservation
+    - Data Conversion
+    - Data Hosting (Junto.net)
+    - ESI Collection
+    - ESI Protocol Assistance
+    - ESI Processing
+    - E-Discovery Review Services
+    - E-Discovery Production Assistance
+    - Scanning/Digitization
+  - type: textarea
+    label: 'Notes or Specific Details:'
+    required: false
+  button: Submit
+  gravity_form_id: 5
+  live_pages:
+  - e-discovery__lp
+  title: e-Discovery Services LP
+  required_marker: (Required)
+lp_litigation_support:
+  fields:
+  - type: name
+    label: Name
+    required: true
+    parts:
+    - First
+    - Last
+  - type: text
+    label: 'Firm Name:'
+    required: true
+  - type: email
+    label: Email
+    required: true
+  - type: tel
+    label: Phone
+    required: false
+  - type: checkboxes
+    label: 'Needs (Check all that apply):'
+    required: true
+    select_all: true
+    choices:
+    - Trial Prep
+    - In Court “Hot Seat” Technician
+    - Document & Exhibit Management
+    - Bate Stamping
+    - Exhibit Marking
+    - Witness Kits
+    - PowerPoint Strategy & Design (e.g., Opening/Closing/Demonstratives)
+    - Graphic Design
+    - File Converting & Standardization
+    - Audio Clipping
+    - Audio Analysis
+    - Audio Enhancement
+    - Video Clipping
+    - Video Analysis
+    - Video Enhancement
+    - Deposition Syncing
+    - Deposition Designations
+    - Optical Character Recognition (OCR)
+    - Scanning & Digitization
+    - Binder Printing
+    - Large Format Printing
+    - Trial Technology Rental
+    - War Room Coordination & Set-up
+  - type: textarea
+    label: 'Notes or Specific Details:'
+    required: false
+  button: Submit
+  gravity_form_id: 4
+  live_pages:
+  - litigation-support__lp
+  required_marker: (Required)
+lp_nacdl:
+  fields:
+  - type: text
+    label: Name
+    required: true
+  - type: email
+    label: Email
+    required: true
+  - type: tel
+    label: Phone
+    required: false
+  - type: textarea
+    label: Message
+    required: false
+  - type: captcha
+  button: Submit
+  gravity_form_id: 3
+  live_pages:
+  - nacdl
+  title: NACDL Form
+  required_marker: '*'
+  legend: '" * " indicates required fields'

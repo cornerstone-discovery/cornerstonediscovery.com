@@ -1,0 +1,17 @@
+{
+  "name": "cornerstone-contact",
+  "private": true,
+  "type": "module",
+  "description": "Contact-form endpoint for cornerstonediscovery.com (Cloudflare Worker): reCAPTCHA + Mailgun.",
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\"",
+    "dev": "node dev-server.mjs",
+    "login": "wrangler login",
+    "secrets": "wrangler secret bulk secrets.json",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}

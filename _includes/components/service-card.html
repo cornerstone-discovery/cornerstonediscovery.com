@@ -1,0 +1,7 @@
+{%- comment -%} usage: {% include components/service-card.html service=svc %} (markup as on the live site) {%- endcomment -%}
+<div class="text-center component">
+  <img src="{{ include.service.icon | relative_url }}" alt="{{ include.service.icon_alt }}" width="100" height="100" loading="lazy" decoding="async">
+  <div class="h3">{{ include.service.title }}</div>
+  <p>{{ include.service.blurb }}</p>
+  <a class="btn btn-primary" href="{{ include.service.url | relative_url }}" role="button">More<span class="sr-only"> about {{ include.service.title }}</span></a>
+</div>
