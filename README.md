@@ -57,8 +57,8 @@ analytics. Full checklist in [DEPLOY.md](DEPLOY.md).
 ## Editing content
 
 * **Pages**: edit the page's `index.html`. Sub-pages (`/e-discovery/early-case-assessment/`) with the same
-  `service` as their parent are listed automatically at the bottom of it ("More … Services"); set `nav_title`
-  for a shorter card label. The main nav (`_data/nav.yml`) lists top-level sections only.
+  `service` as their parent get tabs along the bottom of the hero automatically (Overview + each sub-page,
+  on the parent and every sub-page); set `nav_title` for a shorter tab label. The main nav (`_data/nav.yml`) lists top-level sections only.
 * **Posts**: add `_posts/YYYY-MM-DD-slug.md` with `title`, `author`, `categories`, `tags`, `image`, `description`.
 * **Team**: `_data/team.yml`. **Nav**: `_data/nav.yml`.
 * **Offices**: `_data/locations.yml` feeds the footer, contact page, "Our Offices" band and structured data.

@@ -1,0 +1,31 @@
+{%- comment -%}
+Section tabs along the bottom of the hero: the service's main page ("Overview") plus its sub-pages (same
+`service`, one level down), current page marked. Shown on the main page and on every sub-page; renders
+nothing when the service has no sub-pages. A page's tab label is its nav_title, else its title.
+{%- endcomment -%}
+{%- assign svc = site.data.services | where: "key", page.service | first %}
+{%- if svc %}
+{%- assign root = site.pages | where: "url", svc.url | first %}
+{%- assign kids = "" | split: "" %}
+{%- for p in site.pages %}
+  {%- if p.service != page.service or p.url == svc.url or p.layout != "page" %}{% continue %}{% endif %}
+  {%- assign prefix = p.url | slice: 0, svc.url.size %}
+  {%- if prefix != svc.url %}{% continue %}{% endif %}
+  {%- assign rest = p.url | remove_first: svc.url | split: "/" %}
+  {%- if rest.size == 1 %}{% assign kids = kids | push: p %}{% endif %}
+{%- endfor %}
+{%- if kids.size > 0 %}
+{%- assign kids = kids | sort: "title" %}
+{%- assign root_label = root.nav_title | default: root.title %}
+<nav class="section-tabs" aria-label="{{ root_label }} pages">
+  <div class="container">
+    <ul>
+      <li><a href="{{ svc.url | relative_url }}"{% if page.url == svc.url %} aria-current="page"{% endif %}><span class="hidden-xs">{{ root_label }} </span>Overview</a></li>
+      {%- for p in kids %}
+      <li><a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>{{ p.nav_title | default: p.title }}</a></li>
+      {%- endfor %}
+    </ul>
+  </div>
+</nav>
+{%- endif %}
+{%- endif %}

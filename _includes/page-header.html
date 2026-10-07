@@ -1,5 +1,6 @@
 {%- comment -%}
-Hero header used by every interior page (and the blog), markup identical to the live theme.
+Interior page header (every page but home and landing pages): a fixed-height photo band with the nav and
+section tabs, then the headline on white below it (styles: .interior-header in _sass/_site.scss).
   page.header_image     background image (ported from the ACF "header image"); include.image overrides
   page.header_position  CSS background-position (default "center center")
   page.header_class     legacy class (about / digitalforensics / ediscovery / liitgationsupport / trialsupport / contact)
@@ -8,11 +9,13 @@ Hero header used by every interior page (and the blog), markup identical to the 
   include.text          headline override (blog archives, posts)
   include.link          wrap the headline in a link (posts link the "Blog" banner back to /blog/)
   include.as_div        same as page.hero_as_div
+  include.section_tabs  tabs along the bottom for the service's own pages (components/section-nav.html)
 {%- endcomment -%}
 {%- assign bg = include.image | default: page.header_image | default: include.default_image -%}
 {%- if page.hero_as_div or include.as_div %}{% assign htag = 'div class="h1"' %}{% assign hclose = 'div' %}{% else %}{% assign htag = 'h1' %}{% assign hclose = 'h1' %}{% endif -%}
-<div class="page-header interior-header {{ page.header_class }}"{% if bg %} style="background-image: url({{ bg | relative_url }}); background-position: {{ include.position | default: page.header_position | default: 'center center' }}"{% endif %}>
+<div class="page-header interior-header {{ page.header_class }}">
   <div class="titlebg">
+    <div class="hero-photo"{% if bg %} style="background-image: url({{ bg | relative_url }}); background-position: {{ include.position | default: page.header_position | default: 'center center' }}"{% endif %}></div>
     {% include nav.html %}
     <div class="container">
       {% if include.link %}<a href="{{ include.link | relative_url }}">{% endif %}<{{ htag }}>
@@ -25,5 +28,6 @@ Hero header used by every interior page (and the blog), markup identical to the 
         {%- endif -%}
       </{{ hclose }}>{% if include.link %}</a>{% endif %}
     </div>
+    {%- if include.section_tabs %}{% include components/section-nav.html %}{% endif %}
   </div>
 </div>

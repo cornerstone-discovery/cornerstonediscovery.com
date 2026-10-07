@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{% include page-header.html default_image="/assets/i/aboutbg.jpg" %}
+{% include page-header.html default_image="/assets/i/aboutbg.jpg" section_tabs=true %}
 <section class="content">
   <div class="container">
     <div class="row">
@@ -13,7 +13,6 @@ layout: default
         <hr class="blurb-rule">
         {%- endif %}
         {{ content }}
-        {% include components/subpages.html %}
         {%- if page.show_form %}{% unless content contains 'class="contact-form"' %}
         <hr>
         {% include components/contact-form.html heading="Interested in Our Services? Have Questions?" intro="Please fill out the form below and you&rsquo;ll hear from us ASAP." %}
