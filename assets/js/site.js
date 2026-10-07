@@ -1,5 +1,5 @@
 // Site behaviour, no dependencies (replaces jQuery + bootstrap.js):
-// mobile nav, About Us accordion, testimonial carousel, click-to-load maps, lazy reCAPTCHA,
+// mobile nav, About Us accordion, testimonial carousel, lazy reCAPTCHA,
 // GA4 key events, and the contact/newsletter/landing-page forms.
 (function () {
   'use strict';
@@ -90,20 +90,6 @@
     carousel.addEventListener('focusout', start);
     document.addEventListener('visibilitychange', function () { if (document.hidden) { stop(); } else { start(); } });
     start();
-  });
-
-  // ---- maps: load the Google iframe only when asked (no third-party request on page load)
-  document.addEventListener('click', function (e) {
-    var btn = e.target.closest('.office-map-load');
-    if (!btn) { return; }
-    var box = btn.parentNode;
-    var iframe = document.createElement('iframe');
-    iframe.src = box.getAttribute('data-map-src');
-    iframe.title = btn.textContent.trim();
-    iframe.loading = 'lazy';
-    iframe.referrerPolicy = 'no-referrer-when-downgrade';
-    iframe.allowFullscreen = true;
-    box.replaceChild(iframe, btn);
   });
 
   // ---- GA4 key events (no-ops when analytics isn't configured)

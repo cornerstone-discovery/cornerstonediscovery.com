@@ -1,6 +1,7 @@
 {%- comment -%}
 "Our Offices" band: both locations side by side, each with address, phone, email, directions and a map.
-Maps are click-to-load (no Google request until the visitor asks), so the band costs nothing on page load.
+Maps are static images made by tools/static-maps.py from OpenStreetMap (no API key, no third-party request);
+each links to the office on Google Maps.
   include.heading   optional heading override
 {%- endcomment -%}
 <section class="offices" id="offices" aria-labelledby="offices-heading">
@@ -21,11 +22,10 @@ Maps are click-to-load (no Google request until the visitor asks), so the band c
             <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&amp;destination={{ q }}" target="_blank" rel="noopener">Get Directions</a>
             {% if loc.page %}<a class="btn btn-secondary" href="{{ loc.page | relative_url }}">Areas We Serve</a>{% endif %}
           </p>
-          <div class="office-map" data-map-src="https://www.google.com/maps?q={{ q }}&amp;output=embed">
-            <button type="button" class="office-map-load">
-              <span>Show map: {{ loc.city }}, {{ loc.region }}</span>
-            </button>
-          </div>
+          <a class="office-map" href="https://www.google.com/maps/search/?api=1&amp;query={{ q }}" target="_blank" rel="noopener" aria-label="Open {{ loc.name }} in Google Maps">
+            <picture><source type="image/webp" srcset="{{ '/assets/i/map-' | append: loc.key | append: '.webp' | relative_url }}"><img src="{{ '/assets/i/map-' | append: loc.key | append: '.jpg' | relative_url }}" alt="Map: {{ loc.street }}, {{ loc.city }}, {{ loc.region }}" width="1040" height="416" loading="lazy" decoding="async"></picture>
+          </a>
+          <p class="map-credit">Map &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors</p>
         </div>
       </div>
       {%- endfor %}
