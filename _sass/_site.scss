@@ -368,6 +368,9 @@ details.faq {
   .dots { background: none; }
 }
 
+// buttons keep white text everywhere: the theme's `.sidebar a` (black, lime on hover) outranks .btn-primary
+.sidebar a.btn, .sidebar a.btn:hover, .sidebar a.btn:focus { color: #fff; }
+
 // sidebar widgets: headings use the site's sidebar heading style instead of the dark bars
 .sidebar.blog-sidebar {
   .widget { margin-bottom: 40px; padding: 0; background: none; }
