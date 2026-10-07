@@ -21,7 +21,7 @@ wp_id: 416
 
 ![](/uploads/2021/01/gavel-pc.webp)
 
-Our very own Director of Operations, Jason Silva, along with Jack Berlin, CEO and president of [Accusoft,](https://www.accusoft.com/) was recently featured in Legal IT Professionals Column on "[The Shifting Role of eDiscovery in the Legal Space.](https://www.legalitprofessionals.com/legal-it-columns/65-guest-columns/9050-the-shifting-role-of-ediscovery-in-the-legal-space)" The article discusses the shifting role of eDiscovery in criminal proceedings and why firms, big and small, are making the switch.
+Our very own Director of Operations, Jason Silva, along with Jack Berlin, CEO and president of [Accusoft,](https://www.accusoft.com/) was recently featured in Legal IT Professionals Column on "[The Shifting Role of eDiscovery in the Legal Space.](https://web.archive.org/web/20161027223107/https://www.legalitprofessionals.com/legal-it-columns/65-guest-columns/9050-the-shifting-role-of-ediscovery-in-the-legal-space)" The article discusses the shifting role of eDiscovery in criminal proceedings and why firms, big and small, are making the switch.
 
 *Here are three reasons why there has never been a better time for law firms to invest in an eDiscovery platform.*
 
@@ -37,7 +37,7 @@ In today’s virtual environment, manual sorting and categorizing of data is no 
 
 A damaged hard drive may represent the loss of billions of pieces of integral data. Deleting an email or a document, is unethical and illegal, but easy to happen by accident. With the availability of tools to identify and preserve data, firms could now be at risk of facing spoliation charges in the result of late eDiscovery adoption. Lawyers now have a strict responsibility to employ relevant technology in their trial practice, requiring a lawyer to “keep abreast of changes in the law and its practice, including the benefits and risks associated with relevant technology.”
 
-[Read more](https://www.legalitprofessionals.com/legal-it-columns/65-guest-columns/9050-the-shifting-role-of-ediscovery-in-the-legal-space) about this article as featured in Legal IT Professionals Column.
+[Read more](https://web.archive.org/web/20161027223107/https://www.legalitprofessionals.com/legal-it-columns/65-guest-columns/9050-the-shifting-role-of-ediscovery-in-the-legal-space) about this article as featured in Legal IT Professionals Column.
 
 Whether your firm has 2 people or 200, [Cornerstone Discovery](/) can help with all of your digital forensic, e-discovery, litigation, and trial support needs. [Contact our technology experts today](/contact/).
 
