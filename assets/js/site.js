@@ -10,12 +10,31 @@
 
   // ---- nav: mark the current section (the server marks most pages; this catches the rest)
   var here = window.location.pathname;
-  $$('#menu-primary-menu a').forEach(function (a) {
+  $$('.site-nav-link').forEach(function (a) {
     var href = a.getAttribute('href');
     if (href && href !== '/' && here.indexOf(href) === 0) { a.parentNode.classList.add('active'); }
   });
 
-  // ---- Bootstrap-style collapse: mobile nav toggle and the About Us team accordion
+  // ---- nav: the menu button opens the mobile panel; Escape or a click outside the header closes it
+  var navToggle = $('.nav-toggle');
+  var nav = $('#site-nav');
+  function setNavOpen(open) {
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    nav.classList.toggle('is-open', open);
+  }
+  if (navToggle && nav) {
+    navToggle.addEventListener('click', function () {
+      setNavOpen(navToggle.getAttribute('aria-expanded') !== 'true');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') { setNavOpen(false); navToggle.focus(); }
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.main-nav-top')) { setNavOpen(false); }
+    });
+  }
+
+  // ---- Bootstrap-style collapse: the About Us team accordion
   function setOpen(target, open, trigger) {
     target.classList.toggle('in', open);
     if (trigger) {

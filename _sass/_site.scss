@@ -1,7 +1,6 @@
 // ==========================================================================
 // Site layer: what the static site adds on top of the live theme (_theme + _theme-custom).
-// Nothing here restyles the shared header/nav/hero: those come straight from the live CSS
-// so they render pixel-for-pixel like the WordPress site.
+// The header/nav is ours (below); the hero still comes straight from the live CSS.
 // ==========================================================================
 
 $lime: #8bc53f;
@@ -22,6 +21,141 @@ a:focus-visible, button:focus-visible, .btn:focus-visible, summary:focus-visible
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+// ==========================================================================
+// Header (_includes/nav.html): contact bar, then logo + nav on one row. From $nav-bp up every item sits on
+// one line with Contact Us as the button at the end; below it the nav is a drop-down panel behind the
+// menu button (toggled by assets/js/site.js).
+// ==========================================================================
+$nav-bp: 992px;
+
+.main-nav-top {
+  position: relative; z-index: 9999;
+  font-family: 'Roboto Condensed', sans-serif;
+  // a little shade behind the white nav so it reads on light hero photos
+  background: linear-gradient(to bottom, rgba(10, 20, 28, .45), rgba(10, 20, 28, 0));
+}
+
+.topcontactbar {
+  background: url(../i/bg_topnav.png);
+  color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: .03em;
+  .container { display: flex; justify-content: flex-end; align-items: center; gap: 18px; min-height: 38px; }
+  .container::before, .container::after { display: none; } // Bootstrap's clearfix would become flex items
+  a { color: #fff; }
+  a:hover, a:focus { color: $turq; text-decoration: none; }
+}
+.header-phone {
+  font-size: 15px;
+  b { font-weight: 400; margin-right: 4px; }
+  a { font-weight: 700; }
+}
+.header-socials {
+  display: flex; gap: 10px;
+  a { display: flex; }
+  i { font-size: 20px; }
+}
+
+.site-header-main {
+  display: flex; align-items: center; justify-content: space-between; gap: 30px;
+  padding-top: 18px; padding-bottom: 18px;
+  &::before, &::after { display: none; }
+}
+.site-logo {
+  flex: none;
+  img { display: block; width: 230px; height: auto; }
+}
+.site-nav-list { list-style: none; margin: 0; padding: 0; }
+.site-nav-link, .site-nav-button {
+  font-family: 'Roboto Condensed', sans-serif; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .04em; white-space: nowrap;
+  &:hover, &:focus { text-decoration: none; }
+}
+.site-nav-button {
+  background: $turq; color: #fff; border-radius: 3px;
+  transition: background-color .2s ease;
+  &:hover, &:focus { background: $lime; color: #fff; }
+}
+
+@media (min-width: $nav-bp) {
+  .nav-toggle { display: none; }
+  .site-nav-list { display: flex; align-items: center; }
+  .site-nav-item { display: flex; }
+  .site-nav-link {
+    position: relative; display: block; padding: 12px 11px;
+    color: #fff; font-size: 15px; text-shadow: 0 1px 3px rgba(0, 0, 0, .7);
+    // underline: turquoise on hover, lime for the current section
+    &::after {
+      content: ''; position: absolute; left: 11px; right: 11px; bottom: 4px; height: 3px;
+      background: $turq; transform: scaleX(0); transform-origin: left center; transition: transform .2s ease;
+    }
+    &:hover, &:focus { color: #fff; }
+    &:hover::after, &:focus-visible::after { transform: scaleX(1); }
+  }
+  .active > .site-nav-link::after { transform: scaleX(1); background: $lime; }
+
+  .site-nav-cta { margin-left: 14px; }
+  .site-nav-button {
+    display: block; padding: 11px 22px; font-size: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .3);
+  }
+}
+
+// the 970px container can't hold the full row at full size: a smaller logo and tighter items
+@media (min-width: $nav-bp) and (max-width: 1199px) {
+  .site-header-main { gap: 16px; }
+  .site-logo img { width: 180px; }
+  .site-nav-link { font-size: 14px; padding-left: 7px; padding-right: 7px; &::after { left: 7px; right: 7px; } }
+  .site-nav-cta { margin-left: 8px; }
+  .site-nav-button { padding: 10px 16px; font-size: 14px; }
+}
+
+@media (max-width: $nav-bp - 1) {
+  .site-logo img { width: 190px; }
+  .nav-toggle {
+    display: flex; align-items: center; justify-content: center; flex: none;
+    width: 46px; height: 46px; padding: 0; cursor: pointer;
+    color: #fff; background: rgba(33, 54, 69, .55); border: 1px solid rgba(255, 255, 255, .4); border-radius: 4px;
+    &:hover, &[aria-expanded="true"] { background: $navy; border-color: $turq; }
+  }
+  // three bars that turn into an X while the menu is open
+  .nav-toggle-bars, .nav-toggle-bars::before, .nav-toggle-bars::after {
+    display: block; width: 22px; height: 2px; background: currentColor; border-radius: 1px;
+    transition: transform .2s ease, background-color .2s ease;
+  }
+  .nav-toggle-bars { position: relative; }
+  .nav-toggle-bars::before, .nav-toggle-bars::after { content: ''; position: absolute; left: 0; }
+  .nav-toggle-bars::before { transform: translateY(-7px); }
+  .nav-toggle-bars::after { transform: translateY(7px); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bars {
+    background-color: transparent;
+    &::before { transform: rotate(45deg); }
+    &::after { transform: rotate(-45deg); }
+  }
+
+  // the panel hangs under the whole header, full width
+  .site-nav {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    max-height: calc(100vh - 150px); overflow-y: auto;
+    background: $navy; border-top: 3px solid $lime; box-shadow: 0 16px 30px rgba(0, 0, 0, .35);
+    &.is-open { display: block; }
+  }
+  .site-nav-list { max-width: 720px; margin: 0 auto; padding: 6px 15px 22px; }
+  .site-nav-item { border-bottom: 1px solid rgba(255, 255, 255, .12); }
+  .site-nav-link {
+    display: block; padding: 15px 0; color: #fff; font-size: 17px;
+    &:hover, &:focus { color: $turq; }
+  }
+  .active > .site-nav-link { color: $lime; }
+  .site-nav-cta { margin-top: 20px; }
+  .site-nav-button { display: block; padding: 14px; text-align: center; font-size: 17px; }
+}
+@media (max-width: 767px) {
+  .topcontactbar { font-size: 12px; .container { gap: 12px; } }
+  .header-phone { font-size: 13px; }
+  .header-socials i { font-size: 16px; }
+  .site-header-main { padding-top: 14px; padding-bottom: 14px; }
+  .site-logo img { width: 160px; }
 }
 
 // ---- blog banner: the live custom CSS turns the dot overlay off on .blog/.single-post/.archive pages because
@@ -48,6 +182,21 @@ section.content hr.blurb-rule { margin: 30px 0; }
 .content img { max-width: 100%; height: auto; }
 .embed-responsive { margin-bottom: 15px; }
 .spacer { height: 30px; }
+
+// "More <service> Services": a service's own pages, listed at the end of the service page
+.subpages {
+  margin: 40px 0 30px; padding: 25px 25px 20px; background: $mist; border-left: 4px solid $lime;
+  .subpages-title { margin: 0 0 15px; font-size: 22px; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+  a {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 100%;
+    padding: 14px 16px; background: #fff; border-left: 3px solid transparent; box-shadow: 0 1px 3px rgba(33, 54, 69, .15);
+    color: $navy; font-family: 'Roboto Condensed', sans-serif; font-size: 16px; font-weight: 700; text-transform: uppercase; line-height: 1.25;
+    transition: border-color .2s ease;
+  }
+  a:hover, a:focus { border-left-color: $lime; color: $navy; text-decoration: none; }
+  i { flex: none; color: $turq; font-size: 12px; }
+}
 
 // "Read More" disclosure on the home page (the live site used a JS accordion; <details> needs no script)
 section.content details:not(.faq) {
@@ -219,8 +368,3 @@ details.faq {
 
 // ---- team accordion ----
 .panel-heading img { width: 100%; }
-
-// ---- mobile nav: Bootstrap's collapse without bootstrap.js ----
-@media (max-width: 767px) {
-  .navbar-collapse.collapse.in { display: block !important; }
-}

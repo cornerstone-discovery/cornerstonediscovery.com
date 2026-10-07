@@ -1,11 +1,11 @@
-# Primary navigation (order matches the live site's menu). `class: menu-cta` renders as the highlighted button.
-- title: Digital <br>Forensics
+# Primary navigation, rendered by _includes/nav.html. Top-level sections only: each service's own pages are
+# listed on the service page (_includes/components/subpages.html), and the section stays highlighted on them.
+#   cta: true renders the item as the button at the end of the bar
+- title: Digital Forensics
   url: /digital-forensics/
 - title: E-Discovery
   url: /e-discovery/
-- title: Early Case<br> Assessment
-  url: /e-discovery/early-case-assessment/
-- title: Litigation <br>Support
+- title: Litigation Support
   url: /litigation-support/
 - title: Trial Support
   url: /trial-support/
@@ -15,4 +15,4 @@
   url: /blog/
 - title: Contact Us
   url: /contact/
-  class: menu-cta
+  cta: true

@@ -92,28 +92,6 @@ img.home-top-banner-image {
 	padding: 10px 20px;
 }
 
-.header-phone {
-	font-size: 2rem;
-}
-.header-socials a i {
-	font-size: 24px;
-}
-@media (min-width: 768px) {
-	#menu-primary-menu .menu-cta > a {
-		background-color: #50c5dc;
-		font-size: 1.6rem;
-		text-shadow: none;
-	}
-}
-@media (max-width: 767px) {
-	.header-phone {
-		font-size: 1.4rem;
-	}
-	.header-socials a i {
-		font-size: 14px;
-	}
-}
-
 .entry-featured-image img {
 	max-width: 100%;
 	height: auto;

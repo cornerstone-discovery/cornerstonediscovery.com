@@ -1,0 +1,25 @@
+{%- comment -%}
+"More <service> services": the pages one level below this one that belong to the same service
+(e.g. /e-discovery/early-case-assessment/ on /e-discovery/). Card label is page.nav_title, else page.title.
+{%- endcomment -%}
+{%- if page.service %}
+{%- assign subs = "" | split: "" %}
+{%- for p in site.pages %}
+  {%- if p.service != page.service or p.url == page.url or p.layout != "page" %}{% continue %}{% endif %}
+  {%- assign prefix = p.url | slice: 0, page.url.size %}
+  {%- if prefix != page.url %}{% continue %}{% endif %}
+  {%- assign rest = p.url | remove_first: page.url | split: "/" %}
+  {%- if rest.size == 1 %}{% assign subs = subs | push: p %}{% endif %}
+{%- endfor %}
+{%- if subs.size > 0 %}
+<div class="subpages">
+  <h2 class="subpages-title">More {{ page.nav_title | default: page.title }} Services</h2>
+  <ul>
+    {%- assign subs = subs | sort: "title" %}
+    {%- for p in subs %}
+    <li><a href="{{ p.url | relative_url }}">{{ p.nav_title | default: p.title }}<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a></li>
+    {%- endfor %}
+  </ul>
+</div>
+{%- endif %}
+{%- endif %}

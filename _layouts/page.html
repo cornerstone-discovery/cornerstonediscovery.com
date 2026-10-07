@@ -13,6 +13,7 @@ layout: default
         <hr class="blurb-rule">
         {%- endif %}
         {{ content }}
+        {% include components/subpages.html %}
         {%- if page.show_form %}{% unless content contains 'class="contact-form"' %}
         <hr>
         {% include components/contact-form.html heading="Interested in Our Services? Have Questions?" intro="Please fill out the form below and you&rsquo;ll hear from us ASAP." %}
