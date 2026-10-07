@@ -4,14 +4,16 @@
 Run after adding or replacing images (needs Python 3.10+ and Pillow, scikit-image, numpy):
 
     pip install pillow scikit-image numpy
-    python tools/images.py            # optimize + regenerate variants + manifest
-    python tools/images.py --dry-run  # report only
+    python tools/images.py               # regenerate WebP variants + manifest (originals untouched)
+    python tools/images.py --dry-run     # report only
+    python tools/images.py --recompress  # ALSO re-encode originals in place (lossy: don't use on photos)
 
 What it does, for every JPEG/PNG/WebP under uploads/ and assets/i/ (skipping icons/logos < 20 KB):
 
-1. Caps width at MAX_W px (1920; nothing on the site renders wider) and re-encodes the file in place, same
-   format and URL, at the smallest quality whose SSIM against the original is >= SSIM_MIN. Files are
-   only rewritten when that saves >= 10%, so re-running is a no-op.
+1. Only with --recompress: caps width at MAX_W px (1920) and re-encodes the file in place, same format and
+   URL, at the smallest quality whose SSIM against the original is >= SSIM_MIN (rewritten only when that
+   saves >= 10%). Off by default: re-encoding an already-compressed JPEG adds visible artifacts (it halved
+   every team photo in e560986), so uploaded originals are left exactly as uploaded.
 2. Writes WebP variants next to the original (`name.w480.webp`, `name.w960.webp`, and `name.webp` for
    JPEG/PNG), also SSIM-checked.
 3. Writes _data/images.json: {"/uploads/x.jpg": {"w":1568,"h":1047,"webp":[[480,"/uploads/x.w480.webp"],…]}}.
@@ -77,7 +79,7 @@ def url_of(p):
     return "/" + p.relative_to(ROOT).as_posix()
 
 
-def process(p, dry):
+def process(p, dry, recompress=False):
     raw = p.read_bytes()
     im = Image.open(io.BytesIO(raw))
     fmt = im.format
@@ -88,12 +90,12 @@ def process(p, dry):
     has_alpha = rgba.getextrema()[3][0] < 255
     im = rgba if has_alpha else im.convert("RGB")
     note = []
-    if im.width > MAX_W and not KEEP_SIZE.search(p.stem):
+    if recompress and im.width > MAX_W and not KEEP_SIZE.search(p.stem):
         im = im.resize((MAX_W, round(im.height * MAX_W / im.width)), Image.LANCZOS)
         note.append(f"resized to {MAX_W}w")
     ref = gray(im)
     data, q = best(im, fmt, ref)
-    if len(data) < len(raw) * 0.9 or note:
+    if recompress and (len(data) < len(raw) * 0.9 or note):
         note.append(f"{len(raw)//1024}->{len(data)//1024}KB q{q}")
         if not dry:
             p.write_bytes(data)
@@ -126,6 +128,7 @@ def process(p, dry):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--recompress", action="store_true", help="also re-encode originals in place (lossy)")
     args = ap.parse_args()
     manifest = {}
     saved = 0
@@ -139,7 +142,7 @@ def main():
                 continue
             before = p.stat().st_size
             try:
-                r = process(p, args.dry_run)
+                r = process(p, args.dry_run, args.recompress)
             except Exception as e:  # corrupt or unsupported file: leave it alone
                 print(f"skip {p.relative_to(ROOT)}: {e}", file=sys.stderr)
                 continue
