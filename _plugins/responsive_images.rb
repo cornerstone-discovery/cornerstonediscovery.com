@@ -57,7 +57,9 @@ module CornerstoneImages
       t = set_attr(t, "loading", "lazy") unless eager
       t = set_attr(t, "decoding", "async")
       variants = Array(info["webp"])
-      if variants.empty?
+      if variants.empty? || t =~ /\sdata-no-webp/i
+        # data-no-webp: serve the original file as-is (team photos: the WebP copies are visibly worse)
+        t = t.sub(/\s+data-no-webp/i, "")
         out << t
         next
       end
