@@ -5,7 +5,6 @@
 
 $lime: #8bc53f;
 $lime-text: #8cc542;
-$lime-on-white: #70a332; // closest to $lime that still reads on white (3:1, large text)
 $turq: #50c5dc;
 $navy: #213645;
 $slate: #335166;
@@ -197,7 +196,7 @@ $nav-item-h-md: 38px;
 .interior-header :is(h1, .h1) {
   position: relative; margin: 0; padding-bottom: 22px; border-bottom: 1px solid #dde3e6;
   color: $navy; font-size: 28px; font-weight: 300; line-height: 1.12; text-wrap: balance;
-  .emphasis { color: $lime-on-white; font-weight: 700; }
+  .emphasis { color: $lime; font-weight: 700; }
   // lime accent on the rule
   &::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 64px; height: 3px; background: $lime; }
   @media (min-width: 768px) { font-size: 36px; }
