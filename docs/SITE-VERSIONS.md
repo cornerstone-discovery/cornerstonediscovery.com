@@ -14,8 +14,11 @@ A **Site version: Now | New** bar sits in the bottom-right corner; the choice is
 `?ver=now` / `?ver=new` in a URL picks one. **Tags** shows the page's `<title>` and meta description for the
 version on screen, with character counts.
 
-Production builds (CI) publish exactly one version, `copy_version` in `_config.yml` (currently `now`), so the
-live HTML carries no trace of the other. To preview New as a production build:
+The github.io preview (https://cornerstone-discovery.github.io/cornerstonediscovery.com/) has the same switcher
+while `versions_switcher: true`, so the test can be shared; add `?ver=new` to a link to open it on New. The preview
+is `noindex`, its robots.txt disallows everything and it runs no analytics. The switcher is never built for the
+real domain (the plugin ignores `versions_switcher` when `url` is `canonical_url`), which publishes exactly one
+version, `copy_version` in `_config.yml` (currently `now`), with no trace of the other. To preview New as a production build:
 
 ```bash
 printf 'copy_version: new\n' > _cmp/new.yml

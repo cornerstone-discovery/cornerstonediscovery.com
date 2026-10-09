@@ -8,10 +8,10 @@
 #                                            optionally, a whole new body (leave it empty to keep the page's)
 #   version: new  (in a page's front matter) a page that exists only in the New version
 #
-# Production builds publish exactly one version, so their HTML carries no trace of the other. Local builds
-# (JEKYLL_ENV=development, or versions_switcher: true) publish both: a page with a New body renders the two
-# bodies wrapped in div.v-now / div.v-new, page.versions.new holds the New front matter for the head and
-# hero, and the switcher in the corner flips html[data-ver] between them.
+# Production builds for the real domain publish exactly one version, so their HTML carries no trace of the
+# other. Local builds (JEKYLL_ENV=development), and the github.io preview when versions_switcher: true, publish
+# both: a page with a New body renders the two bodies wrapped in div.v-now / div.v-new, page.versions.new holds
+# the New front matter for the head and hero, and the switcher in the corner flips html[data-ver] between them.
 require "yaml"
 
 module SiteVersions
@@ -28,7 +28,9 @@ end
 
 Jekyll::Hooks.register :site, :post_read do |site|
   live = site.config["copy_version"].to_s == "new" ? "new" : "now"
-  both = Jekyll.env == "development" || site.config["versions_switcher"] == true
+  # The switcher never reaches the real domain: versions_switcher only applies while url isn't canonical_url.
+  preview = site.config["versions_switcher"] == true && site.config["url"] != site.config["canonical_url"]
+  both = Jekyll.env == "development" || preview
   site.config["versions_both"] = both
 
   # Pages that belong to one version only.

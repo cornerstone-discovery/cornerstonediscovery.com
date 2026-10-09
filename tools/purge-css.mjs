@@ -16,7 +16,7 @@ const [result] = await new PurgeCSS().purge({
   safelist: {
     standard: ['in', 'collapse', 'collapsing', 'collapsed', 'active', 'next', 'prev', 'left', 'right', 'item',
       'open', 'is-open', 'hidden', 'alert', 'alert-success', 'alert-danger', 'fa-chevron-up', 'fa-chevron-down',
-      'sr-only', 'sr-only-focusable'],
+      'sr-only', 'sr-only-focusable', 'v-now', 'v-new'],
     deep: [/^carousel/],
     greedy: [/carousel-inner/],
   },

@@ -6,8 +6,10 @@ description: >-
   digital forensics, e-Discovery, litigation and trial support services in PA, NJ, NY, DE and nationwide.
 # Site versions (_plugins/site_versions.rb, docs/SITE-VERSIONS.md): "now" is the copy that is live today,
 # "new" the nationwide-positioning rewrite. Production publishes copy_version; local builds show both with a
-# Now/New switcher in the corner (versions_switcher: true shows it on other builds too).
+# Now/New switcher in the corner. versions_switcher: true does the same on the github.io preview (noindex),
+# never on the real domain.
 copy_version: now
+versions_switcher: true
 versions:
   new:
     description: >-
