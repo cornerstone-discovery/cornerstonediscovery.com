@@ -8,7 +8,10 @@
           </div>
           <div class="col-xs-9 col-sm-9">
             <div class="h3">About Cornerstone Discovery</div>
-            <p>Cornerstone Discovery was founded in {{ site.company.founded }} and is located at the Navy Yard in Philadelphia, Pennsylvania. We are proud to support clients both locally and nationally with certified technical experts and experienced trial technicians to help you revolutionize your case in and out of the courtroom.</p>
+            {%- capture about_now %}<p>Cornerstone Discovery was founded in {{ site.company.founded }} and is located at the Navy Yard in Philadelphia, Pennsylvania. We are proud to support clients both locally and nationally with certified technical experts and experienced trial technicians to help you revolutionize your case in and out of the courtroom.</p>{% endcapture %}
+            {%- capture about_new %}<p>Founded in {{ site.company.founded }}, Cornerstone Discovery is a Philadelphia-based digital forensics, e-Discovery and trial support firm serving attorneys nationwide, with certified technical experts and experienced trial technicians in and out of the courtroom.</p>
+            <p class="footer-specialties"><a href="{{ '/digital-forensics/cell-site-analysis/' | relative_url }}">Cell Site Analysis</a> &middot; <a href="{{ '/digital-forensics/expert-witness-testimony/' | relative_url }}">Expert Testimony</a> &middot; <a href="{{ '/criminal-defense/' | relative_url }}">Criminal Defense</a></p>{% endcapture %}
+            {% include versioned.html now=about_now new=about_new tag="div" %}
             <p><a href="{{ '/about-us/' | relative_url }}">Learn More<span class="sr-only"> about Cornerstone Discovery</span></a></p>
           </div>
         </div>

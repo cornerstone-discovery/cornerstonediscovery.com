@@ -1,0 +1,41 @@
+{%- comment -%}
+LOCAL SITE-VERSION PREVIEW (local builds only; see _plugins/site_versions.rb). Flips html[data-ver] between
+"now" (live copy) and "new" (nationwide rewrite), remembers the choice across pages, and shows the page's
+<title> and meta description for the version on screen. Remove with the losing version.
+{%- endcomment -%}
+{%- if page.version == "new" %}
+<div class="ver-only v-now" role="note">This page exists only in the <b>New</b> version. Switch to New to see the site the way visitors would reach it.</div>
+{%- endif %}
+<div class="ab-switch ver-switch" role="group" aria-label="Site version preview">
+  <span>Site version:</span>
+  <button type="button" data-v="now">Now</button>
+  <button type="button" data-v="new">New</button>
+  <button type="button" class="ver-info" aria-expanded="false" aria-controls="ver-panel">Tags</button>
+  <div id="ver-panel" class="ver-panel" hidden>
+    <p><b>Title</b> <span data-f="title"></span> <small data-f="tlen"></small></p>
+    <p><b>Description</b> <span data-f="description"></span> <small data-f="dlen"></small></p>
+  </div>
+</div>
+<script>(function () {
+  var root = document.documentElement, meta = {};
+  try { meta = JSON.parse(document.getElementById('ver-meta').textContent); } catch (e) {}
+  var panel = document.getElementById('ver-panel'), info = document.querySelector('.ver-info');
+  function field(name, text) { panel.querySelector('[data-f="' + name + '"]').textContent = text; }
+  function show(v) {
+    root.setAttribute('data-ver', v);
+    try { localStorage.setItem('ver', v); } catch (e) {}
+    document.querySelectorAll('.ver-switch [data-v]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.v === v ? 'true' : 'false'); });
+    var m = meta[v] || {};
+    if (m.title) { document.title = m.title; }
+    var d = document.querySelector('meta[name="description"]');
+    if (d && m.description) { d.setAttribute('content', m.description); }
+    field('title', m.title || ''); field('tlen', (m.title || '').length + ' chars');
+    field('description', m.description || ''); field('dlen', (m.description || '').length + ' chars');
+    history.replaceState(null, '', location.pathname + '?ver=' + v + location.hash);
+  }
+  document.querySelectorAll('.ver-switch [data-v]').forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.v); }); });
+  info.addEventListener('click', function () {
+    var open = panel.hidden; panel.hidden = !open; info.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  show(root.getAttribute('data-ver') === 'new' ? 'new' : 'now');
+})();</script>

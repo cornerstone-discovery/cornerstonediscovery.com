@@ -8,6 +8,15 @@ User-agent: *
 Allow: /
 Disallow: /_public/
 
+# AI search and assistants (ChatGPT, Claude, Perplexity), named so a later rule can't shut them out by accident
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+Allow: /
+Disallow: /_public/
+
 Sitemap: {{ '/sitemap.xml' | absolute_url }}
 {%- else -%}
 Disallow: /

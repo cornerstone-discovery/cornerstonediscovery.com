@@ -1,0 +1,15 @@
+{%- comment -%}
+Cards linking to the expert profile pages (version: new), in About Us team order: everyone in _data/team.yml
+with a `profile` page. Used by the New versions of About Us and the expert-testimony page.
+{%- endcomment -%}
+<div class="expert-grid">
+  {%- for person in site.data.team %}
+  {%- if person.profile %}
+  <a href="{{ person.profile | relative_url }}">
+    <img src="{{ person.image | relative_url }}" alt="{{ person.first }} {{ person.last }}" width="1000" height="353" loading="lazy" data-no-webp>
+    <span class="expert-name">{{ person.first }} {{ person.last }}</span>
+    <span class="expert-role">{{ person.profile_role | default: person.position }}</span>
+  </a>
+  {%- endif %}
+  {%- endfor %}
+</div>

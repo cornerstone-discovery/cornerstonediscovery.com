@@ -56,6 +56,10 @@ analytics. Full checklist in [DEPLOY.md](DEPLOY.md).
 
 ## Editing content
 
+* **Two site versions** (Now = live copy, New = nationwide rewrite) are in progress: local builds show both with a
+  switcher in the corner, production publishes `copy_version`. A page's New copy lives in `_versions/new/`, so
+  edit both while the test runs. See [docs/SITE-VERSIONS.md](docs/SITE-VERSIONS.md).
+
 * **Pages**: edit the page's `index.html`. Sub-pages (`/e-discovery/early-case-assessment/`) with the same
   `service` as their parent get tabs along the bottom of the hero automatically (Overview + each sub-page,
   on the parent and every sub-page); set `nav_title` for a shorter tab label. The main nav (`_data/nav.yml`) lists top-level sections only.

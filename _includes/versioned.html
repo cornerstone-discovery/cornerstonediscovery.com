@@ -1,0 +1,13 @@
+{%- comment -%}
+Template text that differs between site versions (_plugins/site_versions.rb): prints include.now or
+include.new, whichever version this build publishes; local builds print both, wrapped in .v-now / .v-new
+(include.tag, default span, sets the wrapper element).
+{%- endcomment -%}
+{%- assign vtag = include.tag | default: "span" -%}
+{%- if site.versions_both -%}
+{%- if include.now != blank %}<{{ vtag }} class="v-now">{{ include.now }}</{{ vtag }}>{% endif %}{% if include.new != blank %}<{{ vtag }} class="v-new">{{ include.new }}</{{ vtag }}>{% endif %}
+{%- elsif site.copy_version == "new" -%}
+{{ include.new }}
+{%- else -%}
+{{ include.now }}
+{%- endif -%}

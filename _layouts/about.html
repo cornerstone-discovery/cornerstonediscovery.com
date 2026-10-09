@@ -28,6 +28,10 @@ layout: default
             <div id="bio-{{ pid }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-{{ pid }}">
               <div class="panel-body">
                 {{ person.bio }}
+                {%- if person.profile %}
+                {%- capture profile_link %}<p class="team-profile-link"><a href="{{ person.profile | relative_url }}">Full profile: credentials and expertise &rarr;</a></p>{% endcapture %}
+                {% include versioned.html new=profile_link tag="div" %}
+                {%- endif %}
               </div>
             </div>
           </div>

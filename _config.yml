@@ -4,6 +4,15 @@ tagline: A Single Source for all of Your Criminal & Civil Litigation Support Nee
 description: >-
   Cornerstone Discovery is an award-winning litigation support firm in Philadelphia, PA providing
   digital forensics, e-Discovery, litigation and trial support services in PA, NJ, NY, DE and nationwide.
+# Site versions (_plugins/site_versions.rb, docs/SITE-VERSIONS.md): "now" is the copy that is live today,
+# "new" the nationwide-positioning rewrite. Production publishes copy_version; local builds show both with a
+# Now/New switcher in the corner (versions_switcher: true shows it on other builds too).
+copy_version: now
+versions:
+  new:
+    description: >-
+      Cornerstone Discovery is a Philadelphia-based digital forensics, e-Discovery and trial support firm
+      serving attorneys nationwide.
 url: https://cornerstonediscovery.com
 baseurl: ""
 # The production domain. Tracking runs and indexing is allowed only when the build's url matches this,

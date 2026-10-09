@@ -21,10 +21,15 @@ section tabs, then the headline on white below it (styles: .interior-header in _
       {% if include.link %}<a href="{{ include.link | relative_url }}">{% endif %}<{{ htag }}>
         {%- if include.text -%}
           {{ include.text }}
-        {%- elsif page.heading -%}
-          {{ page.heading.pre }}{% if page.heading.emphasis %} <span class="emphasis">{{ page.heading.emphasis }} </span>{% endif %}{% if page.heading.post %}{% unless page.heading.emphasis %} {% endunless %}{{ page.heading.post }}{% endif %}
         {%- else -%}
-          {{ page.h1 | default: page.title }}
+          {%- capture hero_now %}{% include hero-heading.html heading=page.heading h1=page.h1 title=page.title %}{% endcapture -%}
+          {%- assign nv = page.versions.new -%}
+          {%- if nv.heading or nv.h1 -%}
+            {%- capture hero_new %}{% include hero-heading.html heading=nv.heading h1=nv.h1 title=page.title %}{% endcapture -%}
+            <span class="v-now">{{ hero_now }}</span><span class="v-new">{{ hero_new }}</span>
+          {%- else -%}
+            {{ hero_now }}
+          {%- endif -%}
         {%- endif -%}
       </{{ hclose }}>{% if include.link %}</a>{% endif %}
     </div>

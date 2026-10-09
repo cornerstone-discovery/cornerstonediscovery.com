@@ -9,5 +9,6 @@
 {{ content | replace_first: '<section class="', '<section id="main" tabindex="-1" class="' }}
 {% include footer.html %}
 <script src="{{ '/assets/js/site.js' | relative_url }}?v={{ site.time | date: '%Y%m%d%H%M' }}" defer></script>
+{%- if site.versions_both %}{% include version-switcher.html %}{% endif %}
 </body>
 </html>

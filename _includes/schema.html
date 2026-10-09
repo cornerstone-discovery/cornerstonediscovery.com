@@ -33,12 +33,32 @@ All business details come from _config.yml `company`, so NAP stays identical eve
      "hasMap": "https://www.google.com/maps/search/?api=1&query={{ loc.maps_query | url_encode }}",
      "parentOrganization": {"@id": "{{ org_id }}"}}{% unless forloop.last %},{% endunless %}{% endfor %}
   ],
-  "areaServed": [{% assign locs = site.pages | where_exp: "pg", "pg.location" %}{% for pg in locs %}{"@type": "Place", "name": "{{ pg.location.name }}, {{ pg.location.region }}"}, {% endfor %}{"@type": "State", "name": "Pennsylvania"}, {"@type": "State", "name": "New Jersey"}, {"@type": "State", "name": "New York"}, {"@type": "State", "name": "Delaware"}, {"@type": "Country", "name": "United States"}],
-  "knowsAbout": ["Digital forensics", "Mobile device forensics", "Cell site analysis", "Electronic discovery", "Early case assessment", "Litigation support", "Trial presentation", "Expert witness testimony"],
+  "areaServed": [{% if site.copy_version == "new" %}{"@type": "Country", "name": "United States"}, {% endif %}{% assign locs = site.pages | where_exp: "pg", "pg.location" %}{% for pg in locs %}{"@type": "Place", "name": "{{ pg.location.name }}, {{ pg.location.region }}"}, {% endfor %}{"@type": "State", "name": "Pennsylvania"}, {"@type": "State", "name": "New Jersey"}, {"@type": "State", "name": "New York"}, {"@type": "State", "name": "Delaware"}{% unless site.copy_version == "new" %}, {"@type": "Country", "name": "United States"}{% endunless %}],
+  "knowsAbout": ["Digital forensics", "Mobile device forensics", "Cell site analysis", "Electronic discovery", "Early case assessment", "Litigation support", "Trial presentation", "Expert witness testimony"],{% if site.copy_version == "new" %}
+  "award": ["#1 Digital Forensics, The Legal Intelligencer Best of 2025", "#1 Digital Forensics & Corporate Investigations, The Legal Intelligencer Best of 2019 and 2020"],{% endif %}
   "sameAs": ["{{ site.social.linkedin }}", "{{ site.social.facebook }}", "{{ site.social.x }}"]
 }
 </script>
 {%- else -%}
+{%- if page.person %}
+{%- comment -%} Expert profile pages (version: new): the examiner as a Person who works for the business. {%- endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "{{ page.url | absolute_url }}#person",
+  "name": "{{ page.person.name }}",
+  "jobTitle": "{{ page.person.job_title }}",
+  "url": "{{ page.url | absolute_url }}",
+  "image": "{{ page.person.image | absolute_url }}",
+  "description": "{{ page.description | strip | escape }}",
+  "worksFor": {"@type": "ProfessionalService", "@id": "{{ org_id }}", "name": "{{ site.title }}"},
+  "knowsAbout": {{ page.person.knows_about | jsonify }}{% if page.person.credentials %},
+  "hasCredential": [{% for c in page.person.credentials %}{"@type": "EducationalOccupationalCredential", "name": {{ c | jsonify }}}{% unless forloop.last %}, {% endunless %}{% endfor %}]{% endif %}{% if page.person.alumni %},
+  "alumniOf": [{% for a in page.person.alumni %}{"@type": "CollegeOrUniversity", "name": {{ a | jsonify }}}{% unless forloop.last %}, {% endunless %}{% endfor %}]{% endif %}
+}
+</script>
+{%- endif %}
 {%- if page.location or page.service and page.layout == "page" %}
 <script type="application/ld+json">
 {
@@ -52,7 +72,11 @@ All business details come from _config.yml `company`, so NAP stays identical eve
   "areaServed": [{% for a in page.location.served %}{"@type": "Place", "name": "{{ a }}, {{ page.location.region }}"}{% unless forloop.last %}, {% endunless %}{% endfor %}],
   "serviceType": ["Digital forensics", "Electronic discovery", "Litigation support", "Trial support"]
   {%- else %}
+  {%- if page.area_served == "us" %}
+  "areaServed": [{"@type": "Country", "name": "United States"}],
+  {%- else %}
   "areaServed": [{"@type": "State", "name": "Pennsylvania"}, {"@type": "State", "name": "New Jersey"}, {"@type": "State", "name": "New York"}, {"@type": "State", "name": "Delaware"}],
+  {%- endif %}
   "serviceType": "{{ page.title | escape }}"
   {%- endif %}
 }

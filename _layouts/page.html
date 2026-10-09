@@ -8,7 +8,8 @@ layout: default
       <div class="col-md-9 col-sm-12">
         {%- if page.blurb %}
         {%- if page.blurb_icon %}<div class="iconheader hidden-xs"><img src="{{ page.blurb_icon | relative_url }}" class="img-responsive" alt=""></div>{% endif %}
-        <div class="h2">{{ page.blurb }}</div>
+        {%- assign nv = page.versions.new %}
+        <div class="h2">{% if nv.blurb %}<span class="v-now">{{ page.blurb }}</span><span class="v-new">{{ nv.blurb }}</span>{% else %}{{ page.blurb }}{% endif %}</div>
         <div class="clearfix"></div>
         <hr class="blurb-rule">
         {%- endif %}

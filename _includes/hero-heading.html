@@ -1,0 +1,6 @@
+{%- comment -%} Hero headline text: heading { pre, emphasis, post } -> "<pre> <span>emphasis </span><post>" (space inside the span, like live), else h1, else title. {%- endcomment -%}
+{%- if include.heading -%}
+{{ include.heading.pre }}{% if include.heading.emphasis %} <span class="emphasis">{{ include.heading.emphasis }} </span>{% endif %}{% if include.heading.post %}{% unless include.heading.emphasis %} {% endunless %}{{ include.heading.post }}{% endif %}
+{%- else -%}
+{{ include.h1 | default: include.title }}
+{%- endif -%}

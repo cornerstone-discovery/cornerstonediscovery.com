@@ -1,14 +1,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {%- comment -%} <title> is the SEO title when one was set (ported from Yoast), otherwise the page title. {%- endcomment -%}
+{%- capture page_title -%}
 {%- if paginator and paginator.page > 1 -%}
-<title>Our Blog - Page {{ paginator.page }} of {{ paginator.total_pages }} | Cornerstone Discovery</title>
+Our Blog - Page {{ paginator.page }} of {{ paginator.total_pages }} | Cornerstone Discovery
 {%- elsif page.seo_title -%}
-<title>{{ page.seo_title }}</title>
+{{ page.seo_title }}
 {%- elsif page.url == "/" -%}
-<title>{{ site.title }}</title>
+{{ site.title }}
 {%- else -%}
-<title>{{ page.title | strip_html }} - {{ site.title }}</title>
+{{ page.title | strip_html }} - {{ site.title }}
+{%- endif -%}
+{%- endcapture %}
+<title>{{ page_title }}</title>
+{%- if site.versions_both %}
+{%- comment -%} LOCAL SITE-VERSION PREVIEW: pick the version before first paint (?ver=now|new, remembered across pages) and hand the switcher both versions' title and description. {%- endcomment -%}
+<script>(function () {
+  var v = new URLSearchParams(location.search).get('ver');
+  try { if (v) { localStorage.setItem('ver', v); } else { v = localStorage.getItem('ver'); } } catch (e) {}
+  document.documentElement.setAttribute('data-ver', v === 'new' ? 'new' : 'now');
+})();</script>
+{%- assign nv = page.versions.new %}
+{%- capture title_new -%}{% if nv.seo_title %}{{ nv.seo_title }}{% elsif nv.title %}{{ nv.title | strip_html }} - {{ site.title }}{% else %}{{ page_title }}{% endif %}{%- endcapture %}
+{%- assign desc_now = page.description | default: site.description | strip_html | normalize_whitespace | strip %}
+{%- assign desc_new = nv.description | default: page.description | default: site.versions.new.description | strip_html | normalize_whitespace | strip %}
+<script type="application/json" id="ver-meta">{"now": {"title": {{ page_title | jsonify }}, "description": {{ desc_now | jsonify }}}, "new": {"title": {{ title_new | jsonify }}, "description": {{ desc_new | jsonify }}}}</script>
 {%- endif %}
 {%- assign css_url = '/assets/css/main.css' | relative_url %}
 <link rel="preload" href="{{ '/assets/fonts/lato-400.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
