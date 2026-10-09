@@ -19,7 +19,7 @@ Additions over WordPress: breadcrumb, publish date & author, tags, prev/next lin
           <h1 class="post-title">{{ page.title }}</h1>
           <p class="post-meta">
             <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
-            {%- if page.author %} &bull; {% assign author_page = site.pages | where_exp: "pg", "pg.person.name == page.author" | first %}{% if author_page %}{% capture author_link %}<a href="{{ author_page.url | relative_url }}">{{ page.author }}</a>{% endcapture %}{% include versioned.html now=page.author new=author_link %}{% else %}{{ page.author }}{% endif %}{% endif %}
+            {%- if page.author %} &bull; {% assign author_url = site.author_profiles[page.author] %}{% if author_url %}{% capture author_link %}<a href="{{ author_url | relative_url }}">{{ page.author }}</a>{% endcapture %}{% include versioned.html now=page.author new=author_link %}{% else %}{{ page.author }}{% endif %}{% endif %}
             {%- if page.contributor %} &bull; Contributing author: {{ page.contributor }}{% endif %}
           </p>
           <div class="post-content">

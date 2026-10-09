@@ -36,6 +36,12 @@ Jekyll::Hooks.register :site, :post_read do |site|
   # Pages that belong to one version only.
   site.pages.reject! { |p| p.data["version"] && !both && p.data["version"] != live }
 
+  # Author name -> expert profile URL, for post bylines (one lookup table instead of a page scan per post).
+  site.config["author_profiles"] = site.pages.each_with_object({}) do |p, map|
+    name = p.data.dig("person", "name")
+    map[name] = p.url if name
+  end
+
   site.pages.each do |page|
     path = File.join(site.source, SiteVersions::DIR, page.relative_path)
     next unless File.file?(path)
