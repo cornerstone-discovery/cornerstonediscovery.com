@@ -30,7 +30,10 @@ Our Blog - Page {{ paginator.page }} of {{ paginator.total_pages }} | Cornerston
 <link rel="preload" href="{{ '/assets/fonts/roboto-v.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ '/assets/fonts/roboto-condensed-v.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
 {%- comment -%} Preload the hero background (the largest thing above the fold) so it starts with the CSS. {%- endcomment -%}
-{%- assign hero = page.preload_image | default: page.header_image %}
+{%- assign hero_page = page %}
+{%- assign hero_svc = site.data.services | where: "key", page.service | first %}
+{%- if hero_svc and page.url != hero_svc.url %}{% assign hero_page = site.pages | where: "url", hero_svc.url | first | default: page %}{% endif %}
+{%- assign hero = page.preload_image | default: hero_page.header_image %}
 {%- if page.layout == "home" %}{% assign hero = "/assets/i/hero.webp" %}{% elsif page.layout == "post" or page.layout == "blog" %}{% assign hero = "/uploads/2021/03/blog-bg.webp" %}{% elsif page.landing %}{% assign hero = nil %}{% endif %}
 {%- if hero %}
 <link rel="preload" href="{{ hero | relative_url }}" as="image" fetchpriority="high">
