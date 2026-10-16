@@ -239,6 +239,16 @@ section.content {
 // the home page's copy runs the full container width; cap the line length (~100 characters) so it stays readable
 .home-copy { p, li { max-width: 720px; } }
 section.content .row + hr { clear: both; }
+// About Us side column (_includes/components/about-glance.html): a navy key-facts card, then the pull quote
+.about-glance-card {
+  margin: 20px 0 30px; padding: 22px 22px 6px; background: $navy; color: #fff; border-top: 4px solid $lime;
+  .h3 { margin: 0 0 16px; color: #fff; font-family: 'Roboto Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; font-size: 18px; }
+  dl { margin: 0; }
+  dl > div { padding: 0 0 14px; margin: 0 0 14px; border-bottom: 1px solid rgba(255, 255, 255, .15); }
+  dl > div:last-child { border-bottom: 0; margin-bottom: 0; }
+  dt { color: $lime; font-family: 'Roboto Slab', serif; font-size: 22px; font-weight: 700; line-height: 1.2; }
+  dd { margin: 4px 0 0; font-size: 15px; line-height: 1.45; color: rgba(255, 255, 255, .88); }
+}
 // in-content separators: WordPress "wide" separator blocks on live (2px grey at 40% opacity)
 section.content hr:not(.blurb-rule):not(.hr-contact-info):not(.visible-xs) {
   border-top: 0; border-bottom: 2px solid #808080; opacity: .4; margin: 30px 0;

@@ -1,0 +1,17 @@
+{%- comment -%}
+About Us side column: key facts about the firm, the pull quote, and the contact button. Shared by both site
+versions of about-us/index.html.
+{%- endcomment -%}
+<aside class="about-glance">
+  <div class="about-glance-card">
+    <div class="h3">At a Glance</div>
+    <dl>
+      <div><dt>Since {{ site.company.founded }}</dt><dd>Litigation support from Philadelphia&rsquo;s Navy Yard</dd></div>
+      <div><dt>PA, NJ, NY, &amp; DE</dt><dd>Local coverage, plus clients nationwide</dd></div>
+      <div><dt>Court-Qualified</dt><dd>Admitted and certified digital forensic examiners</dd></div>
+      <div><dt>One Point of Contact</dt><dd>A dedicated Project Manager on every matter</dd></div>
+    </dl>
+  </div>
+  <p class="pullquote">The strong leadership at Cornerstone Discovery encourages excellence, innovation, and, above all, exceptional customer service.</p>
+  <a class="btn btn-primary btn-larger" href="{{ '/contact/' | relative_url }}">CONTACT US</a>
+</aside>
