@@ -34,6 +34,23 @@
     });
   }
 
+  // ---- section tabs: when the strip has to scroll, start with the current tab in view, and fade each edge
+  // while there is more to scroll to on that side
+  $$('.section-tabs ul').forEach(function (ul) {
+    function update() {
+      ul.classList.toggle('is-overflowing', ul.scrollLeft + ul.clientWidth < ul.scrollWidth - 1);
+      ul.classList.toggle('is-scrolled', ul.scrollLeft > 1);
+    }
+    var cur = $('[aria-current]', ul);
+    if (cur && ul.scrollWidth > ul.clientWidth) {
+      var left = cur.getBoundingClientRect().left - ul.getBoundingClientRect().left + ul.scrollLeft;
+      ul.scrollLeft = left - (ul.clientWidth - cur.offsetWidth) / 2;
+    }
+    update();
+    ul.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  });
+
   // ---- Bootstrap-style collapse: the About Us team accordion
   function setOpen(target, open, trigger) {
     target.classList.toggle('in', open);

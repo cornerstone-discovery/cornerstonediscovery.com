@@ -1,14 +1,15 @@
 {%- comment -%}
 Section tabs along the bottom of the hero: the service's main page ("Overview") plus its sub-pages (same
-`service`, one level down), current page marked. Shown on the main page and on every sub-page; renders
-nothing when the service has no sub-pages. A page's tab label is its nav_title, else its title.
+`service`, one level down, page or contact layout, ad landing pages excluded), current page marked. Shown on
+the main page and on every sub-page; renders nothing when the service has no sub-pages. A page's tab label is its nav_title, else its title.
 {%- endcomment -%}
 {%- assign svc = site.data.services | where: "key", page.service | first %}
 {%- if svc %}
 {%- assign root = site.pages | where: "url", svc.url | first %}
 {%- assign kids = "" | split: "" %}
 {%- for p in site.pages %}
-  {%- if p.service != page.service or p.url == svc.url or p.layout != "page" %}{% continue %}{% endif %}
+  {%- if p.service != page.service or p.url == svc.url or p.landing %}{% continue %}{% endif %}
+  {%- unless p.layout == "page" or p.layout == "contact" %}{% continue %}{% endunless %}
   {%- assign prefix = p.url | slice: 0, svc.url.size %}
   {%- if prefix != svc.url %}{% continue %}{% endif %}
   {%- assign rest = p.url | remove_first: svc.url | split: "/" %}
@@ -20,7 +21,7 @@ nothing when the service has no sub-pages. A page's tab label is its nav_title, 
 <nav class="section-tabs" aria-label="{{ root_label }} pages">
   <div class="container">
     <ul>
-      <li><a href="{{ svc.url | relative_url }}"{% if page.url == svc.url %} aria-current="page"{% endif %}><span class="hidden-xs">{{ root_label }} </span>Overview</a></li>
+      <li><a href="{{ svc.url | relative_url }}"{% if page.url == svc.url %} aria-current="page"{% endif %}><span class="hidden-xs hidden-sm">{{ root_label }} </span>Overview</a></li>
       {%- for p in kids %}
       <li{% if p.version and site.versions_both %} class="v-{{ p.version }}"{% endif %}><a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>{{ p.nav_title | default: p.title }}</a></li>
       {%- endfor %}

@@ -23,6 +23,7 @@ LOCAL SITE-VERSION PREVIEW (local builds only; see _plugins/site_versions.rb). F
   function field(name, text) { panel.querySelector('[data-f="' + name + '"]').textContent = text; }
   function show(v) {
     root.setAttribute('data-ver', v);
+    window.dispatchEvent(new Event('resize')); // tab strips re-measure (assets/js/site.js)
     try { localStorage.setItem('ver', v); } catch (e) {}
     document.querySelectorAll('.ver-switch [data-v]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.v === v ? 'true' : 'false'); });
     var m = meta[v] || {};
