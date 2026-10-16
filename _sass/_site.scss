@@ -499,6 +499,7 @@ details.faq {
   .expert-role { display: block; padding: 2px 15px 14px; color: $slate; font-size: 14px; line-height: 1.35; }
 }
 .expert-profile {
+  > h1:first-child { margin-top: 20px; } // level with the sidebar's first heading
   .expert-photo { margin: 0 0 20px; }
   .expert-creds { color: $slate; font-family: 'Roboto Condensed', sans-serif; font-size: 18px; font-weight: 700; margin: -10px 0 20px; }
 }
