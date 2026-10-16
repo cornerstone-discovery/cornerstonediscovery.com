@@ -66,7 +66,7 @@ social:
 analytics:
   # GA4 > Admin > Data streams > Web > Measurement ID (G-XXXXXXXXXX). Loads gtag.js directly; no GTM.
   # Sends page views plus key events: generate_lead (contact form), click_to_call, click_to_email.
-  ga4_measurement_id:
+  ga4_measurement_id: G-JPX8XEENZ7
   # Optional Google Ads conversion tracking for form leads: AW-XXXXXXXXX and the conversion label.
   google_ads_id:
   google_ads_lead_label:
