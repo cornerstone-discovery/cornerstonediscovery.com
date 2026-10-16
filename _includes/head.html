@@ -27,7 +27,7 @@ Our Blog - Page {{ paginator.page }} of {{ paginator.total_pages }} | Cornerston
 <script type="application/json" id="ver-meta">{"now": {"title": {{ page_title | jsonify }}, "description": {{ desc_now | jsonify }}}, "new": {"title": {{ title_new | jsonify }}, "description": {{ desc_new | jsonify }}}}</script>
 {%- endif %}
 {%- assign css_url = '/assets/css/main.css' | relative_url %}
-<link rel="preload" href="{{ '/assets/fonts/lato-400.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ '/assets/fonts/roboto-v.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ '/assets/fonts/roboto-condensed-v.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
 {%- comment -%} Preload the hero background (the largest thing above the fold) so it starts with the CSS. {%- endcomment -%}
 {%- assign hero = page.preload_image | default: page.header_image %}
