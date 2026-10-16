@@ -1,32 +1,30 @@
 <footer>
   <div class="container">
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-12 col-md-6 footer-about">
         <div class="row">
           <div class="col-xs-3 col-sm-3">
             <p><img src="{{ '/assets/i/cornerstonediscoverytag.png' | relative_url }}" class="img-responsive" alt="{{ site.title }}"></p>
           </div>
           <div class="col-xs-9 col-sm-9">
             <div class="h3">About Cornerstone Discovery</div>
-            {%- capture about_now %}<p>Cornerstone Discovery was founded in {{ site.company.founded }} and is located at the Navy Yard in Philadelphia, Pennsylvania. We are proud to support clients both locally and nationally with certified technical experts and experienced trial technicians to help you revolutionize your case in and out of the courtroom.</p>{% endcapture %}
-            {%- capture about_new %}<p>Founded in {{ site.company.founded }}, Cornerstone Discovery is a Philadelphia-based digital forensics, e-Discovery and trial support firm serving attorneys nationwide, with certified technical experts and experienced trial technicians in and out of the courtroom.</p>
-            <p class="footer-specialties"><a href="{{ '/digital-forensics/cell-site-analysis/' | relative_url }}">Cell Site Analysis</a> &middot; <a href="{{ '/digital-forensics/expert-witness-testimony/' | relative_url }}">Expert Testimony</a> &middot; <a href="{{ '/criminal-defense/' | relative_url }}">Criminal Defense</a></p>{% endcapture %}
+            {%- capture about_now %}<p>Cornerstone Discovery was founded in {{ site.company.founded }} and is located at the Navy Yard in Philadelphia, Pennsylvania. We are proud to support clients both locally and nationally with certified technical experts and experienced trial technicians to help you revolutionize your case in and out of the courtroom.</p>
+            <p><a href="{{ '/about-us/' | relative_url }}">Learn More<span class="sr-only"> about Cornerstone Discovery</span></a></p>{% endcapture %}
+            {%- capture about_new %}<p>Founded in {{ site.company.founded }}, Cornerstone Discovery is a Philadelphia-based digital forensics, e-Discovery, and trial support firm serving attorneys nationwide, with certified technical experts and experienced trial technicians in and out of the courtroom.</p>
+            <p class="footer-specialties"><a href="{{ '/digital-forensics/cell-site-analysis/' | relative_url }}">Cell Site Analysis</a> &middot; <a href="{{ '/digital-forensics/expert-witness-testimony/' | relative_url }}">Expert Testimony</a> &middot; <a href="{{ '/criminal-defense/' | relative_url }}">Criminal Defense</a> &middot; <a href="{{ '/about-us/' | relative_url }}">About Us</a></p>{% endcapture %}
             {% include versioned.html now=about_now new=about_new tag="div" %}
-            <p><a href="{{ '/about-us/' | relative_url }}">Learn More<span class="sr-only"> about Cornerstone Discovery</span></a></p>
           </div>
         </div>
         <hr class="visible-xs">
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-6 col-md-3">
         <div class="h3">Contact Info</div>
         {% include components/addresses.html %}
         <hr class="visible-xs">
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-6 col-md-3">
         <div class="h3">Forensic Certifications</div>
-        <div class="row">
-          <img src="{{ '/assets/i/certs.png' | relative_url }}" class="img-responsive col-xs-9 col-sm-12" alt="International Society of Forensic Computer Examiners (CCE), EnCase® Certified e-Discovery Practitioner – Guidance Software (EnCEP®), EnCase® Certified Examiner – Guidance Software (EnCE), AccessData Certified Examiner (ACE)">
-        </div>
+        <p class="footer-certs"><img src="{{ '/assets/i/certs.png' | relative_url }}" class="img-responsive" alt="International Society of Forensic Computer Examiners (CCE), EnCase® Certified e-Discovery Practitioner – Guidance Software (EnCEP®), EnCase® Certified Examiner – Guidance Software (EnCE), AccessData Certified Examiner (ACE)"></p>
         <div class="footer-social">
           <div class="h3">Stay Connected</div>
           <a href="{{ site.social.x }}" target="_blank" rel="noopener" aria-label="Cornerstone Discovery on X"><i class="fa-brands fa-square-x-twitter fa-lg" aria-hidden="true"></i></a> &nbsp;&nbsp;

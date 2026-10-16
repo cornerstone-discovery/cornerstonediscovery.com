@@ -210,6 +210,24 @@ $nav-item-h-md: 38px;
 // ---- landing pages: the live site hides the hero there (page-id-861/862/863 in the custom CSS) ----
 .landing-page .page-header.interior-header { display: none; }
 
+// ---- footer ----
+footer {
+  // contact info: icons sit on the heading's left edge, text in a column beside them
+  .fa-ul { margin-left: 24px; }
+  .fa-li { left: -24px; width: 16px; text-align: left; }
+  .footer-certs { margin: 0 0 24px; img { width: 100%; max-width: 300px; } }
+  .footer-specialties a { white-space: nowrap; } // wrap between links, never inside one
+  a[href^="mailto:"] { overflow-wrap: anywhere; }
+}
+// tablets: About runs full width, Contact and Certifications share the row below it
+@media (min-width: 768px) and (max-width: 991px) { footer .footer-about { margin-bottom: 30px; img { max-width: 120px; } } }
+@media (max-width: 767px) {
+  footer { padding: 40px 0 30px; }
+  footer hr.visible-xs { margin: 20px 0; }
+  // copyright bar: stack the two lines instead of squeezing them side by side
+  .copyright .pull-right { float: none !important; margin-bottom: 4px; }
+}
+
 // ---- page content ----
 // body copy: Bootstrap 3's 14px/20px default read small; Roboto at the web-standard 16px with room between lines and
 // paragraphs. The sidebar cards keep compact 14px text so they don't stretch into tall pillars.
@@ -527,7 +545,7 @@ div.v-now, div.v-new { display: contents; }
   button { min-width: 42px; padding: 6px 8px; border: 1px solid rgba(255, 255, 255, .4); border-radius: 4px; background: none; color: #fff; font: inherit; text-transform: inherit; cursor: pointer; }
   button[aria-pressed="true"] { background: $lime; border-color: $lime; }
 }
-body:has(.ab-switch) { padding-bottom: 64px; } // keep the footer clear of the switcher
+body:has(.ab-switch) .copyright { padding-bottom: 64px; } // keep the footer clear of the switcher, in the bar's own navy
 @media (max-width: 767px) {
   .ab-switch { right: 10px; bottom: 10px; gap: 4px; padding: 5px 6px; font-size: 12px; }
   .ab-switch > span { display: none; }
