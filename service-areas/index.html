@@ -12,7 +12,7 @@ blurb: There’s no place to hide from our team of Certified Digital Forensic Ex
 blurb_icon: /uploads/2021/02/icon_digitalforensics.webp
 offices: true
 ---
-<h2>Service Areas</h2><p>Cornerstone Discovery serves law firms, corporations and government agencies throughout Pennsylvania, New Jersey, New York and Delaware — and nationwide. Learn more about our work in these areas:</p>
+<h2>Service Areas</h2><p>Cornerstone Discovery serves law firms, corporations, and government agencies throughout Pennsylvania, New Jersey, New York, and Delaware — and nationwide. Learn more about our work in these areas:</p>
 <ul>
 {% for pg in site.pages %}{% if pg.url contains "/service-areas/" and pg.url != page.url %}<li><a href="{{ pg.url | relative_url }}">{{ pg.title }}</a></li>{% endif %}{% endfor %}
 {% for pg in site.pages %}{% if pg.url == "/philadelphia-pa/" %}<li><a href="{{ pg.url | relative_url }}">{{ pg.title }}</a></li>{% endif %}{% endfor %}

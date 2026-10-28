@@ -14,11 +14,12 @@ Our Blog - Page {{ paginator.page }} of {{ paginator.total_pages }} | Cornerston
 {%- endcapture %}
 <title>{{ page_title }}</title>
 {%- if site.versions_both %}
-{%- comment -%} LOCAL SITE-VERSION PREVIEW: pick the version before first paint (?ver=now|new, remembered across pages) and hand the switcher both versions' title and description. {%- endcomment -%}
+{%- comment -%} LOCAL SITE-VERSION PREVIEW: pick the version before first paint (?ver=now|new, remembered across pages, else the published copy_version) and hand the switcher both versions' title and description. The storage key names the published version, so a choice remembered before a switch doesn't outlive it. {%- endcomment -%}
 <script>(function () {
-  var v = new URLSearchParams(location.search).get('ver');
-  try { if (v) { localStorage.setItem('ver', v); } else { v = localStorage.getItem('ver'); } } catch (e) {}
-  document.documentElement.setAttribute('data-ver', v === 'new' ? 'new' : 'now');
+  var v = new URLSearchParams(location.search).get('ver'), key = 'ver-{{ site.copy_version }}';
+  try { if (v) { localStorage.setItem(key, v); } else { v = localStorage.getItem(key); } } catch (e) {}
+  if (v !== 'now' && v !== 'new') { v = '{{ site.copy_version }}'; }
+  document.documentElement.setAttribute('data-ver', v);
 })();</script>
 {%- assign nv = page.versions.new %}
 {%- capture title_new -%}{% if nv.seo_title %}{{ nv.seo_title }}{% elsif nv.title %}{{ nv.title | strip_html }} - {{ site.title }}{% else %}{{ page_title }}{% endif %}{%- endcapture %}
