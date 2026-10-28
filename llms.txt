@@ -15,13 +15,13 @@ live (ad landing pages, noindex pages, pages from the other copy version). Facts
 
 > {{ summary | strip | normalize_whitespace }}
 
-{{ site.title }} is a litigation support firm founded in {{ site.company.founded }} and headquartered at the Philadelphia Navy Yard. Attorneys, corporations and public agencies hire us to find digital evidence, manage it through discovery, and present it in court: certified digital forensic examiners, cell site analysis and expert witness testimony; e-Discovery processing, hosting and review on our own platform, Junto; and certified trial technicians. We work on criminal and civil matters in Pennsylvania, New Jersey, New York and Delaware and for clients across the United States.
+{{ site.title }} is a litigation support firm founded in {{ site.company.founded }} and headquartered at the Philadelphia Navy Yard. Attorneys, corporations, and public agencies hire us to find digital evidence, manage it through discovery, and present it in court: certified digital forensic examiners, cell site analysis, and expert witness testimony; e-Discovery processing, hosting, and review on our own platform, Junto; and certified trial technicians. We work on criminal and civil matters in Pennsylvania, New Jersey, New York, and Delaware, and for clients across the United States.
 
 Key facts:
 
-- Services: digital forensics (computers, phones, cloud accounts), mobile device forensics, JTAG and chip-off, cell site analysis and call detail records, expert witness testimony and rebuttal, e-Discovery (collection, processing, early case assessment, managed review, production), criminal discovery management for multi-defendant cases, document management, paper discovery, printing and scanning, trial presentation and exhibit management.
-- Clients: criminal defense attorneys, public defenders and court-appointed (CJA) counsel, civil litigators, corporate legal and HR teams, schools and public agencies.
-- Recognition: The Legal Intelligencer "Best Of" 2025, #1 in Digital Forensics and Top 3 in End-to-End eDiscovery, Trial Technology, Trial Technicians and Demonstrative Evidence.
+- Services: digital forensics (computers, phones, cloud accounts), mobile device forensics, JTAG and chip-off, cell site analysis and call detail records, expert witness testimony and rebuttal, e-Discovery (collection, processing, early case assessment, managed review, production), criminal discovery management for multi-defendant cases, document management, paper discovery, printing and scanning, and trial presentation and exhibit management.
+- Clients: criminal defense attorneys, public defenders, and court-appointed (CJA) counsel; civil litigators; corporate legal and HR teams; and schools and public agencies.
+- Recognition: The Legal Intelligencer "Best Of" 2025: voted the #1 Digital Forensic Company for the third consecutive year, and ranked #3 in End-to-End eDiscovery, Trial Technology, Hot Seat Trial Technicians, and Demonstrative Evidence Provider, with Hall of Fame recognition ({{ '/cornerstone-discovery-winner-of-legal-intelligencer-2025-best-of-survey/' | absolute_url }}).
 - Phone: {{ site.company.phone }}. Email: {{ site.company.email }}. Contact form: {{ '/contact/' | absolute_url }}
 - Offices:{% for loc in site.data.locations %}
   - {{ loc.name }}: {{ loc.street }}{% if loc.suite %}, {{ loc.suite }}{% endif %}, {{ loc.city }}, {{ loc.region }} {{ loc.postal_code }} ({{ loc.area }}){% endfor %}
@@ -31,7 +31,7 @@ Key facts:
 {% assign main = live | where: "url", svc.url | first %}
 - [{{ svc.title }}]({{ svc.url | absolute_url }}): {{ main.description | default: svc.blurb | strip_html | normalize_whitespace }}
 {%- assign subs = live | where: "service", svc.key | sort: "url" %}{% for p in subs %}{% if p.url != svc.url %}
-- [{{ p.title }}]({{ p.url | absolute_url }}): {{ p.description | strip_html | normalize_whitespace }}
+- [{{ p.nav_title | default: p.title }}]({{ p.url | absolute_url }}): {{ p.description | strip_html | normalize_whitespace }}
 {%- endif %}{% endfor %}
 {% endfor %}
 {%- assign extra = live | where_exp: "p", "p.service == 'criminal-defense'" %}{% if extra.size > 0 %}
@@ -43,22 +43,23 @@ Key facts:
 ## Our Experts and Team
 
 - [About Us]({{ '/about-us/' | absolute_url }}): who we are and the full team.
-{%- assign experts = live | where_exp: "p", "p.person" | sort: "url" %}{% for p in experts %}
-- [{{ p.person.name }}]({{ p.url | absolute_url }}): {{ p.person.job_title }}. {{ p.description | strip_html | normalize_whitespace }}
+{%- comment -%} The About Us roster; members with a live expert profile page link to it. {%- endcomment %}
+{%- for m in site.data.team %}{% assign p = nil %}{% if m.profile %}{% assign p = live | where: "url", m.profile | first %}{% endif %}
+- {% if p %}[{{ m.first }} {{ m.last }}]({{ p.url | absolute_url }}){% else %}{{ m.first }} {{ m.last }}{% endif %}: {% include team-role.html m=m %}.{% if p %} {{ p.description | strip_html | normalize_whitespace }}{% endif %}
 {%- endfor %}
 
 ## Locations
 {% assign places = live | where_exp: "p", "p.location" | sort: "url" %}{% for p in places %}
 - [{{ p.title }}]({{ p.url | absolute_url }}): {{ p.description | strip_html | normalize_whitespace }}
 {%- endfor %}
-- [Contact]({{ '/contact/' | absolute_url }}): phone, email, both offices and the contact form.
+- [Contact]({{ '/contact/' | absolute_url }}): phone, email, both offices, and the contact form.
 {%- assign nacdl = live | where: "url", "/nacdl/" | first %}{% if nacdl %}
 - [NACDL members]({{ nacdl.url | absolute_url }}): {{ nacdl.description | strip_html | normalize_whitespace }}
 {%- endif %}
 
 ## Optional
 
-- [The Tech Gazette blog]({{ '/blog/' | absolute_url }}): articles on digital forensics, e-Discovery and trial technology by our examiners.
+- [The Tech Gazette blog]({{ '/blog/' | absolute_url }}): articles on digital forensics, e-Discovery, and trial technology by our examiners.
 {%- for post in site.posts limit: 15 %}
 - [{{ post.title | strip_html }}]({{ post.url | absolute_url }}){% if post.description %}: {{ post.description | strip_html | normalize_whitespace }}{% endif %}
 {%- endfor %}

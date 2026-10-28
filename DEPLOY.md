@@ -35,7 +35,7 @@ Nothing here touches the live site or DNS until step 4. For the test weeks:
 `form-worker/secrets.example.json`.
 
 In GA4 → Admin → Events, mark **`generate_lead`** (and optionally `click_to_call`, `click_to_email`) as key events.
-In Meta Events Manager the same actions arrive as **Lead**, **Contact** and **Subscribe**.
+In Meta Events Manager the same actions arrive as **Lead**, **Contact**, and **Subscribe**.
 
 To see visitors sent by AI assistants: GA4 → Admin → Data display → Channel groups → copy the default group, add
 a channel **AI Assistants** *above* Referral with the condition *Source matches regex*

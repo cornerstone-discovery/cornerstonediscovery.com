@@ -1,0 +1,13 @@
+{%- comment -%}
+A team member's job title for structured data and llms.txt: profile_role when set, else position, with the
+all-caps positions ported from WordPress ("OPERATIONS MANAGER") put in title case. include.m = a _data/team.yml entry.
+{%- endcomment -%}
+{%- assign role = include.m.profile_role | default: include.m.position | strip -%}
+{%- assign upper = role | upcase -%}
+{%- if role == upper -%}
+{%- assign words = role | downcase | split: " " -%}
+{%- for w in words -%}{%- assign cap = w | capitalize -%}
+{%- if forloop.first %}{% assign role = cap %}{% else %}{% assign role = role | append: " " | append: cap %}{% endif -%}
+{%- endfor -%}
+{%- endif -%}
+{{- role -}}

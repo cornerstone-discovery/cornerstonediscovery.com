@@ -10,7 +10,7 @@ post from the Jekyll era, the Wix era and the WordPress era, with its real publi
 
 | Path | What |
 | --- | --- |
-| `_config.yml` | Site settings and **every public integration ID** (GA4, Google Ads, Meta Pixel and domain verification, Search Console, reCAPTCHA site key, form endpoint). |
+| `_config.yml` | Site settings and **every public integration ID** (GA4, Google Ads, Meta Pixel and domain verification, Search Console, reCAPTCHA site key, and form endpoint). |
 | `index.html`, `about-us/`, `digital-forensics/`, … | Pages. One folder per URL; front matter drives the hero (`heading`, `header_image`) and sidebar (`service`). |
 | `_posts/` | Blog posts (`YYYY-MM-DD-slug.md`), root permalinks (`/post-slug/`) as on WordPress. |
 | `blog/`, `tag/`, `category/` | Paginated index (`/blog/page/N/`) and tag/category archives (noindex). |
