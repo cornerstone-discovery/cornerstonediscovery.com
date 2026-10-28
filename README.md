@@ -10,7 +10,7 @@ post from the Jekyll era, the Wix era and the WordPress era, with its real publi
 
 | Path | What |
 | --- | --- |
-| `_config.yml` | Site settings and **every public integration ID** (GA4, Google Ads, Search Console, reCAPTCHA site key, form endpoint). |
+| `_config.yml` | Site settings and **every public integration ID** (GA4, Google Ads, Meta Pixel and domain verification, Search Console, reCAPTCHA site key, form endpoint). |
 | `index.html`, `about-us/`, `digital-forensics/`, … | Pages. One folder per URL; front matter drives the hero (`heading`, `header_image`) and sidebar (`service`). |
 | `_posts/` | Blog posts (`YYYY-MM-DD-slug.md`), root permalinks (`/post-slug/`) as on WordPress. |
 | `blog/`, `tag/`, `category/` | Paginated index (`/blog/page/N/`) and tag/category archives (noindex). |
@@ -19,7 +19,8 @@ post from the Jekyll era, the Wix era and the WordPress era, with its real publi
 | `_sass/` → `assets/css/main.scss` | The one stylesheet: self-hosted fonts, Font Awesome 7 icon subset, Bootstrap 3.3.1 CSS, the live theme CSS and the live "Additional CSS" (verbatim, so the site renders like the WordPress one), then `_site.scss` (our additions). Compiled + minified by Jekyll, unused rules purged in CI. |
 | `assets/js/site.js` | All behaviour, no dependencies: mobile nav, team accordion, testimonial carousel, click-to-load maps, lazy reCAPTCHA, forms, GA4 events. |
 | `assets/fonts/`, `assets/icons/` | Lato + Roboto Condensed (woff2), Font Awesome 7 subsets, favicon set (from the original `FAVICON.ai`). |
-| `_plugins/` | `baseurl_links.rb` (github.io sub-path), `responsive_images.rb` (width/height, lazy loading, WebP `<picture>`/srcset from `_data/images.json`). |
+| `_plugins/` | `baseurl_links.rb` (github.io sub-path), `responsive_images.rb` (width/height, lazy loading, WebP `<picture>`/srcset from `_data/images.json`), `faq_schema.rb` (FAQPage JSON-LD from each page's FAQ accordion), `site_versions.rb`. |
+| `robots.txt`, `llms.txt` | Crawler rules (AI search and training bots named and allowed) and the plain-Markdown site map for AI assistants, both built from config and front matter. |
 | `tools/` | `images.py` (optimize images, make WebP variants, write the manifest), `purge-css.mjs`, `check-links.mjs`. See [docs/ASSETS.md](docs/ASSETS.md). |
 | `uploads/YYYY/MM/` | Content images carried over from WordPress (+ generated `.w480.webp` / `.w960.webp` / `.webp` variants). |
 | `_public/` | Externally referenced images (email signatures). **Keep these paths stable.** |

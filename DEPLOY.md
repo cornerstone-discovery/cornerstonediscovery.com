@@ -25,6 +25,8 @@ Nothing here touches the live site or DNS until step 4. For the test weeks:
 |---|---|
 | `analytics.ga4_measurement_id` | GA4 → Admin → Data streams → Web → Measurement ID (`G-…`). Use a property **you** own, not 1SEO's. |
 | `analytics.google_ads_id` / `google_ads_lead_label` | Optional. Google Ads → Goals → Conversions → your "Contact form" conversion → Tag setup. |
+| `analytics.meta_pixel_id` | Meta Events Manager → Data sources → the pixel's ID. Set to our pixel `1184826961874042` (our Meta Business account). Blank = no Meta script. |
+| `facebook_domain_verification` | Meta Business Suite → Settings → Brand safety → Domains → cornerstonediscovery.com → meta-tag option → the `content` value. Click **Verify** there after the cut-over. |
 | `webmaster_verifications.google` / `.bing` | Search Console / Bing Webmaster → add property → HTML tag → the `content` value. |
 | `contact_form.recaptcha_site_key` | reCAPTCHA admin → v2 "I'm not a robot" → site key. Domains: `cornerstonediscovery.com`, `cornerstone-discovery.github.io`, `localhost`. |
 | `contact_form.endpoint` | Printed by `npm run deploy` in `form-worker/` (step 2). |
@@ -33,6 +35,12 @@ Nothing here touches the live site or DNS until step 4. For the test weeks:
 `form-worker/secrets.example.json`.
 
 In GA4 → Admin → Events, mark **`generate_lead`** (and optionally `click_to_call`, `click_to_email`) as key events.
+In Meta Events Manager the same actions arrive as **Lead**, **Contact** and **Subscribe**.
+
+To see visitors sent by AI assistants: GA4 → Admin → Data display → Channel groups → copy the default group, add
+a channel **AI Assistants** *above* Referral with the condition *Source matches regex*
+`chatgpt\.com|openai\.com|perplexity\.ai|claude\.ai|gemini\.google\.com|copilot\.microsoft\.com|deepseek\.com|meta\.ai|you\.com`,
+and make that group the primary one.
 
 ## 2. Contact-form worker
 
@@ -98,11 +106,15 @@ GitHub Pages caches files for 10 minutes and can't set headers; Cloudflare can, 
   `Permissions-Policy: camera=(), microphone=(), geolocation=()`, `X-Frame-Options: SAMEORIGIN`.
 * Speed → Brotli on; Auto Minify off (already minified); Rocket Loader **off** (breaks deferred scripts).
 
-## 6. Search Console
+## 6. Search Console and Bing Webmaster Tools
 
 1. Verify the domain (DNS TXT via Cloudflare is simplest) or use the HTML tag from step 1.
 2. Submit `https://cornerstonediscovery.com/sitemap.xml`.
 3. Remove the Yoast sitemaps if they're listed (`sitemap_index.xml`, `post-sitemap.xml`, …).
+4. Bing Webmaster Tools → import from Search Console. Bing's index feeds ChatGPT search and Microsoft Copilot, so
+   this matters for AI answers as much as for Bing itself. Turn on IndexNow there if offered.
+5. AI crawlers: `robots.txt` names and allows the AI search and training bots, and `/llms.txt` gives assistants a
+   plain-text map of the firm, services, experts and offices (built from page front matter; nothing to edit).
 
 ## 7. Shut down the 1SEO stack
 
@@ -116,4 +128,6 @@ Do these after the site is live on Pages and the form has delivered a real test 
 - [ ] Remove 1SEO's access from Google Business Profile, Search Console, Google Ads, Meta Business, Cloudflare
       and GitHub.
 - [ ] Cancel WP Engine once traffic has been on Pages for a couple of weeks.
-- [ ] 1SEO's Tag Manager container and GA4 property: export any history you want, then stop using them.
+- [ ] 1SEO's Tag Manager container `GTM-NHJ7FK9`: stop using it. GA4 `G-JPX8XEENZ7` and Meta pixel
+      `1184826961874042` stay (we have admin on both); remove 1SEO's users from the GA4 property and the Meta
+      Business account.
