@@ -1,6 +1,6 @@
 {%- comment -%}
 Structured data (JSON-LD). jekyll-seo-tag already emits WebSite / WebPage / BlogPosting; this adds:
-  * home:            the business itself (ProfessionalService) with real NAP, geo and service areas
+  * home, about, contact: the business itself (ProfessionalService) with real NAP, geo and service areas
   * location pages:  a Service for that area, provided by the business
   * service pages:   a Service (page.service set and not a location page)
   * everything else: BreadcrumbList
@@ -9,7 +9,7 @@ All business details come from _config.yml `company`, so NAP stays identical eve
 {%- assign org_id = '/' | absolute_url | append: '#organization' -%}
 {%- assign tel = site.company.phone_tel -%}
 {%- capture phone %}+1-{{ tel | slice: 0, 3 }}-{{ tel | slice: 3, 3 }}-{{ tel | slice: 6, 4 }}{% endcapture -%}
-{%- if page.url == "/" or page.url == "/contact/" -%}
+{%- if page.url == "/" or page.url == "/contact/" or page.url == "/about-us/" -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -34,7 +34,11 @@ All business details come from _config.yml `company`, so NAP stays identical eve
      "parentOrganization": {"@id": "{{ org_id }}"}}{% unless forloop.last %},{% endunless %}{% endfor %}
   ],
   "areaServed": [{% if site.copy_version == "new" %}{"@type": "Country", "name": "United States"}, {% endif %}{% assign locs = site.pages | where_exp: "pg", "pg.location" %}{% for pg in locs %}{"@type": "Place", "name": "{{ pg.location.name }}, {{ pg.location.region }}"}, {% endfor %}{"@type": "State", "name": "Pennsylvania"}, {"@type": "State", "name": "New Jersey"}, {"@type": "State", "name": "New York"}, {"@type": "State", "name": "Delaware"}{% unless site.copy_version == "new" %}, {"@type": "Country", "name": "United States"}{% endunless %}],
-  "knowsAbout": ["Digital forensics", "Mobile device forensics", "Cell site analysis", "Electronic discovery", "Early case assessment", "Litigation support", "Trial presentation", "Expert witness testimony"],{% if site.copy_version == "new" %}
+  "slogan": "{{ site.tagline | escape }}",
+  "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Litigation support services", "itemListElement": [{% assign live_pages = site.pages | where_exp: "pg", "pg.landing != true" %}{% for svc in site.data.services %}
+    {"@type": "OfferCatalog", "name": "{{ svc.title }}", "url": "{{ svc.url | absolute_url }}", "itemListElement": [{% assign subs = live_pages | where: "service", svc.key | sort: "url" %}{% for pg in subs %}{"@type": "Offer", "itemOffered": {"@type": "Service", "name": {{ pg.title | strip_html | jsonify }}, "url": "{{ pg.url | absolute_url }}"}}{% unless forloop.last %}, {% endunless %}{% endfor %}]}{% unless forloop.last %},{% endunless %}{% endfor %}
+  ]},
+  "knowsAbout": ["Digital forensics", "Mobile device forensics", "Cell site analysis", "Electronic discovery", "Early case assessment", "Litigation support", "Trial presentation", "Expert witness testimony", "JTAG and chip-off forensics", "Cloud forensics", "Call detail records", "Criminal defense discovery", "Managed document review", "ESI protocols", "Electronic Discovery Reference Model (EDRM)"],{% if site.copy_version == "new" %}
   "award": ["#1 Digital Forensics, The Legal Intelligencer Best of 2025", "#1 Digital Forensics & Corporate Investigations, The Legal Intelligencer Best of 2019 and 2020"],{% endif %}
   "sameAs": ["{{ site.social.linkedin }}", "{{ site.social.facebook }}", "{{ site.social.x }}"]
 }

@@ -1,0 +1,65 @@
+---
+layout: none
+permalink: /llms.txt
+sitemap: false
+---
+{%- comment -%}
+llms.txt (https://llmstxt.org): a plain-Markdown map of the site for AI assistants and answer engines.
+Built from page front matter, so it follows the published copy version and never lists a page that isn't
+live (ad landing pages, noindex pages, pages from the other copy version). Facts come from _config.yml
+`company` and _data/locations.yml, the same sources as the footer and structured data.
+{%- endcomment -%}
+{%- assign live = site.pages | where_exp: "p", "p.landing != true" | where_exp: "p", "p.robots != 'noindex'" | where_exp: "p", "p.sitemap != false" -%}
+{%- if site.copy_version == "new" %}{% assign summary = site.versions.new.description %}{% else %}{% assign summary = site.description %}{% endif -%}
+# {{ site.title }}
+
+> {{ summary | strip | normalize_whitespace }}
+
+{{ site.title }} is a litigation support firm founded in {{ site.company.founded }} and headquartered at the Philadelphia Navy Yard. Attorneys, corporations and public agencies hire us to find digital evidence, manage it through discovery, and present it in court: certified digital forensic examiners, cell site analysis and expert witness testimony; e-Discovery processing, hosting and review on our own platform, Junto; and certified trial technicians. We work on criminal and civil matters in Pennsylvania, New Jersey, New York and Delaware and for clients across the United States.
+
+Key facts:
+
+- Services: digital forensics (computers, phones, cloud accounts), mobile device forensics, JTAG and chip-off, cell site analysis and call detail records, expert witness testimony and rebuttal, e-Discovery (collection, processing, early case assessment, managed review, production), criminal discovery management for multi-defendant cases, document management, paper discovery, printing and scanning, trial presentation and exhibit management.
+- Clients: criminal defense attorneys, public defenders and court-appointed (CJA) counsel, civil litigators, corporate legal and HR teams, schools and public agencies.
+- Recognition: The Legal Intelligencer "Best Of" 2025, #1 in Digital Forensics and Top 3 in End-to-End eDiscovery, Trial Technology, Trial Technicians and Demonstrative Evidence.
+- Phone: {{ site.company.phone }}. Email: {{ site.company.email }}. Contact form: {{ '/contact/' | absolute_url }}
+- Offices:{% for loc in site.data.locations %}
+  - {{ loc.name }}: {{ loc.street }}{% if loc.suite %}, {{ loc.suite }}{% endif %}, {{ loc.city }}, {{ loc.region }} {{ loc.postal_code }} ({{ loc.area }}){% endfor %}
+- Profiles: {{ site.social.linkedin }}, {{ site.social.facebook }}, {{ site.social.x }}
+{% for svc in site.data.services %}
+## {{ svc.title }}
+{% assign main = live | where: "url", svc.url | first %}
+- [{{ svc.title }}]({{ svc.url | absolute_url }}): {{ main.description | default: svc.blurb | strip_html | normalize_whitespace }}
+{%- assign subs = live | where: "service", svc.key | sort: "url" %}{% for p in subs %}{% if p.url != svc.url %}
+- [{{ p.title }}]({{ p.url | absolute_url }}): {{ p.description | strip_html | normalize_whitespace }}
+{%- endif %}{% endfor %}
+{% endfor %}
+{%- assign extra = live | where_exp: "p", "p.service == 'criminal-defense'" %}{% if extra.size > 0 %}
+## For Criminal Defense
+{% for p in extra %}
+- [{{ p.title }}]({{ p.url | absolute_url }}): {{ p.description | strip_html | normalize_whitespace }}
+{%- endfor %}
+{% endif %}
+## Our Experts and Team
+
+- [About Us]({{ '/about-us/' | absolute_url }}): who we are and the full team.
+{%- assign experts = live | where_exp: "p", "p.person" | sort: "url" %}{% for p in experts %}
+- [{{ p.person.name }}]({{ p.url | absolute_url }}): {{ p.person.job_title }}. {{ p.description | strip_html | normalize_whitespace }}
+{%- endfor %}
+
+## Locations
+{% assign places = live | where_exp: "p", "p.location" | sort: "url" %}{% for p in places %}
+- [{{ p.title }}]({{ p.url | absolute_url }}): {{ p.description | strip_html | normalize_whitespace }}
+{%- endfor %}
+- [Contact]({{ '/contact/' | absolute_url }}): phone, email, both offices and the contact form.
+{%- assign nacdl = live | where: "url", "/nacdl/" | first %}{% if nacdl %}
+- [NACDL members]({{ nacdl.url | absolute_url }}): {{ nacdl.description | strip_html | normalize_whitespace }}
+{%- endif %}
+
+## Optional
+
+- [The Tech Gazette blog]({{ '/blog/' | absolute_url }}): articles on digital forensics, e-Discovery and trial technology by our examiners.
+{%- for post in site.posts limit: 15 %}
+- [{{ post.title | strip_html }}]({{ post.url | absolute_url }}){% if post.description %}: {{ post.description | strip_html | normalize_whitespace }}{% endif %}
+{%- endfor %}
+- [Sitemap (XML)]({{ '/sitemap.xml' | absolute_url }})
