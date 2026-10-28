@@ -7,7 +7,7 @@ header_class: about
 heading:
   pre: Privacy
   emphasis: Policy
-last_updated: 2026-10-06
+last_updated: 2026-10-28
 ---
 {%- comment -%}
 Plain-language policy describing what this static site actually does. Have counsel review before launch.
@@ -26,8 +26,13 @@ Keep it in sync with _config.yml: if analytics or the contact form change, updat
 <h3>Analytics</h3>
 <p>We use Google Analytics to understand how visitors use the site, such as which pages are read and whether the contact form or our phone and email links are used. Google Analytics sets cookies and collects information such as your approximate location, browser and device type, and pages visited. We do not use it to identify individual visitors. You can opt out with the <a href="https://tools.google.com/dlpage/gaoptout">Google Analytics opt-out browser add-on</a> or by blocking cookies in your browser.</p>
 
+{%- if site.analytics.meta_pixel_id %}
+<h3>Meta (Facebook) Pixel</h3>
+<p>We use the Meta Pixel to measure visits from our Facebook page and any Facebook or Instagram advertising we run. It tells Meta which pages were viewed and whether the contact form or our phone and email links were used; it does not send what you type into the form. Meta may link this to your Facebook or Instagram account under its own <a href="https://www.facebook.com/privacy/policy/">Privacy Policy</a>. You can control ad personalization in your <a href="https://accountscenter.facebook.com/ad_preferences">Meta ad preferences</a> or by blocking third-party cookies in your browser.</p>
+{%- endif %}
+
 <h3>What we don't do</h3>
-<p>This site does not use call-tracking or phone-number-swapping services, advertising pixels from social networks, or third-party advertising cookies, and we do not sell personal information.</p>
+<p>This site does not use call-tracking or phone-number-swapping services{% unless site.analytics.meta_pixel_id %}, advertising pixels from social networks,{% endunless %} or third-party advertising networks, and we do not sell personal information.</p>
 
 <h3>Retention and security</h3>
 <p>Inquiries are kept in our business email for as long as needed to respond and maintain a record of our communications. The site itself stores nothing: it is a static website, and the form is processed in transit and not stored by the site.</p>

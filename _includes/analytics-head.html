@@ -1,10 +1,14 @@
 {%- comment -%}
-GA4 (and optional Google Ads) via gtag.js — production domain only, never the github.io preview or local dev.
-IDs come from site.analytics in _config.yml; blank = nothing loads.
+GA4 (and optional Google Ads) via gtag.js, and the optional Meta Pixel — production domain only, never the
+github.io preview or local dev. IDs come from site.analytics in _config.yml; blank = nothing loads.
 {%- endcomment -%}
 {%- assign ga = site.analytics.ga4_measurement_id -%}
 {%- assign ads = site.analytics.google_ads_id -%}
+{%- assign fb = site.analytics.meta_pixel_id -%}
 {%- if jekyll.environment == "production" and site.url == site.canonical_url -%}
+{%- if site.facebook_domain_verification %}
+<meta name="facebook-domain-verification" content="{{ site.facebook_domain_verification }}">
+{%- endif -%}
 {%- if ga or ads %}
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga | default: ads }}"></script>
 <script>
@@ -15,5 +19,17 @@ IDs come from site.analytics in _config.yml; blank = nothing loads.
   {% if ads %}gtag('config', '{{ ads }}');{% endif %}
   window.CSD_ADS_LEAD = {% if ads and site.analytics.google_ads_lead_label %}'{{ ads }}/{{ site.analytics.google_ads_lead_label }}'{% else %}null{% endif %};
 </script>
+{%- endif -%}
+{%- if fb %}
+<script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '{{ fb }}');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id={{ fb }}&amp;ev=PageView&amp;noscript=1"></noscript>
 {%- endif -%}
 {%- endif -%}

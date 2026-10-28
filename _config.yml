@@ -70,11 +70,16 @@ analytics:
   # Optional Google Ads conversion tracking for form leads: AW-XXXXXXXXX and the conversion label.
   google_ads_id:
   google_ads_lead_label:
+  # Meta (Facebook) Pixel, owned by our Meta Business account (Events Manager > Data sources). PageView on every
+  # page, Lead on a contact-form send, Contact on a phone/email click. Blank = no Meta script at all.
+  meta_pixel_id: "1184826961874042"
 
 # Search Console / Bing Webmaster "HTML tag" verification codes (content="…" value only).
 webmaster_verifications:
   google:
   bing:
+# Meta Business Suite > Settings > Brand safety > Domains > cornerstonediscovery.com > meta-tag (content value).
+facebook_domain_verification: wwgjugltwe2u5khznwcbutfaq2a317
 
 contact_form:
   # URL of the contact-form worker (form-worker/). After `npm run deploy` use the workers.dev URL it prints;

@@ -128,9 +128,11 @@
     start();
   });
 
-  // ---- GA4 key events (no-ops when analytics isn't configured)
+  // ---- GA4 key events, mirrored to the Meta Pixel as its standard events (no-ops when analytics isn't configured)
+  var META_EVENTS = { generate_lead: 'Lead', click_to_call: 'Contact', click_to_email: 'Contact', sign_up: 'Subscribe' };
   function track(name, params) {
     if (typeof window.gtag === 'function') { window.gtag('event', name, params || {}); }
+    if (typeof window.fbq === 'function' && META_EVENTS[name]) { window.fbq('track', META_EVENTS[name]); }
   }
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href^="tel:"], a[href^="mailto:"]');
