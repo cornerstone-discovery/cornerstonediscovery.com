@@ -9,10 +9,14 @@ require "cgi"
 require "json"
 
 module FaqSchema
+  # Named entities the copy uses that CGI.unescapeHTML leaves as-is (it only knows &amp; &lt; &gt; &quot; &apos;).
+  TYPOGRAPHY = { "rsquo" => "’", "lsquo" => "‘", "rdquo" => "”", "ldquo" => "“", "mdash" => "—",
+                 "ndash" => "–", "hellip" => "…", "nbsp" => " " }.freeze
   ITEM = %r{<details class="faq"[^>]*>\s*<summary>(.*?)</summary>\s*<div class="faq-body">(.*?)</div>\s*</details>}m
 
   def self.text(html)
     html = html.gsub(%r{</li>\s*</[uo]l>}i, ". ").gsub(%r{</li>}i, "; ").gsub(%r{</(p|h\d)>}i, "\\0 ")
+    html = html.gsub(/&(\w+);/) { |e| TYPOGRAPHY.fetch(Regexp.last_match(1), e) }
     CGI.unescapeHTML(html.gsub(/<[^>]+>/, "")).gsub(/\s+/, " ").gsub(/([.;:])\s*\./, "\\1").strip
   end
 
